@@ -1,0 +1,28 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteBase /ebayar/
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . index.php [L]
+    RewriteCond %{REQUEST_METHOD} !^(GET|HEAD|POST|PROPFIND|OPTIONS|PUT)$ [NC]
+    RewriteRule .? - [F,NS,L]
+    RewriteCond %{HTTP:Content-Disposition} \.php [NC]
+    RewriteCond %{HTTP:Content-Type} image/.+ [NC]
+    RewriteRule .? - [F,NS,L]
+</IfModule>
+<FilesMatch "\.(flv|gif|jpg|jpeg|png|ico)$">
+    Header set Cache-Control "max-age=2592000"
+</FilesMatch>
+<FilesMatch "\.(js|css|pdf|swf)$">
+    Header set Cache-Control "max-age=604800"
+</FilesMatch>
+<FilesMatch "\.(html|htm|txt)$">
+    Header set Cache-Control "max-age=600"
+</FilesMatch>
+<FilesMatch "\.(pl|php|cgi|spl|scgi|fcgi)$">
+    Header unset Cache-Control
+</FilesMatch>
+<Files "\.(env|git)$">
+    Order allow,deny
+    Deny from all
+</Files>
