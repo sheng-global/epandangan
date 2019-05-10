@@ -1,57 +1,167 @@
-    <body class="fixed-left" onload="load()">
+    <body class="" onload="load()">
 
         <!-- Begin page -->
         <div id="wrapper">
 
-        <!-- Top Bar Start -->
-            <div class="topbar">
+            <!-- Topbar Start -->
+            <div class="navbar-custom">
+                <ul class="list-unstyled topnav-menu float-right mb-0">
+
+                    <li class="d-none d-sm-block">
+                        <form class="app-search">
+                            <div class="app-search-box">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search...">
+                                    <div class="input-group-append">
+                                        <button class="btn" type="submit">
+                                            <i class="fe-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+        
+                    <li class="dropdown notification-list">
+                        <a class="nav-link dropdown-toggle  waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <i class="fe-bell noti-icon"></i>
+                            <span class="badge badge-danger rounded-circle noti-icon-badge">5</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-lg">
+
+                            <!-- item-->
+                            <div class="dropdown-item noti-title">
+                                <h5 class="m-0">
+                                    <span class="float-right">
+                                        <a href="" class="text-dark">
+                                            <small>Clear All</small>
+                                        </a>
+                                    </span>Notification
+                                </h5>
+                            </div>
+
+                            <div class="slimscroll noti-scroll">
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item active">
+                                    <div class="notify-icon">
+                                        <img src="assets/images/users/user-1.jpg" class="img-fluid rounded-circle" alt="" /> </div>
+                                    <p class="notify-details">Cristina Pride</p>
+                                    <p class="text-muted mb-0 user-msg">
+                                        <small>Hi, How are you? What about our next meeting</small>
+                                    </p>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <div class="notify-icon bg-primary">
+                                        <i class="mdi mdi-comment-account-outline"></i>
+                                    </div>
+                                    <p class="notify-details">Caleb Flakelar commented on Admin
+                                        <small class="text-muted">1 min ago</small>
+                                    </p>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <div class="notify-icon">
+                                        <img src="assets/images/users/user-4.jpg" class="img-fluid rounded-circle" alt="" /> </div>
+                                    <p class="notify-details">Karen Robinson</p>
+                                    <p class="text-muted mb-0 user-msg">
+                                        <small>Wow ! this admin looks good and awesome design</small>
+                                    </p>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <div class="notify-icon bg-warning">
+                                        <i class="mdi mdi-account-plus"></i>
+                                    </div>
+                                    <p class="notify-details">New user registered.
+                                        <small class="text-muted">5 hours ago</small>
+                                    </p>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <div class="notify-icon bg-info">
+                                        <i class="mdi mdi-comment-account-outline"></i>
+                                    </div>
+                                    <p class="notify-details">Caleb Flakelar commented on Admin
+                                        <small class="text-muted">4 days ago</small>
+                                    </p>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <div class="notify-icon bg-secondary">
+                                        <i class="mdi mdi-heart"></i>
+                                    </div>
+                                    <p class="notify-details">Carlos Crouch liked
+                                        <b>Admin</b>
+                                        <small class="text-muted">13 days ago</small>
+                                    </p>
+                                </a>
+                            </div>
+
+                            <!-- All-->
+                            <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
+                                View all
+                                <i class="fi-arrow-right"></i>
+                            </a>
+
+                        </div>
+                    </li>
+
+                    <li class="dropdown notification-list">
+                        <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" href="<?php echo BASE_URL ?>user/profile/<?php echo $_SESSION['user_id'] ?>" role="button">
+                            <img src="<?php echo BASE_URL ?>assets/images/users/user-1.jpg" alt="user-image" class="rounded-circle">
+                            <span class="pro-user-name ml-1">
+                                <?php echo $_SESSION['full_name'] ?>
+                            </span>
+                        </a>
+                    </li>
+
+                    <li class="dropdown notification-list">
+                        <a href="<?php echo BASE_URL ?>auth/logout" class="nav-link right-bar-toggle waves-effect waves-light">
+                            <i class="fe-log-out"></i>
+                        </a>
+                    </li>
+                </ul>
 
                 <!-- LOGO -->
-                <div class="topbar-left">
-                    <div class="text-center">
-                        <a href="#" class="logo"><i class="icon-magnet icon-c-logo"></i><span><?php echo SITE_TITLE ?></span></a>
-                    </div>
+                <div class="logo-box">
+                    <a href="index.html" class="logo text-center">
+                        <span class="logo-lg">
+                            <span class="logo-lg-text-light"><?php echo getenv('SITE_TITLE') ?></span>
+                        </span>
+                        <span class="logo-sm">
+                            <img src="<?php echo BASE_URL ?>assets/images/logo-sm.png" alt="" height="24">
+                        </span>
+                    </a>
                 </div>
 
-                <!-- Button mobile view to collapse sidebar menu -->
-                <div class="navbar navbar-default" role="navigation">
-                    <div class="container">
-                        <div class="">
-                            <div class="pull-left">
-                                <button class="button-menu-mobile open-left waves-effect waves-light">
-                                    <i class="md md-menu"></i>
-                                </button>
-                                <span class="clearfix"></span>
-                            </div>
-                            <ul class="nav navbar-nav navbar-right pull-right">
-                                <?php if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1): ?>
-                                <li class="hidden-xs">
-                                    <a href="javascript:void(0)" id="btn-fullscreen" class="waves-effect waves-light"><i class="icon-size-fullscreen"></i></a>
-                                </li>
-                                <li class="dropdown top-menu-item-xs">
-                                    <a href="javascript:void(0)" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true"><img src="<?php echo BASE_URL ?>assets/images/default.jpg" alt="user-img" class="img-circle"> </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="<?php echo BASE_URL ?>user/profile/<?php echo $_SESSION['user_id'] ?>"><i class="ti-user m-r-10 text-custom"></i> <span data-tag="profile"></span></a></li>
-                                        <li><a href="#" id="change-language"><i class="ti-pencil m-r-10"></i> <span data-tag="change-language"></span></a></li>
-                                        <li><a href="<?php echo BASE_URL ?>auth/logout"><i class="ti-power-off m-r-10 text-danger"></i> <span data-tag="logout"></span></a></li>
-                                    </ul>
-                                </li>
-                                <?php endif; ?>
-                            </ul>
-                        
-                        </div>
-                        <!--/.nav-collapse -->
-                    </div>
-                </div>
+                <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+                    <li>
+                        <button class="button-menu-mobile waves-effect waves-light">
+                            <i class="fe-menu"></i>
+                        </button>
+                    </li>
+                </ul>
             </div>
-            <!-- Top Bar End -->
+            <!-- end Topbar -->
 
             <!-- ========== Left Sidebar Start ========== -->
-            <div class="left side-menu">
-                <div class="sidebar-inner slimscrollleft">
-                    <!--- Divider -->
+            <div class="left-side-menu">
+
+                <div class="slimscroll-menu">
+
+                    <!--- Sidemenu -->
                     <div id="sidebar-menu">
-                        <ul>
+
+                        <ul class="metismenu" id="side-menu">
+
+                            <li class="menu-title">Navigation</li>
                             <li>
                                 <a href="<?php echo BASE_URL ?>dashboard" class="waves-effect"><i class="ti-dashboard"></i><span> Dashboard </span></a>
                             </li>
@@ -62,12 +172,20 @@
                                 <a href="<?php echo BASE_URL ?>language" class="waves-effect"><i class="ti-bookmark-alt"></i><span data-tag="language"></span></a>
                             </li>
                             <li>
-                                <a href="<?php echo BASE_URL ?>user/ahli" class="waves-effect"><i class="fa fa-group"></i><span data-tag="member"></span></a>
+                                <a href="<?php echo BASE_URL ?>user/ahli" class="waves-effect"><i class="fa fa-users"></i><span data-tag="member"></span></a>
+                            </li>
+                            <li>
+                                <a href="<?php echo BASE_URL ?>candidate" class="waves-effect"><i class="fa fa-users"></i><span data-tag="candidate"></span></a>
                             </li>
                         </ul>
-                        <div class="clearfix"></div>
                     </div>
+                    <!-- End Sidebar -->
+                    <div id="demo"></div>
+
                     <div class="clearfix"></div>
+
                 </div>
+                <!-- Sidebar -left -->
+
             </div>
-            <!-- Left Sidebar End --> 
+            <!-- Left Sidebar End -->

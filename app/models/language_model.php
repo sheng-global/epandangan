@@ -44,7 +44,7 @@ Class Language_model extends Model {
 				'content' => $data['content']
 			);
 			
-			return $this->pdo->fetchAll($stm, $bind);
+			return $this->pdo->fetchAffected($stm, $bind);
 		}
 		catch(Exception $e){
 			return $e->getMessage();

@@ -33,7 +33,7 @@ class User_model extends Model {
 			'messageid' => $data['messageid'],
 			'last_update' => $data['last_update']
 		);
-		$result = $this->pdo->fetchAll($stm, $bind);
+		$result = $this->pdo->fetchAffected($stm, $bind);
 		return $result;
 	}
 	

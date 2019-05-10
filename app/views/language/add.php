@@ -1,30 +1,35 @@
-<!-- ============================================================== -->
+            <!-- ============================================================== -->
             <!-- Start right Content here -->
             <!-- ============================================================== -->                      
             <div class="content-page">
-                <!-- Start content -->
                 <div class="content">
-                    <div class="container">
-                    	<!-- Start Header -->
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
                         <div class="row">
-                            <div class="col-sm-12">
-                                <h4 class="page-title"><i class="md md-mail"></i> Add new Language String</h4>
-                                <ol class="breadcrumb">
-                                    <li><a href="<?php echo BASE_URL ?>"><?php echo SITE_TITLE ?></a></li>
-                                    <li><a href="#">Language</a></li>
-                                    <li class="active">New Language String</li>
-                                </ol>
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="<?php echo BASE_URL ?>"><?php echo SITE_TITLE ?></a></li>
+                                            <li class="breadcrumb-item"><a href="#">Language</a></li>
+                                            <li class="breadcrumb-item active">Language Strings</li>
+                                        </ol>
+                                    </div>
+                                    <h4 class="page-title">New Language String</h4>
+                                </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-8">
-                                <div class="panel panel-info panel-border">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">Add New Language String</h3>
-                                    </div>
-                                    <div class="panel-body">
-                                    	<!-- Content start -->
+                            <div class="col-6">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <h4 class="header-title">NewLanguage Strings</h4>
+                                        
                                     	<form method="post" role="form" action="<?php echo BASE_URL ?>language/create" novalidate="novalidate">
             								<div class="form-group">
             									<label for="slug">Slug</label>
@@ -42,33 +47,56 @@
             								<button type="submit" class="btn btn-success waves-effect waves-light m-b-5">Save</button>
             								<button class="btn btn-warning waves-effect waves-light m-b-5" id="back">Cancel</button>
         								</form>
-        								<!-- Content end -->
-                                    </div>
+        								</div>
                                 </div>
-        					</div>
-                            <div class="col-md-4">
-                                <div class="panel panel-primary panel-border">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">Instruction</h3>
+                            </div>
+
+                            <div class="col-lg-6 col-xl-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card title</h5>
+                                        <h6 class="card-subtitle text-muted">Support card subtitle</h6>
                                     </div>
-                                    <div class="panel-body">
-                                        <dl>
-                                            <dt>Subject</dt><dd>The subject that will appear in recepient email</dd>
-                                            <dt>Content</dt><dd>The content of the email</dd>
-                                            <dt>Example</dt><dd>{{LOGIN}} placeholder will be replace by a login button. This button is generated in the controller. So, if you want to create new placeholder, make sure it is available to be use. Otherwise, the placeholder will not be populated.</dd>
-                                            <dt>Title</dt><dd>Meaningful title for the email</dd>
-                                        </dl>
+                                    <img class="img-fluid" src="<?php echo BASE_URL ?>assets/images/small/img-4.jpg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <p class="card-text">Some quick example text to build on the card title and make
+                                            up the bulk of the card's content.</p>
+                                        <a href="javascript:void(0);" class="card-link text-custom">Card link</a>
+                                        <a href="javascript:void(0);" class="card-link text-custom">Another link</a>
                                     </div>
                                 </div>
                             </div>
-                    	</div> <!-- End Row -->
+
+                            <div class="col-lg-6 col-xl-3">
+                                <!-- Simple card -->
+                                <div class="card">
+                                    <img class="card-img-top img-fluid" src="<?php echo BASE_URL ?>assets/images/small/img-1.jpg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">Some quick example text to build on the card title and make
+                                            up the bulk of the card's content. With supporting text below as a natural lead-in to additional content.</p>
+                                        <a href="javascript:void(0);" class="btn btn-primary waves-effect waves-light">Button</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div> <!-- End Row -->
+
                     </div> <!-- container -->
                                
                 </div> <!-- content -->
 
-                <footer class="footer text-right">
-                    <?php echo getenv('FOOTER') ?>
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <?php echo getenv('FOOTER') ?>
+                            </div>
+                        </div>
+                    </div>
                 </footer>
+                <!-- end Footer -->
 
             </div>
             

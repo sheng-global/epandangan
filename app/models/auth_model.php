@@ -29,6 +29,18 @@ class Auth_model extends Model {
 		}
 	}
 
+	public function processLoginVoter($data)
+	{
+		$error_msg = NULL;
+		$user = $this->checkIC($data);
+
+		if(empty($user)){
+			return $error_msg = "No. gaji atau kad pengenalan tidak sah";
+		}else{
+			return $user;
+		}
+	}
+
 	public function checkSMS($phone_no)
 	{
 		$stm  = "SELECT * FROM otp WHERE phone_number = :phone_no AND verified = '0'";
@@ -45,6 +57,25 @@ class Auth_model extends Model {
 		return $result;
 	}
 
+	public function checkIC($data)
+	{
+		$stm  = "SELECT * FROM user_profile WHERE ic_passport = :ic_passport AND no_gaji = :no_gaji";
+		$bind = array(
+			'ic_passport' => $data['ic_passport'],
+			'no_gaji' => $data['no_gaji']
+		);
+		$result = $this->pdo->fetchAssoc($stm, $bind);
+		return $result;
+	}
+
+	public function getVoter($ic_passport)
+	{
+		$stm  = "SELECT * FROM user_profile WHERE ic_passport = :ic_passport";
+		$bind = array('ic_passport' => $ic_passport);
+		$result = $this->pdo->fetchAll($stm, $bind);
+		return $result;
+	}
+
 	# insert otp sms
 	public function insertSMS($data)
 	{
@@ -56,7 +87,7 @@ class Auth_model extends Model {
 			'messageid' => $data['messageid'],
 			'last_update' => $data['last_update']
 		);
-		$result = $this->pdo->fetchAll($stm, $bind);
+		$result = $this->pdo->fetchAffected($stm, $bind);
 		return $result;
 	}
 	

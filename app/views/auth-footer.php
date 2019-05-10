@@ -1,22 +1,12 @@
-        </div>
-        <!-- END wrapper -->
+        <footer class="footer footer-alt">
+            <?php echo getenv('FOOTER') ?>
+        </footer>
 
-        <script>var resizefunc = [];</script>
+        <!-- Vendor js -->
+        <script src="<?php echo BASE_URL; ?>assets/js/vendor.min.js"></script>
 
-        <!-- jQuery  -->
-        <script src="<?php echo BASE_URL; ?>assets/js/jquery.min.js"></script>
-        <script src="<?php echo BASE_URL; ?>assets/js/bootstrap.min.js"></script>
-
-        <!-- Password -->
-        <script src="<?php echo BASE_URL; ?>assets/plugins/password/hideShowPassword.min.js"></script>
-        <script src="<?php echo BASE_URL; ?>assets/js/password.js"></script>
-
-        <!-- sweet alert  -->
-        <script src="<?php echo BASE_URL; ?>assets/plugins/sweetalert/sweetalert2.min.js"></script>
-        <script src="<?php echo BASE_URL; ?>assets/pages/jquery.sweet-alert2.init.js"></script>
-
-        <!-- Page specific -->
-        <script src="<?php echo BASE_URL; ?>assets/js/base.js"></script>
+        <!-- App js -->
+        <script src="<?php echo BASE_URL; ?>assets/js/app.min.js"></script>
         
         <?php
 

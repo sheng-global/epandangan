@@ -16,17 +16,27 @@ class Language extends Controller {
 		$this->model = $this->loadModel('Language_model');
 
 		$this->css = array(
-			'assets/plugins/datatables/jquery.dataTables.min.css',
-			'assets/plugins/datatables/responsive.bootstrap.min.css',
-			'assets/plugins/datatables/buttons.bootstrap.min.css'
+			'assets/libs/datatables/dataTables.bootstrap4.css',
+			'assets/libs/datatables/responsive.bootstrap4.css',
+			'assets/libs/datatables/buttons.bootstrap4.css',
+			'assets/libs/datatables/select.bootstrap4.css',
+			'assets/libs/sweetalert2/sweetalert2.min.css'
 		);
 
 		$this->js = array(
-			'assets/plugins/datatables/media/js/jquery.dataTables.min.js',
-			'assets/plugins/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js',
-			'assets/plugins/datatables/dataTables.responsive.min.js',
-			'assets/plugins/datatables/responsive.bootstrap.min.js',
-			'assets/pages/datatables.init.js'
+			'assets/libs/datatables/jquery.dataTables.min.js',
+			'assets/libs/datatables/dataTables.bootstrap4.js',
+			'assets/libs/datatables/dataTables.responsive.min.js',
+			'assets/libs/datatables/responsive.bootstrap4.min.js',
+			'assets/libs/datatables/dataTables.buttons.min.js',
+			'assets/libs/datatables/buttons.html5.min.js',
+			'assets/libs/datatables/buttons.flash.min.js',
+			'assets/libs/datatables/buttons.print.min.js',
+			'assets/libs/pdfmake/pdfmake.min.js',
+			'assets/libs/pdfmake/vfs_fonts.js',
+			'assets/js/pages/datatables.init.js',
+			'assets/libs/sweetalert2/sweetalert2.min.js',
+			'assets/js/pages/sweet-alerts.init.js'
 		);
 
 		if(empty($this->session->get('loggedin'))){
@@ -41,7 +51,7 @@ class Language extends Controller {
 			
 			$(document).ready(function() {
 
-    			$('#datatable').dataTable({
+    			$('#datatable').DataTable({
     				responsive : true,
     				serverSide : true,
     				processing : true,

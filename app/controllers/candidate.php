@@ -8,17 +8,24 @@ class Candidate extends Controller {
 		$this->model = $this->loadModel('Candidate_model');
 
 		$this->css = array(
-			'assets/plugins/datatables/jquery.dataTables.min.css',
-			'assets/plugins/datatables/responsive.bootstrap.min.css',
-			'assets/plugins/datatables/buttons.bootstrap.min.css'
+			'assets/libs/datatables/dataTables.bootstrap4.css',
+			'assets/libs/datatables/responsive.bootstrap4.css',
+			'assets/libs/datatables/buttons.bootstrap4.css',
+			'assets/libs/datatables/select.bootstrap4.css'
 		);
 
 		$this->js = array(
-			'assets/plugins/datatables/media/js/jquery.dataTables.min.js',
-			'assets/plugins/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js',
-			'assets/plugins/datatables/dataTables.responsive.min.js',
-			'assets/plugins/datatables/responsive.bootstrap.min.js',
-			'assets/pages/datatables.init.js'
+			'assets/libs/datatables/jquery.dataTables.min.js',
+			'assets/libs/datatables/dataTables.bootstrap4.js',
+			'assets/libs/datatables/dataTables.responsive.min.js',
+			'assets/libs/datatables/responsive.bootstrap4.min.js',
+			'assets/libs/datatables/dataTables.buttons.min.js',
+			'assets/libs/datatables/buttons.html5.min.js',
+			'assets/libs/datatables/buttons.flash.min.js',
+			'assets/libs/datatables/buttons.print.min.js',
+			'assets/libs/pdfmake/pdfmake.min.js',
+			'assets/libs/pdfmake/vfs_fonts.js',
+			'assets/js/pages/datatables.init.js'
 		);
 
 		if(empty($this->session->get('loggedin'))){
@@ -32,7 +39,8 @@ class Candidate extends Controller {
 			var base_url = '".BASE_URL."candidate/process';
 			
 			$(document).ready(function() {
-    			$('#datatable').dataTable({
+
+    			$('#datatable').DataTable({
     				serverSide : true,
     				processing : true,
     				ajax : {
@@ -42,12 +50,14 @@ class Candidate extends Controller {
     				deferRender : true,
     				error : true,
     				columns: [
-			            { data: 'recipient' },
-			            { data: 'subject' },
-			            { data: 'last_update' },
+			            { data: 'post_name' },
+			            { data: 'full_name' },
+			            { data: 'jawatan' },
+			            { data: 'jabatan' },
 			            { data: 'action' }
 			        ]
     			});
+    			
     		});
 		</script>";
 		
@@ -302,10 +312,6 @@ class Candidate extends Controller {
 	{
 		$datatable = $this->loadHelper('datatable_helper');
 
-		if(empty($session->get('loggedin'))){
-			$this->redirect('auth/login');
-		}
-
 		// DB table to use
 		$table = 'view_candidates';
 		 
@@ -313,9 +319,10 @@ class Candidate extends Controller {
 		$primaryKey = 'id';
 
 		$columns = array(
-		    array( 'db' => 'recipient', 'dt' => 'recipient' ),
-		    array( 'db' => 'subject', 'dt' => 'subject' ),
-		    array( 'db' => 'last_update', 'dt' => 'last_update' ),
+		    array( 'db' => 'post_name', 'dt' => 'post_name' ),
+		    array( 'db' => 'full_name', 'dt' => 'full_name' ),
+		    array( 'db' => 'jawatan', 'dt' => 'jawatan' ),
+		    array( 'db' => 'jabatan', 'dt' => 'jabatan' ),
         	array(
 		    	'db' => 'id',
 		    	'dt' => 'action',

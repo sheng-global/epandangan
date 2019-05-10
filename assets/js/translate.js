@@ -14,7 +14,7 @@ function Translate() {
         var xrhFile = new XMLHttpRequest();
         //load content data 
         xrhFile.open('GET', this.dictPath+this.lng+'.json', false);
-        xrhFile.onreadystatechange = function ()
+        xrhFile.onload = function ()
         {
             if(xrhFile.readyState === 4)
             {
@@ -30,9 +30,14 @@ function Translate() {
                             elem.innerHTML = LngObject[key];
                             }       
                     }
+                }else{
+                    console.error(xrhFile.statusText);
                 }
             }
         }
+        xrhFile.onerror = function (e) {
+          console.error(xrhFile.statusText);
+        };
         xrhFile.send();
     } 
 }
