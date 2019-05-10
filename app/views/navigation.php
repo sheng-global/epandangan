@@ -165,6 +165,7 @@
                             <li>
                                 <a href="<?php echo BASE_URL ?>dashboard" class="waves-effect"><i class="ti-dashboard"></i><span> Dashboard </span></a>
                             </li>
+                        <?php if($_SESSION['role'] != 'voter'): ?>
                             <li>
                                 <a href="<?php echo BASE_URL ?>adminer.php" class="waves-effect" target="_blank"><i class="ti-settings"></i><span data-tag="database"></span></a>
                             </li>
@@ -177,6 +178,7 @@
                             <li>
                                 <a href="<?php echo BASE_URL ?>candidate" class="waves-effect"><i class="fa fa-users"></i><span data-tag="candidate"></span></a>
                             </li>
+                        <?php endif; ?>
                         </ul>
                     </div>
                     <!-- End Sidebar -->

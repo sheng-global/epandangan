@@ -24,86 +24,6 @@
                         <!-- end page title -->
 
                         <div class="row">
-                            <div class="col-md-6 col-xl-4">
-                                <div class="card-box">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <div class="avatar-sm bg-info rounded">
-                                                <i class="fe-aperture avatar-title font-22 text-white"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="text-right">
-                                                <h3 class="text-dark my-1">$<span data-plugin="counterup">12,145</span></h3>
-                                                <p class="text-muted mb-1 text-truncate">Income status</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mt-3">
-                                        <h6 class="text-uppercase">Target <span class="float-right">60%</span></h6>
-                                        <div class="progress progress-sm m-0">
-                                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                                <span class="sr-only">60% Complete</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> <!-- end card-box-->
-                            </div> <!-- end col -->
-
-                            <div class="col-md-6 col-xl-4">
-                                <div class="card-box">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <div class="avatar-sm bg-primary rounded">
-                                                <i class="fe-shopping-cart avatar-title font-22 text-white"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="text-right">
-                                                <h3 class="text-dark my-1"><span data-plugin="counterup">1576</span></h3>
-                                                <p class="text-muted mb-1 text-truncate">January's Sales</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mt-3">
-                                        <h6 class="text-uppercase">Target <span class="float-right">49%</span></h6>
-                                        <div class="progress progress-sm m-0">
-                                            <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="49" aria-valuemin="0" aria-valuemax="100" style="width: 49%">
-                                                <span class="sr-only">49% Complete</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> <!-- end card-box-->
-                            </div> <!-- end col -->
-
-                            <div class="col-md-6 col-xl-4">
-                                <div class="card-box">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <div class="avatar-sm bg-primary rounded">
-                                                <i class="fe-cpu avatar-title font-22 text-white"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="text-right">
-                                                <h3 class="text-dark my-1"><span data-plugin="counterup">178</span></h3>
-                                                <p class="text-muted mb-1 text-truncate">Available Stores</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mt-3">
-                                        <h6 class="text-uppercase">Target <span class="float-right">74%</span></h6>
-                                        <div class="progress progress-sm m-0">
-                                            <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="74" aria-valuemin="0" aria-valuemax="100" style="width: 74%">
-                                                <span class="sr-only">74% Complete</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> <!-- end card-box-->
-                            </div> <!-- end col -->
-                        </div>
-
-                        <div class="row">
                             <div class="col-lg-12">
                                 <div class="card-columns">
                                 <?php foreach($posts as $post): ?>
@@ -125,7 +45,7 @@
                                                 <?php endif; ?>
                                                 <?php endforeach; ?>
                                                 <?php if($i < $post['post_available']): ?>
-                                                <button type="button" class="btn btn-primary waves-effect waves-light open-modal" data-toggle="modal" data-target="#modal" data-post-id="<?php echo $post['id'] ?>">Pilih <?php echo $post['post_available'] ?> calon</button>
+                                                <button type="button" class="btn btn-warning waves-effect waves-light open-modal" data-toggle="modal" data-target="#modal" data-post-id="<?php echo $post['id'] ?>">Pilih <?php echo $post['post_available'] ?> calon</button>
                                             <?php endif; ?>
                                             </div>
                                         </div>
@@ -180,7 +100,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Tutup</button>
-                            <button type="submit" class="btn btn-info waves-effect waves-light" id="save-vote">Pilih</button>
+                            <button type="submit" class="btn btn-warning waves-effect waves-light" id="save-vote">Pilih</button>
                             <input type="hidden" name="post_id" id="postID">
                             <input type="hidden" name="session_id" value="<?php echo $_SESSION['user_id'] ?>">
                             </form>

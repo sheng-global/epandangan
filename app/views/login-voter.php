@@ -6,9 +6,9 @@
 
                             <div class="card-body p-4">
                                 
-                                <div class="text-center w-75 m-auto">
-                                    <a href="index.html">
-                                        <span><img src="<?php echo BASE_URL ?>assets/images/logo-dark.png" alt="" height="22"></span>
+                                <div class="text-center m-auto">
+                                    <a href="#">
+                                        <span><img src="<?php echo BASE_URL ?>assets/images/logo.png" alt="" height="65"></span>
                                     </a>
                                     <p class="text-muted mb-4 mt-3" data-tag="login-info"></p>
                                 </div>
@@ -26,7 +26,7 @@
                                     </div>
 
                                     <div class="form-group mb-0 text-center">
-                                        <button class="btn btn-info btn-block" type="submit" name="submit" data-tag="login"></button>
+                                        <button class="btn btn-warning btn-block" type="submit" name="submit" data-tag="login"></button>
                                     </div>
                                     <input type="hidden" name="redirect" id="redirect">
                                     <input type="hidden" name="token" value="<?php echo $token ?>">
