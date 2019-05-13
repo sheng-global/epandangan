@@ -69,7 +69,7 @@ class Vote extends Controller {
 		}
 	}
 
-	public function addNomination($data)
+	public function addNomination()
 	{
 		if(isset($_POST)){
 
@@ -87,6 +87,33 @@ class Vote extends Controller {
 				'controller' => 'Vote',
 				'function' => 'addNomination',
 				'action' => 'Add new nomination'
+			);
+			$log->add($data2);
+
+			return true;
+			
+		}else{
+			return false;
+		}
+	}
+
+	public function updateCandidates()
+	{
+		if(isset($_POST)){
+
+			$data = array(
+				'voter_id' => $_POST['voter_id']
+			);
+
+			$this->model->updateCandidates($data);
+
+			# log user action
+			$log = $this->loadHelper('log_helper');
+			$data2 = array(
+				'user_id' => $this->session->get('user_id'),
+				'controller' => 'Vote',
+				'function' => 'updateCandidates',
+				'action' => 'Update candidates submission'
 			);
 			$log->add($data2);
 

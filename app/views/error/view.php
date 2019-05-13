@@ -63,7 +63,7 @@
 
                         <div class="row mt-3">
                             <div class="col-12 text-center">
-                                <a class="btn btn-<?php echo $data['error_type'] ?>" href="#">Try again</a>
+                                <a class="btn btn-<?php echo $data['error_type'] ?>" href="#" id="back">Cuba semula</a>
                             </div> <!-- end col -->
                         </div>
                         <!-- end row -->

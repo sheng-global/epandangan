@@ -158,6 +158,7 @@ class Auth extends Controller {
 
 		try{
 			$easyCSRF->check('token', $_POST['token']);
+			$csrf = NULL;
 		}catch(Exception $e){
 			$csrf = $e->getMessage();
 		}
