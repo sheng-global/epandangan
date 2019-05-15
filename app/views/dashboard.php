@@ -17,7 +17,7 @@
                                             <li class="breadcrumb-item active">Dashboard</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">Dashboard</h4>
+                                    <h4 class="page-title">Pencalonan Jawatankuasa Induk Sesi 2019-2021</h4>
                                 </div>
                             </div>
                         </div>     

@@ -13,7 +13,7 @@ function Translate() {
         _self = this;
         var xrhFile = new XMLHttpRequest();
         //load content data 
-        xrhFile.open('GET', this.dictPath+this.lng+'.json', false);
+        xrhFile.open('GET', this.dictPath+this.lng+'.json', true);
         xrhFile.onload = function ()
         {
             if(xrhFile.readyState === 4)

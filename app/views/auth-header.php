@@ -7,7 +7,7 @@
         <title><?php echo SITE_TITLE ?></title>
 
         <!-- App favicon -->
-        <link rel="shortcut icon" href="<?php echo BASE_URL; ?>assets/images/favicon.ico">
+        <link rel="shortcut icon" href="<?php echo BASE_URL; ?>assets/images/favicon.png">
 
         <!-- App css -->
         <link href="<?php echo BASE_URL; ?>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
