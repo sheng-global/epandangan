@@ -55,9 +55,6 @@ class Dashboard extends Controller {
 			    $('.modal-footer #postID').val( postID );
 			    $('#modal').modal('show');
 
-				if (parseInt(postID) === 9){
-			    	var nama_url = '".BASE_URL."search.php?action=namaKewangan';
-			    }
 			    if(parseInt(postID) === 4){
 			    	var nama_url = '".BASE_URL."search.php?action=wanitaOnly';
 		    	}
