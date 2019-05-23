@@ -32,13 +32,22 @@ class Dashboard extends Controller {
 		$posts = $this->vote_model->getPosts();
 		$candidates = $this->vote_model->getCandidates($this->filter->isInt($this->session->get('user_id')));
 		$submission = $this->vote_model->countSubmission($this->filter->isInt($this->session->get('user_id')));
+
+		if($submission){
+			$total = $submission[0]['total'];
+			$toVote = $submission[0]['to_vote'];
+		}else{
+			$total = 0;
+			$toVote = 0;
+		}
+
 		$post = $this->vote_model->countPost();
 
 		$custom_js = "<script>
 
-			var submission = '".$submission[0]['total']."';
+			var submission = '".$total."';
 			var post = '".$post[0]['total']."';
-			var toVote = '".$submission[0]['to_vote']."';
+			var toVote = '".$toVote."';
 			var diff = parseInt(post) - parseInt(submission);
 			var voter_id = '".$this->session->get('user_id')."';
 
