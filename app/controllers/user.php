@@ -8,6 +8,27 @@ class User extends Controller {
 		$this->model = $this->loadModel('User_model');
 		$this->filter = $this->loadHelper('filter_helper');
 
+		$this->css = array(
+			'assets/libs/datatables/dataTables.bootstrap4.css',
+			'assets/libs/datatables/responsive.bootstrap4.css',
+			'assets/libs/datatables/buttons.bootstrap4.css',
+			'assets/libs/datatables/select.bootstrap4.css'
+		);
+
+		$this->js = array(
+			'assets/libs/datatables/jquery.dataTables.min.js',
+			'assets/libs/datatables/dataTables.bootstrap4.js',
+			'assets/libs/datatables/dataTables.responsive.min.js',
+			'assets/libs/datatables/responsive.bootstrap4.min.js',
+			'assets/libs/datatables/dataTables.buttons.min.js',
+			'assets/libs/datatables/buttons.html5.min.js',
+			'assets/libs/datatables/buttons.flash.min.js',
+			'assets/libs/datatables/buttons.print.min.js',
+			'assets/libs/pdfmake/pdfmake.min.js',
+			'assets/libs/pdfmake/vfs_fonts.js',
+			'assets/js/pages/datatables.init.js'
+		);
+
 		if(empty($this->session->get('loggedin'))){
 			$this->redirect('auth/login');
 		}
@@ -15,26 +36,12 @@ class User extends Controller {
 
 	function index()
 	{
-		$css = array(
-			'assets/plugins/datatables/jquery.dataTables.min.css',
-			'assets/plugins/datatables/responsive.bootstrap.min.css',
-			'assets/plugins/datatables/buttons.bootstrap.min.css'
-		);
-
-		$js = array(
-			'assets/plugins/datatables/media/js/jquery.dataTables.min.js',
-			'assets/plugins/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js',
-			'assets/plugins/datatables/dataTables.responsive.min.js',
-			'assets/plugins/datatables/responsive.bootstrap.min.js',
-			'assets/pages/datatables.init.js'
-		);
-
 		$custom_js = "<script type='text/javascript'>
 			var base_url = '".BASE_URL."user/process';
 			
 			$(document).ready(function() {
 
-    			$('#datatable').dataTable({
+    			$('#datatable').DataTable({
     				responsive : true,
     				serverSide : true,
     				processing : true,
@@ -64,8 +71,8 @@ class User extends Controller {
 		$footer = $this->loadView('footer');
         $template = $this->loadView('user/index');
 
-		$header->set('css', $css);
-		$footer->set('js', $js);
+		$header->set('css', $this->css);
+		$footer->set('js', $this->js);
 		$footer->set('custom_js', $custom_js);
 		
 		$header->render();
@@ -85,26 +92,12 @@ class User extends Controller {
 
 	function ahli()
 	{
-		$css = array(
-			'assets/plugins/datatables/jquery.dataTables.min.css',
-			'assets/plugins/datatables/responsive.bootstrap.min.css',
-			'assets/plugins/datatables/buttons.bootstrap.min.css'
-		);
-
-		$js = array(
-			'assets/plugins/datatables/media/js/jquery.dataTables.min.js',
-			'assets/plugins/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js',
-			'assets/plugins/datatables/dataTables.responsive.min.js',
-			'assets/plugins/datatables/responsive.bootstrap.min.js',
-			'assets/pages/datatables.init.js'
-		);
-
 		$custom_js = "<script type='text/javascript'>
 			var base_url = '".BASE_URL."user/process_ahli';
 			
 			$(document).ready(function() {
 
-    			$('#datatable').dataTable({
+    			$('#datatable').DataTable({
     				responsive : true,
     				serverSide : true,
     				processing : true,
@@ -131,8 +124,8 @@ class User extends Controller {
 		$footer = $this->loadView('footer');
         $template = $this->loadView('user/ahli');
 
-		$header->set('css', $css);
-		$footer->set('js', $js);
+		$header->set('css', $this->css);
+		$footer->set('js', $this->js);
 		$footer->set('custom_js', $custom_js);
 		
 		$header->render();

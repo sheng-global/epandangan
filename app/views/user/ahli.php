@@ -2,29 +2,38 @@
             <!-- Start right Content here -->
             <!-- ============================================================== -->                      
             <div class="content-page">
-                <!-- Start content -->
                 <div class="content">
-                    <div class="container">
 
-                        <!-- Page-Title -->
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <h4 class="page-title">Ahli</h4>
-                                <ol class="breadcrumb">
-                                    <li><a href="<?php echo BASE_URL ?>"><?php echo SITE_TITLE ?></a></li>
-                                    <li class="active">Senarai Ahli</li>
-                                </ol>
-                            </div>
-                        </div>
+                    <!-- Start Content-->
+                    <div class="container-fluid">
 
+                        <!-- start page title -->
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="panel panel-purple panel-border">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">Senarai Ahli</h3>
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);"><?php echo SITE_TITLE ?></a></li>
+                                            <li class="breadcrumb-item active">Senarai Keahlian</li>
+                                        </ol>
                                     </div>
-                                    <div class="panel-body">
-                                        <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                    <h4 class="page-title">Senarai Keahlian</h4>
+                                </div>
+                            </div>
+                        </div>     
+                        <!-- end page title -->
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <h4 class="header-title">Keahlian</h4>
+                                        <p class="text-muted font-13 mb-4">
+                                            Berikut adalah senarai ahli berdaftar.
+                                        </p>
+
+                                        <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap">
                                             <thead>
                                                 <tr>
                                                     <th>No. Gaji</th>
@@ -40,15 +49,23 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> <!-- End Row -->
+                        </div>
 
                     </div> <!-- container -->
                                
                 </div> <!-- content -->
 
-                <footer class="footer text-right">
-                    &copy; 2017. All rights reserved. Pengurusan Aset Air Berhad.
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <?php echo getenv('FOOTER') ?>
+                            </div>
+                        </div>
+                    </div>
                 </footer>
+                <!-- end Footer -->
 
             </div>
             

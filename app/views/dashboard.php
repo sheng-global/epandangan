@@ -25,6 +25,12 @@
 
                         <div class="row">
                             <div class="col-lg-12">
+                                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    Nota: Sesi pencalonan akan ditutup pada <strong>10 Jun 2019 jam 5.00 petang</strong>.
+                                </div>
                                 <div class="card-columns">
                                 <?php foreach($posts as $post): ?>
                                     <div class="card">
