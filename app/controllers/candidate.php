@@ -33,10 +33,10 @@ class Candidate extends Controller {
 		}
 	}
 
-	function index()
+	function view($post_id)
 	{
 		$custom_js = "<script type=\"text/javascript\">
-			var base_url = '".BASE_URL."candidate/process';
+			var base_url = '".BASE_URL."candidate/process/".$post_id."';
 			
 			$(document).ready(function() {
 
@@ -50,7 +50,6 @@ class Candidate extends Controller {
     				deferRender : true,
     				error : true,
     				columns: [
-			            { data: 'post_name' },
 			            { data: 'full_name' },
 			            { data: 'jawatan' },
 			            { data: 'jabatan' },
@@ -64,9 +63,10 @@ class Candidate extends Controller {
 		$header = $this->loadView('header');
 		$navigation = $this->loadView('navigation');
 		$footer = $this->loadView('footer');
-        $template = $this->loadView('candidate/index');
+        $template = $this->loadView('candidate/view');
 
 		$header->set('css', $this->css);
+		$template->set('data', $this->model->getPosition($post_id));
 		$footer->set('custom_js', $custom_js);
 		$footer->set('js', $this->js);
 		
@@ -78,34 +78,6 @@ class Candidate extends Controller {
 	
 	function add()
 	{
-		$session = $this->loadHelper('session_helper');
-		if(empty($session->get('loggedin'))){
-			$this->redirect('auth/login');
-		}
-
-		$css = array(
-			'assets/plugins/select2/select2.min.css',
-			'assets/plugins/select2/select2-bootstrap.css',
-			'assets/plugins/summernote/summernote.css',
-		);
-
-		$js = array(
-			'assets/plugins/select2/select2.min.js',
-			'assets/plugins/summernote/summernote.min.js'
-		);
-
-		$custom_js = "<script type=\"text/javascript\">
-
-			$('.summernote').summernote({
-                height: 400,                 // set editor height
-
-                minHeight: null,             // set minimum height of editor
-                maxHeight: null,             // set maximum height of editor
-
-                focus: true                 // set focus to editable area after initializing summernote
-            });
-		</script>";
-
 		$header = $this->loadView('header');
 		$navigation = $this->loadView('navigation');
 		$footer = $this->loadView('footer');
@@ -113,7 +85,6 @@ class Candidate extends Controller {
 
         $header->set('css', $css);
 		$footer->set('js', $js);
-        $footer->set('custom_js', $custom_js);
 		
 		$header->render();
 		$navigation->render();
@@ -123,11 +94,6 @@ class Candidate extends Controller {
 	
 	function create()
 	{
-		$session = $this->loadHelper('session_helper');
-		if(empty($session->get('loggedin'))){
-			$this->redirect('auth/login');
-		}
-
 		$model = $this->loadModel('Template_model');
 		if(isset($_POST)){
 			
@@ -157,11 +123,6 @@ class Candidate extends Controller {
 	
 	function edit($id)
 	{
-		$session = $this->loadHelper('session_helper');
-		if(empty($session->get('loggedin'))){
-			$this->redirect('auth/login');
-		}
-
 		$css = array(
 			'assets/plugins/select2/select2.min.css',
 			'assets/plugins/select2/select2-bootstrap.css',
@@ -248,11 +209,6 @@ class Candidate extends Controller {
 	
 	function update()
 	{
-		$session = $this->loadHelper('session_helper');
-		if(empty($session->get('loggedin'))){
-			$this->redirect('auth/login');
-		}
-
 		$model = $this->loadModel('Template_model');
 		if(isset($_POST)){
 			$id = $_POST['id'];
@@ -281,11 +237,6 @@ class Candidate extends Controller {
 	
 	function delete($id)
 	{
-		$session = $this->loadHelper('session_helper');
-		if(empty($session->get('loggedin'))){
-			$this->redirect('auth/login');
-		}
-
 		if(isset($id)){
 
 			$model = $this->loadModel('Template_model');
@@ -308,7 +259,7 @@ class Candidate extends Controller {
 	}
 
 	// process datatable
-	function process()
+	function process($post_id)
 	{
 		$datatable = $this->loadHelper('datatable_helper');
 
@@ -317,6 +268,8 @@ class Candidate extends Controller {
 		 
 		// Table's primary key
 		$primaryKey = 'id';
+
+		$where = 'post_id = '.$post_id.'';
 
 		$columns = array(
 		    array( 'db' => 'post_name', 'dt' => 'post_name' ),
@@ -327,7 +280,7 @@ class Candidate extends Controller {
 		    	'db' => 'id',
 		    	'dt' => 'action',
 		    	'formatter' => function( $d, $row ) {
-            		return "<a href=\"".BASE_URL."candidate/edit/".$d."\" class=\"btn btn-info btn-xs\">Edit</a>";
+            		return "<a href=\"".BASE_URL."candidate/view/".$d."\" class=\"btn btn-info btn-xs\">Edit</a>";
         		}
         	)
 		);
@@ -341,7 +294,7 @@ class Candidate extends Controller {
 		);
 		 
 		$data = json_encode(
-		    $datatable::simple( $_POST, $sql_details, $table, $primaryKey, $columns )
+		    $datatable::complex( $_POST, $sql_details, $table, $primaryKey, $columns, $where )
 		);
 		print_r($data);
 	}

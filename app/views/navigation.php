@@ -73,8 +73,17 @@
                                 <a href="<?php echo BASE_URL ?>user/ahli" class="waves-effect"><i class="fa fa-users"></i><span data-tag="member"></span></a>
                             </li>
                             <li>
-                                <a href="<?php echo BASE_URL ?>candidate" class="waves-effect"><i class="fa fa-users"></i><span data-tag="candidate"></span></a>
+                                <?php $model = new Controller;
+                                $data = $model->loadModel('Vote_model');
+                                $lists = $data->getPosts();?>
+                                <a href="javascript: void(0);" class="waves-effect"><i class="fa fa-users"></i><span data-tag="candidate"></span></a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <?php foreach ($lists as $list) { ?>
+                                    <li><a href="<?php echo BASE_URL ?>candidate/view/<?php echo $list['id'] ?>"><?php echo $list['post_name'] ?></a></li>
+                                    <?php } ?>
+                                </ul>
                             </li>
+                            
                         <?php endif; ?>
                         </ul>
                     </div>

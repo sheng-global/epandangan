@@ -29,5 +29,12 @@
         ?>
 
         <script src="<?php echo BASE_URL; ?>assets/js/app.min.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function(){
+            <?php if(getenv('ENVIRONMENT') == 'production'){
+                echo "$('#debug').hide()";
+            } ?>
+        });
+        </script>
     </body>
 </html>
