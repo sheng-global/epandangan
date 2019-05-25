@@ -29,7 +29,7 @@
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
-                                    Nota: Sesi pencalonan akan ditutup pada <strong>10 Jun 2019 jam 5.00 petang</strong>.
+                                    Nota: Sesi pencalonan akan ditutup pada <strong>14 Jun 2019 jam 5.00 petang</strong>.
                                 </div>
                                 <div class="card-columns">
                                 <?php foreach($posts as $post): ?>
