@@ -17,7 +17,7 @@
 
                                     <div class="form-group mb-3">
                                         <label for="ic_passport" data-tag="username"></label>
-                                        <input class="form-control" name="ic_passport" type="text" required="" placeholder="XXXXXX-XX-XXXX">
+                                        <input class="form-control" name="ic_passport" type="text" required="" data-toggle="input-mask" data-mask-format="000000-00-0000" data-reverse="true" placeholder="Contoh 888888-88-8888">
                                     </div>
 
                                     <div class="form-group mb-3">

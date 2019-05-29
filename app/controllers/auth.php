@@ -38,6 +38,12 @@ class Auth extends Controller {
 	# Voter login page
 	public function index()
 	{
+		$js = array(
+			'assets/libs/jquery-mask-plugin/jquery.mask.min.js',
+			'assets/libs/autonumeric/autoNumeric-min.js',
+			'assets/js/pages/form-masks.init.js'
+		);
+
 		# load EasyCSRF and session provider
 		$session = new EasyCSRF\NativeSessionProvider();
 
@@ -60,6 +66,7 @@ class Auth extends Controller {
 				});
 			</script>";
 
+			$footer->set('js', $js);
 			$footer->set('custom_js', $custom_js);
 			$template->set('token', $token);
 
@@ -127,7 +134,7 @@ class Auth extends Controller {
 
 				if(getenv('2FA') == 'no'){
 
-					$this->redirect('dashboard/index');
+					$this->redirect('dashboard/admin');
 					exit;
 
 				}else{
@@ -365,7 +372,7 @@ class Auth extends Controller {
 		$log->add($data);
 
 		if($role) $this->redirect('auth/'.$role);
-		else $this->redirect('auth/'.$role);
+		else $this->redirect('auth');
 		exit;
 	}
 
