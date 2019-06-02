@@ -41,6 +41,11 @@
                             <i class="fe-menu"></i>
                         </button>
                     </li>
+                    <li class="dropdown d-none d-lg-block">
+                        <a class="nav-link waves-effect waves-light" role="button">
+                            <i class="mdi mdi-clock-outline"></i> Pencalonan ditutup lagi <span id="timer"></span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <!-- end Topbar -->
@@ -57,31 +62,35 @@
 
                             <li class="menu-title">Navigation</li>
                             <li>
-                                <a href="<?php echo BASE_URL ?>dashboard" class="waves-effect"><i class="fa fa-users"></i><span> Pencalonan </span></a>
+                                <a href="<?php echo BASE_URL ?>dashboard" class="waves-effect"><i class="fe-users"></i><span> Pencalonan </span></a>
                             </li>
                             <li>
-                                <a href="#" class="waves-effect"><i class="ti-pencil"></i><span> Pemilihan </span></a>
+                                <a href="javascript: void(0);" class="waves-effect" id="notify"><i class="ti-pencil"></i><span> Pemilihan </span></a>
                             </li>
                         <?php if($_SESSION['role'] != 'voter'): ?>
+                            <li class="menu-title">Administration</li>
                             <li>
-                                <a href="<?php echo BASE_URL ?>adminer.php" class="waves-effect" target="_blank"><i class="ti-settings"></i><span data-tag="database"></span></a>
-                            </li>
-                            <li>
-                                <a href="<?php echo BASE_URL ?>language" class="waves-effect"><i class="ti-bookmark-alt"></i><span data-tag="language"></span></a>
-                            </li>
-                            <li>
-                                <a href="<?php echo BASE_URL ?>user/ahli" class="waves-effect"><i class="fa fa-users"></i><span data-tag="member"></span></a>
+                                <a href="<?php echo BASE_URL ?>dashboard/admin" class="waves-effect"><i class="fe-airplay"></i><span> Dashboard </span></a>
                             </li>
                             <li>
                                 <?php $model = new Controller;
-                                $data = $model->loadModel('Vote_model');
+                                $data = $model->loadModel('Base_model');
                                 $lists = $data->getPosts();?>
-                                <a href="javascript: void(0);" class="waves-effect"><i class="fa fa-users"></i><span data-tag="candidate"></span></a>
+                                <a href="javascript: void(0);" class="waves-effect"><i class="fe-layers"></i><span data-tag="candidate"></span><span class="menu-arrow"></span></a>
                                 <ul class="nav-second-level" aria-expanded="false">
                                     <?php foreach ($lists as $list) { ?>
                                     <li><a href="<?php echo BASE_URL ?>candidate/view/<?php echo $list['id'] ?>"><?php echo $list['post_name'] ?></a></li>
                                     <?php } ?>
                                 </ul>
+                            </li>
+                            <li>
+                                <a href="<?php echo BASE_URL ?>candidate/posts" class="waves-effect"><i class="fa fa-briefcase"></i><span data-tag="posts"></span></a>
+                            </li>
+                            <li>
+                                <a href="<?php echo BASE_URL ?>user/ahli" class="waves-effect"><i class="fa fa-users"></i><span data-tag="member"></span></a>
+                            </li>
+                            <li>
+                                <a href="<?php echo BASE_URL ?>language" class="waves-effect"><i class="ti-bookmark-alt"></i><span data-tag="language"></span></a>
                             </li>
                             
                         <?php endif; ?>

@@ -10,8 +10,16 @@ Class Vote_model extends Model {
 
 	public function getCandidates($user_id)
 	{
-		$stm  = "SELECT * FROM view_candidates WHERE voter_id = :user_id";
+		$stm  = "SELECT * FROM view_candidates WHERE voter_id = :user_id ORDER BY post_id";
 		$bind = array('user_id' => $user_id);
+		$result = $this->pdo->fetchAll($stm, $bind);
+		return $result;
+	}
+
+	public function getVote()
+	{
+		$stm  = "SELECT * FROM view_candidates WHERE to_vote = :to_vote";
+		$bind = array('to_vote' => 'yes');
 		$result = $this->pdo->fetchAll($stm, $bind);
 		return $result;
 	}
@@ -48,14 +56,25 @@ Class Vote_model extends Model {
 			return $this->pdo->fetchAffected($stm, $bind);
 		}
 		catch(Exception $e){
-			echo $e->getMessage();
+			return $e->getMessage();
 		}
 	}
 
 	public function countSubmission($user_id)
 	{
-		$stm  = "SELECT COUNT(voter_id) AS total, to_vote FROM candidates WHERE voter_id = :user_id GROUP BY to_vote";
+		$stm  = "SELECT COUNT(voter_id) AS total FROM view_candidates WHERE voter_id = :user_id";
 		$bind = array('user_id' => $user_id);
+		$result = $this->pdo->fetchAll($stm, $bind);
+		return $result;
+	}
+
+	public function countToVote($user_id)
+	{
+		$stm  = "SELECT COUNT(to_vote) AS total FROM view_candidates WHERE voter_id = :user_id AND to_vote = :to_vote";
+		$bind = array(
+			'user_id' => $user_id,
+			'to_vote' => 'yes'
+		);
 		$result = $this->pdo->fetchAll($stm, $bind);
 		return $result;
 	}
@@ -78,7 +97,49 @@ Class Vote_model extends Model {
 			return $this->pdo->fetchAffected($stm, $bind);
 		}
 		catch(Exception $e){
-			echo $e->getMessage();
+			return $e->getMessage();
+		}
+	}
+
+	public function toVote($data)
+	{
+		try{
+			$stm  = "INSERT INTO to_vote (voter_id, status) VALUES (:voter_id, :status)";
+			$bind = array(
+				'voter_id' => $data['voter_id'],
+				'status' => $data['status']
+			);
+			
+			return $this->pdo->fetchAffected($stm, $bind);
+		}
+		catch(Exception $e){
+			return $e->getMessage();
+		}
+	}
+
+	public function checkNomination($voter_id)
+	{
+		$stm  = "SELECT * FROM to_vote WHERE voter_id = :voter_id";
+		$bind = array(
+			'voter_id' => $voter_id
+		);
+		$result = $this->pdo->fetchAll($stm, $bind);
+		return $result;
+	}
+
+	public function addVote($data)
+	{
+		try{
+			$stm  = "INSERT INTO votes (user_id, post_id) VALUES (:user_id, :post_id)";
+			$bind = array(
+				'user_id' => $data['user_id'],
+				'post_id' => $data['post_id']
+			);
+			
+			return $this->pdo->fetchAffected($stm, $bind);
+		}
+		catch(Exception $e){
+			return $e->getMessage();
 		}
 	}
 }

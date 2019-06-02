@@ -17,7 +17,7 @@
                                             <li class="breadcrumb-item active">Dashboard</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">Pencalonan Jawatankuasa Induk Sesi 2019-2021</h4>
+                                    <h4 class="page-title">Pemilihan Jawatankuasa Induk Sesi 2019-2021</h4>
                                 </div>
                             </div>
                         </div>     
@@ -29,38 +29,43 @@
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
-                                    Nota: Sesi pencalonan akan ditutup pada <strong>13 Jun 2019 jam 5.00 petang</strong>.
+                                    Nota: Sesi pemilihan akan ditutup pada <strong>26 Jun 2019 jam 2.00 petang</strong>.
                                 </div>
                             </div>
                         </div>
-
+                                
+                        <?php foreach($posts as $post): ?>
+                        
                         <div class="row">
-                            <?php foreach($posts as $post): ?>
-                            <div class="col-lg-4">
-                                <div class="card-box ribbon-box">
-                                    <div class="ribbon float-left">
-                                        <?php echo $post['post_name'] ?>
+                            <div class="col-md-12">
+                            <h4 class="mb-4"><?php echo $post['post_name'] ?></h4>
+                            <h5 class="text mt-0"><?php echo $post['post_available'] ?> kekosongan</h5>
+                                <div class="card-columns">
+                                <?php foreach ($candidates as $candidate): ?>
+                                <?php $user = array('id' => $candidate['user_id'], 'controller' => 'candidate'); 
+                                $get = $helper->get($user);
+                                if($get) $img = BASE_URL."files/".$get[0]['file'];
+                                else $img = BASE_URL."assets/images/default.jpg"; ?>
+                                <?php if($post['id'] == $candidate['post_id']): ?>
+                                    <div class="card">
+                                        <img src="<?php echo $img ?>" class="card-img-top" alt="profile-image">
+
+                                        <div class="card-body">
+
+                                            <h5 class="card-title"><a href="#" class="text-dark"><?php echo $candidate['full_name'] ?></a></h5>
+                                            <p class="card-text"><?php echo $candidate['jawatan'] ?></p>
+                                            <p class="card-text"><?php echo $candidate['jabatan'] ?></p>
+
+                                            <button type="button" class="btn btn-success btn-sm waves-effect waves-light">Pilih</button>
+
+                                        </div> <!-- end card-body-->
                                     </div>
-                                    <div class="ribbon-content">
-                                        <h5 class="text mt-0"><?php echo $post['post_available'] ?> kekosongan <span class="text-danger"><?php echo $post['indicator'] ?></span></h5>
-                                        <?php
-                                            $i = 0;
-                                                foreach ($candidates as $candidate):
-                                                if(($candidate['post_id'] == $post['id'])):
-                                                    $i++;
-                                            ?>
-                                            <h5><i class="mdi mdi-account-circle"></i> <?php echo $candidate['full_name'] ?></h5>
-                                            <p class="text-muted"> <small><?php echo $candidate['jawatan'] ?> - <?php echo $candidate['jabatan'] ?></small></p>
-                                            <?php endif; ?>
-                                            <?php endforeach; ?>
-                                            <?php if($i < $post['post_available']): ?>
-                                            <button type="button" class="btn btn-warning waves-effect waves-light open-modal" data-toggle="modal" data-target="#modal" data-post-id="<?php echo $post['id'] ?>">Pilih <?php echo $post['post_available'] - $i ?> calon</button>
-                                        <?php endif; ?>
-                                    </div>
+                                <?php endif; ?>
+                                <?php endforeach; ?>
                                 </div>
                             </div>
-                            <?php endforeach; ?>
                         </div>
+                        <?php endforeach; ?>
 
                     </div> <!-- container -->
                                
@@ -95,12 +100,6 @@
                             <form id="voting-form" class="needs-validation" novalidate>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="alert alert-info alert-dismissible fade show" role="alert">
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        Nota: Sila pastikan anda mengenali dan mendapat persetujuan dari ahli ini sebelum dicalonkan
-                                    </div>
                                     <div class="form-group">
                                         <label for="nama" class="control-label">Calon</label>
                                         <select name="user_id" class="form-control" id="nama" style="width: 100%" data-toggle="select2" required></select>

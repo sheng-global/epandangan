@@ -8,6 +8,7 @@ class Dashboard extends Controller {
 		$this->date = $this->loadHelper('date_helper');
 		$this->model = $this->loadModel('Dashboard_model');
 		$this->filter = $this->loadHelper('filter_helper');
+		$this->vote_model = $this->loadModel('vote_model');
 
 		if(empty($this->session->get('loggedin'))){
 			$this->redirect('auth/login');
@@ -28,17 +29,21 @@ class Dashboard extends Controller {
 			'assets/js/pages/sweet-alerts.init.js'
 		);
 
-		$this->vote_model = $this->loadModel('vote_model');
 		$posts = $this->vote_model->getPosts();
 		$candidates = $this->vote_model->getCandidates($this->filter->isInt($this->session->get('user_id')));
 		$submission = $this->vote_model->countSubmission($this->filter->isInt($this->session->get('user_id')));
+		$toVote = $this->vote_model->checkNomination($this->filter->isInt($this->session->get('user_id')));
 
 		if($submission){
 			$total = $submission[0]['total'];
-			$toVote = $submission[0]['to_vote'];
 		}else{
 			$total = 0;
-			$toVote = 0;
+		}
+
+		if($toVote){
+			$checkNomination = $toVote[0]['status'];
+		}else{
+			$checkNomination = 'no';
 		}
 
 		$post = $this->vote_model->countPost();
@@ -47,9 +52,9 @@ class Dashboard extends Controller {
 
 			var submission = '".$total."';
 			var post = '".$post[0]['total']."';
-			var toVote = '".$toVote."';
 			var diff = parseInt(post) - parseInt(submission);
 			var voter_id = '".$this->session->get('user_id')."';
+			var toVote = '".$checkNomination."';
 
 			// assign random color to ribbon
 			var klasses = ['ribbon-primary', 'ribbon-info', 'ribbon-success', 'ribbon-warning', 'ribbon-danger', 'ribbon-dark', 'ribbon-blue', 'ribbon-pink', 'ribbon-secondary'];
@@ -64,7 +69,7 @@ class Dashboard extends Controller {
 			    $('.modal-footer #postID').val( postID );
 			    $('#modal').modal('show');
 
-			    if(parseInt(postID) === 4){
+			    if(parseInt(postID) === 4 || parseInt(postID) === 7){
 			    	var nama_url = '".BASE_URL."search.php?action=wanitaOnly';
 		    	}
 		    	else{
@@ -122,56 +127,56 @@ class Dashboard extends Controller {
 
 				var submit_url = '".BASE_URL."vote/updateCandidates';
 
-				console.log(toVote);
-
-				if(parseInt(submission) === parseInt(post) && toVote === 'no'){
-					swal('Terima kasih!', '', 'info');
-					swal({
-			            title: 'Tahniah!',
-			            text: 'Anda telah melengkapkan borang pencalonan ini. Jika anda bersetuju dengan pencalonan anda, sila klik pada butang Hantar untuk mengesahkan pencalonan anda. Jika anda ingin menukar pencalonan anda, sila tekan butang Batal.',
-			            type: 'question',
-			            showCancelButton: true,
-			            confirmButtonText: 'Hantar',
-			            cancelButtonText: 'Batal'
-			        }).then(function(){
-						$.ajax({
-							type: 'POST',
-							url: submit_url,
-							data: 'voter_id='+ voter_id,
-							success: function(){
-								swal({
-									title: 'Berjaya',
-									text: 'Borang pencalonan anda telah dihantar. Terima kasih kerana menggunakan perkhidmatan e-voting ini.',
-									type: 'success'
-								}).then(function() {
-									location.reload();
-								})
-							}
-						})
-						.error(function() {
-							swal('Oops', 'Error connecting to the server!', 'error');
-						});
-					}, function (dismiss) {
-						if (dismiss === 'cancel') {
-							swal(
-								'Batal',
-								'Pencalonan anda belum dihantar kepada urusetia. Sila sahkan pencalonan anda sebelum tamat tempoh pencalonan.',
-								'info'
-							)
-						}
-					});
-				}
-
 				if(parseInt(submission) < parseInt(post)){
 					swal('Makluman', 'Pencalonan anda masih belum lengkap. Terdapat '+ diff + ' lagi kekosongan yang perlu diisi. Sila lengkapkan borang pencalonan anda', 'info')
 				}
 
-				if(parseInt(submission) === 0){
-					swal('Selamat datang', 'Terima kasih kerana menggunakan perkhidmatan e-voting bagi pemilihan calon kali ini. Sila klik pada butang Pilih Calon bagi setiap jawatan yang dipertandingkan.', 'info')
+				if(toVote === 'no'){
+
+					if(parseInt(submission) === parseInt(post)){
+						swal('Terima kasih!', '', 'info');
+						swal({
+				            title: 'Tahniah!',
+				            text: 'Anda telah melengkapkan borang pencalonan ini. Jika anda bersetuju dengan pencalonan anda, sila klik pada butang Hantar untuk mengesahkan pencalonan anda. Jika anda ingin menukar pencalonan anda, sila tekan butang Batal.',
+				            type: 'question',
+				            showCancelButton: true,
+				            confirmButtonText: 'Hantar',
+				            cancelButtonText: 'Batal'
+				        }).then(function(){
+							$.ajax({
+								type: 'POST',
+								url: submit_url,
+								data: 'voter_id='+ voter_id,
+								success: function(){
+									swal({
+										title: 'Berjaya',
+										text: 'Borang pencalonan anda telah dihantar. Terima kasih kerana menggunakan perkhidmatan e-voting ini.',
+										type: 'success'
+									}).then(function() {
+										location.reload();
+									})
+								}
+							})
+							.error(function() {
+								swal('Oops', 'Error connecting to the server!', 'error');
+							});
+						}, function (dismiss) {
+							if (dismiss === 'cancel') {
+								swal(
+									'Batal',
+									'Pencalonan anda belum dihantar kepada urusetia. Sila sahkan pencalonan anda sebelum tamat tempoh pencalonan.',
+									'info'
+								)
+							}
+						});
+					}
+
+				}else{
+					swal('Terima kasih', 'Terima kasih kerana menggunakan perkhidmatan e-voting bagi pemilihan calon kali ini. Pencalonan anda telah selesai.', 'success')
 				}
 
-				if(toVote === 'yes'){
-					swal('Tahniah!', 'Pencalonan anda masih telah lengkap. Terima kasih kerana menggunakan perkhidmatan e-voting ini. Sila tunggu hari pengundian untuk memilih calon pilihan anda.', 'success')
+				if(parseInt(submission) === 0){
+					swal('Selamat datang', 'Terima kasih kerana menggunakan perkhidmatan e-voting bagi pemilihan calon kali ini. Sila klik pada butang Pilih Calon bagi setiap jawatan yang dipertandingkan.', 'info')
 				}
 			});
 
@@ -192,6 +197,21 @@ class Dashboard extends Controller {
 		$footer = $this->loadView('footer');
         $footer->set('custom_js', $custom_js);
         $footer->set('js', $js);
+		$footer->render();
+	}
+
+	public function admin()
+	{
+		$header = $this->loadView('header');
+		$header->render();
+
+		$navigation = $this->loadView('navigation');
+		$navigation->render();
+
+        $template = $this->loadView('dashboard-admin');
+		$template->render();
+
+		$footer = $this->loadView('footer');
 		$footer->render();
 	}
 

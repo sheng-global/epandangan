@@ -53,6 +53,7 @@ class Candidate extends Controller {
 			            { data: 'full_name' },
 			            { data: 'jawatan' },
 			            { data: 'jabatan' },
+			            { data: 'count' },
 			            { data: 'action' }
 			        ]
     			});
@@ -67,6 +68,75 @@ class Candidate extends Controller {
 
 		$header->set('css', $this->css);
 		$template->set('data', $this->model->getPosition($post_id));
+		$footer->set('custom_js', $custom_js);
+		$footer->set('js', $this->js);
+		
+		$header->render();
+		$navigation->render();
+		$template->render();
+		$footer->render();
+	}
+
+	function nomination($user_id)
+	{
+		$custom_js = "<script>
+		$(document).ready(function(){
+			$('#add-picture').hide();
+			$('#tambah-gambar').click(function(){
+				$('#add-picture').toggle('slow');
+			});
+		});
+		</script>";
+
+		$header = $this->loadView('header');
+		$navigation = $this->loadView('navigation');
+		$footer = $this->loadView('footer');
+        $template = $this->loadView('candidate/nomination');
+
+		$template->set('data', $this->model->getNomination($user_id));
+		$template->set('helper', $this->loadHelper('upload_helper'));
+		$footer->set('custom_js', $custom_js);
+		
+		$header->render();
+		$navigation->render();
+		$template->render();
+		$footer->render();
+	}
+
+	function posts()
+	{
+		$custom_js = "<script type=\"text/javascript\">
+			var base_url = '".BASE_URL."candidate/process_posts/';
+			
+			$(document).ready(function() {
+
+    			$('#datatable').DataTable({
+    				serverSide : true,
+    				processing : true,
+    				ajax : {
+    					url : base_url,
+    					type : 'POST'
+    				},
+    				deferRender : true,
+    				error : true,
+    				columns: [
+			            { data: 'post_name' },
+			            { data: 'post_available' },
+			            { data: 'min_nomination_require' },
+			            { data: 'indicator' },
+			            { data: 'action' }
+			        ]
+    			});
+    			
+    		});
+		</script>";
+		
+		$header = $this->loadView('header');
+		$navigation = $this->loadView('navigation');
+		$footer = $this->loadView('footer');
+        $template = $this->loadView('candidate/post');
+
+		$header->set('css', $this->css);
 		$footer->set('custom_js', $custom_js);
 		$footer->set('js', $this->js);
 		
@@ -121,38 +191,13 @@ class Candidate extends Controller {
 		}
 	}
 	
-	function edit($id)
+	function edit_post($id)
 	{
-		$css = array(
-			'assets/plugins/select2/select2.min.css',
-			'assets/plugins/select2/select2-bootstrap.css',
-			'assets/plugins/wysihtml5/bootstrap-wysihtml5.css',
-			'assets/plugins/summernote/summernote.css',
-		);
-
-		$js = array(
-			'assets/plugins/select2/select2.min.js',
-			'assets/plugins/wysihtml5/wysihtml5-0.3.0.js',
-			'assets/plugins/wysihtml5/bootstrap-wysihtml5.js',
-			'assets/plugins/summernote/summernote.min.js'
-		);
-
 		$custom_js = "<script type='text/javascript'>
 
-			$('.wysihtml5').wysihtml5();
-
-			$('.summernote').summernote({
-                height: 400,                 // set editor height
-
-                minHeight: null,             // set minimum height of editor
-                maxHeight: null,             // set maximum height of editor
-
-                focus: true                 // set focus to editable area after initializing summernote
-            });
-
 			//Parameter
-			var delete_url = '".BASE_URL."template/delete/".$id."';
-			var main_url = '".BASE_URL."template/index/';
+			var delete_url = '".BASE_URL."candidate/delete/".$id."';
+			var main_url = '".BASE_URL."candidate/posts/';
 
 		    $('#delete').click(function(){
 		        swal({
@@ -188,16 +233,13 @@ class Candidate extends Controller {
 		    });
 		</script>";
 
-		$model = $this->loadModel('template_model');
-		$data = $model->listSingle($id);
+		$data = $this->model->getPosition($id);
 
 		$header = $this->loadView('header');
 		$navigation = $this->loadView('navigation');
 		$footer = $this->loadView('footer');
-        $template = $this->loadView('template/edit');
+        $template = $this->loadView('candidate/edit_post');
 
-		$header->set('css', $css);
-		$footer->set('js', $js);
 		$footer->set('custom_js', $custom_js);
 		$template->set('data', $data);
 		
@@ -207,28 +249,31 @@ class Candidate extends Controller {
 		$footer->render();
 	}
 	
-	function update()
+	function update_post()
 	{
-		$model = $this->loadModel('Template_model');
 		if(isset($_POST)){
-			$id = $_POST['id'];
+
 			$data = array(
-				'subject' => $_POST['subject'], 
-				'body' => $_POST['body']
+				'id' => $_POST['id'],
+				'post_name' => $_POST['post_name'], 
+				'post_available' => $_POST['post_available'],
+				'min_nomination_require' => $_POST['min_nomination_require'],
+				'indicator' => $_POST['indicator']
 			);
-			$model->editRecord($data,$id);
+
+			$this->model->updatePost($data);
 
 			# log user action
 			$log = $this->loadHelper('log_helper');
 			$data2 = array(
-				'user_id' => $session->get('user_id'),
-				'controller' => 'Template',
+				'user_id' => $this->session->get('user_id'),
+				'controller' => 'Candidate',
 				'function' => 'update',
-				'action' => 'Update email template #'.$id
+				'action' => 'Update post #'.$_POST['id']
 			);
 			$log->add($data2);
 
-			$this->redirect('template/index');
+			$this->redirect('candidate/posts');
 			
 		}else{
 			die('Error: Unable to update the record.');
@@ -258,6 +303,23 @@ class Candidate extends Controller {
 		}
 	}
 
+	function updateNomination()
+	{
+		if(isset($_FILES)){
+
+			$this->upload = $this->loadHelper('upload_helper');
+
+			$data = array(
+				'files' => $_FILES['files'],
+				'controller' => 'candidate',
+				'file_id' => $_POST['user_id']
+			);
+			$this->upload->add($data);
+		}
+
+		$this->redirect('candidate/nomination/'.$_POST['user_id']);
+	}
+
 	// process datatable
 	function process($post_id)
 	{
@@ -267,7 +329,7 @@ class Candidate extends Controller {
 		$table = 'view_candidates';
 		 
 		// Table's primary key
-		$primaryKey = 'id';
+		$primaryKey = 'user_id';
 
 		$where = 'post_id = '.$post_id.'';
 
@@ -276,11 +338,12 @@ class Candidate extends Controller {
 		    array( 'db' => 'full_name', 'dt' => 'full_name' ),
 		    array( 'db' => 'jawatan', 'dt' => 'jawatan' ),
 		    array( 'db' => 'jabatan', 'dt' => 'jabatan' ),
+		    array( 'db' => 'count', 'dt' => 'count' ),
         	array(
-		    	'db' => 'id',
+		    	'db' => 'user_id',
 		    	'dt' => 'action',
 		    	'formatter' => function( $d, $row ) {
-            		return "<a href=\"".BASE_URL."candidate/view/".$d."\" class=\"btn btn-info btn-xs\">Edit</a>";
+            		return "<a href=\"".BASE_URL."candidate/nomination/".$d."\" class=\"btn btn-info btn-xs\">Papar</a>";
         		}
         	)
 		);
@@ -295,6 +358,45 @@ class Candidate extends Controller {
 		 
 		$data = json_encode(
 		    $datatable::complex( $_POST, $sql_details, $table, $primaryKey, $columns, $where )
+		);
+		print_r($data);
+	}
+
+	// process datatable
+	function process_posts()
+	{
+		$datatable = $this->loadHelper('datatable_helper');
+
+		// DB table to use
+		$table = 'posts';
+		 
+		// Table's primary key
+		$primaryKey = 'id';
+
+		$columns = array(
+		    array( 'db' => 'post_name', 'dt' => 'post_name' ),
+		    array( 'db' => 'post_available', 'dt' => 'post_available' ),
+		    array( 'db' => 'min_nomination_require', 'dt' => 'min_nomination_require' ),
+		    array( 'db' => 'indicator', 'dt' => 'indicator' ),
+        	array(
+		    	'db' => 'id',
+		    	'dt' => 'action',
+		    	'formatter' => function( $d, $row ) {
+            		return "<a href=\"".BASE_URL."candidate/edit_post/".$d."\" class=\"btn btn-info btn-xs\">Ubah</a>";
+        		}
+        	)
+		);
+		 
+		// SQL server connection information
+		$sql_details = array(
+		    'user' => DB_USER,
+		    'pass' => DB_PASS,
+		    'db'   => DB_NAME,
+		    'host' => DB_HOST
+		);
+		 
+		$data = json_encode(
+		    $datatable::simple( $_POST, $sql_details, $table, $primaryKey, $columns )
 		);
 		print_r($data);
 	}

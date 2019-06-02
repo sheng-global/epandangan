@@ -5,6 +5,7 @@
         "vlucas/phpdotenv": "^2.4",
         "aura/sql": "^3.0",
         "dolondro/google-authenticator": "^2.0",
-        "dg/adminer-custom": "^1.18"
+        "dg/adminer-custom": "^1.18",
+        "gargron/fileupload": "^1.5"
     }
 }

@@ -14,11 +14,11 @@
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="<?php echo BASE_URL ?>"><?php echo SITE_TITLE ?></a></li>
-                                            <li class="breadcrumb-item"><a href="#">Language</a></li>
-                                            <li class="breadcrumb-item active">Language Strings</li>
+                                            <li class="breadcrumb-item"><a href="#">Jawatan</a></li>
+                                            <li class="breadcrumb-item active">Tambah Jawatan</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">New Language String</h4>
+                                    <h4 class="page-title">Tambah Jawatan</h4>
                                 </div>
                             </div>
                         </div>
@@ -28,22 +28,29 @@
                                 <div class="card">
                                     <div class="card-body">
 
-                                        <h4 class="header-title">NewLanguage Strings</h4>
+                                        <h4 class="header-title">Tambah Jawatan</h4>
                                         
-                                    	<form method="post" role="form" action="<?php echo BASE_URL ?>language/create" novalidate="novalidate">
+                                    	<form method="post" role="form" action="<?php echo BASE_URL ?>candidate/create_post" novalidate="novalidate">
             								<div class="form-group">
-            									<label for="slug">Slug</label>
-            									<input type="text" name="slug" class="form-control" placeholder="Add your slug" required="">
+            									<label for="post_name">Nama Jawatan</label>
+            									<input type="text" name="post_name" class="form-control" placeholder="Nama jawatan" required="">
             								</div>
+
                                             <div class="form-group">
-                                                <label for="content">English</label>
-                                                <input type="text" name="content-en" class="form-control" placeholder="English" required="">
+                                                <label for="post_available">Kekosongan</label>
+                                                <input type="number" name="post_available" class="form-control" placeholder="Jumlah kekosongan" required="">
                                             </div>
+
                                             <div class="form-group">
-                                                <label for="content">Bahasa Melayu</label>
-                                                <input type="text" name="content-my" class="form-control" placeholder="Bahasa Melayu" required="">
+                                                <label for="min_nomination_require">Jumlah pencalonan minima</label>
+                                                <input type="number" name="min_nomination_require" class="form-control" placeholder="Jumlah pencalonan minima sebelum layak menjadi calon" required="">
                                             </div>
-                                            
+
+                                            <div class="form-group">
+                                                <label for="min_nomination_require">Syarat-syarat</label>
+                                                <input type="text" name="min_nomination_require" class="form-control" placeholder="Syarat-syarat">
+                                            </div>
+
             								<button type="submit" class="btn btn-success waves-effect waves-light m-b-5">Save</button>
             								<button class="btn btn-warning waves-effect waves-light m-b-5" id="back">Cancel</button>
         								</form>
