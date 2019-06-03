@@ -12,7 +12,8 @@ class User extends Controller {
 			'assets/libs/datatables/dataTables.bootstrap4.css',
 			'assets/libs/datatables/responsive.bootstrap4.css',
 			'assets/libs/datatables/buttons.bootstrap4.css',
-			'assets/libs/datatables/select.bootstrap4.css'
+			'assets/libs/datatables/select.bootstrap4.css',
+			'assets/libs/sweetalert2/sweetalert2.min.css'
 		);
 
 		$this->js = array(
@@ -26,7 +27,10 @@ class User extends Controller {
 			'assets/libs/datatables/buttons.print.min.js',
 			'assets/libs/pdfmake/pdfmake.min.js',
 			'assets/libs/pdfmake/vfs_fonts.js',
-			'assets/js/pages/datatables.init.js'
+			'assets/js/pages/datatables.init.js',
+			'assets/js/pages/select2.init.js',
+			'assets/libs/sweetalert2/sweetalert2.min.js',
+			'assets/js/pages/sweet-alerts.init.js'
 		);
 
 		if(empty($this->session->get('loggedin'))){
@@ -139,6 +143,58 @@ class User extends Controller {
 			'controller' => 'User',
 			'function' => 'ahli',
 			'action' => 'View list of member'
+		);
+		$log->add($log_data);
+	}
+
+	function pencalonan()
+	{
+		$custom_js = "<script type='text/javascript'>
+			var base_url = '".BASE_URL."user/process_pencalonan';
+			
+			$(document).ready(function() {
+
+    			$('#datatable').DataTable({
+    				responsive : true,
+    				serverSide : true,
+    				processing : true,
+    				ajax : {
+    					url : base_url,
+    					type : 'POST'
+    				},
+    				error : true,
+    				columns: [
+			            { data: 'no_gaji' },
+						{ data: 'full_name' },	
+						{ data: 'ic_passport' },	
+						{ data: 'jawatan' },	
+						{ data: 'total' },	
+						{ data: 'action' }
+			        ]
+    			});
+    		});
+		</script>";
+		
+		$header = $this->loadView('header');
+		$navigation = $this->loadView('navigation');
+		$footer = $this->loadView('footer');
+        $template = $this->loadView('user/pencalonan');
+
+		$header->set('css', $this->css);
+		$footer->set('js', $this->js);
+		$footer->set('custom_js', $custom_js);
+		
+		$header->render();
+		$navigation->render();
+		$template->render();
+		$footer->render();
+
+		$log = $this->loadHelper('log_helper');
+		$log_data = array(
+			'user_id' => $this->session->get('user_id'),
+			'controller' => 'User',
+			'function' => 'ahli',
+			'action' => 'View list of nomination'
 		);
 		$log->add($log_data);
 	}
@@ -373,18 +429,102 @@ class User extends Controller {
 		);
 		$log->add($log_data);
 	}
-	
-	function delete($id)
+
+	public function view_pencalonan($id)
 	{
-		if(isset($id)){
-			$this->model->deleteRecord($id);
+		$custom_js = "<script type='text/javascript'>
+			
+			$(document).ready(function() {
+
+    			$('#datatable').DataTable();
+    		});
+
+    		//Parameter
+			var main_url = '".BASE_URL."user/view_pencalonan/".$id."';
+
+		    $('.delete').on('click', function(){
+
+		    	var candidate_id = $(this).attr('data-candidate');
+		    	console.log(candidate_id);
+
+				var delete_url = '".BASE_URL."user/delete_calon/'+ candidate_id;
+
+		        swal({
+		            title: 'Are you sure?',
+		            text: 'You will not be able to recover this record!',
+		            type: 'question',
+		            showCancelButton: true,
+		            confirmButtonText: 'Yes, delete it!',
+		            cancelButtonText: 'Cancel'
+		        }).then(function(){
+					$.ajax({
+						type: 'POST',
+						url: delete_url,
+						success: function(){
+							
+						}
+					})
+					.done(function() {
+						swal({
+							title: 'Success',
+							text: 'The record is successfully deleted.',
+							type: 'success'
+						}).then(function() {
+							window.location.href = main_url;
+						});
+					})
+					.error(function() {
+						swal('Oops', 'Error connecting to the server!', 'error');
+					});
+				}, function (dismiss) {
+					if (dismiss === 'cancel') {
+						swal(
+							'Cancelled',
+							'The record is safe :)',
+							'info'
+						)
+					}
+				});
+		    });
+		</script>";
+
+		$header = $this->loadView('header');
+		$navigation = $this->loadView('navigation');
+		$footer = $this->loadView('footer');
+        $template = $this->loadView('user/view_pencalonan');
+		$template->set('calon', $this->model->listSinglePencalonan($id));
+
+		$header->set('css', $this->css);
+		$footer->set('js', $this->js);
+		$footer->set('custom_js', $custom_js);
+
+		$header->render();
+		$navigation->render();
+		$template->render();
+		$footer->render();
+
+		$log = $this->loadHelper('log_helper');
+		$log_data = array(
+			'user_id' => $this->session->get('user_id'),
+			'controller' => 'User',
+			'function' => 'view_pencalonan',
+			'action' => 'View user pencalonan #'.$id
+		);
+		$log->add($log_data);
+	}
+	
+	function delete_calon($candidate_id)
+	{
+		if(isset($candidate_id)){
+
+			$this->model->deleteCalon($candidate_id);
 
 			$log = $this->loadHelper('log_helper');
 			$log_data = array(
 				'user_id' => $this->session->get('user_id'),
 				'controller' => 'User',
-				'function' => 'delete',
-				'action' => 'Delete user #'.$id
+				'function' => 'delete_calon',
+				'action' => 'Delete calon #'.$candidate_id
 			);
 			$log->add($log_data);
 
@@ -489,6 +629,51 @@ class User extends Controller {
 		    	'dt' => 'action',
 		    	'formatter' => function( $d, $row ) {
             		return "<a href=\"".BASE_URL."user/edit/".$d."\" class=\"btn btn-primary btn-xs\">Edit</a>";
+        		}
+        	)
+		);
+		 
+		// SQL server connection information
+		$sql_details = array(
+		    'user' => DB_USER,
+		    'pass' => DB_PASS,
+		    'db'   => DB_NAME,
+		    'host' => DB_HOST
+		);
+		 
+		$data = json_encode(
+		    $datatable::simple( $_POST, $sql_details, $table, $primaryKey, $columns )
+		);
+		print_r($data);
+	}
+
+	// process datatable
+	function process_pencalonan()
+	{
+		global $config;
+
+		$datatable = $this->loadHelper('datatable_helper');
+
+		// DB table to use
+		$table = 'view_voter';
+		 
+		// Table's primary key
+		$primaryKey = 'id';
+
+		$columns = array(
+		    array( 'db' => 'no_gaji', 'dt' => 'no_gaji' ),
+		    array( 'db' => 'full_name', 'dt' => 'full_name' ),
+		    array( 'db' => 'ic_passport', 'dt' => 'ic_passport' ),
+		    array( 'db' => 'total', 'dt' => 'total' ),
+		    array( 'db' => 'jawatan', 'dt' => 'jawatan' ),
+		    array( 'db' => 'kod_jabatan', 'dt' => 'kod_jabatan' ),
+		    array( 'db' => 'jabatan', 'dt' => 'jabatan' ),
+		    array( 'db' => 'jantina', 'dt' => 'jantina' ),
+        	array(
+		    	'db' => 'id',
+		    	'dt' => 'action',
+		    	'formatter' => function( $d, $row ) {
+            		return "<a href=\"".BASE_URL."user/view_pencalonan/".$d."\" class=\"btn btn-primary btn-xs\">Papar</a>";
         		}
         	)
 		);

@@ -90,6 +90,9 @@
                                 <a href="<?php echo BASE_URL ?>user/ahli" class="waves-effect"><i class="fa fa-users"></i><span data-tag="member"></span></a>
                             </li>
                             <li>
+                                <a href="<?php echo BASE_URL ?>user/pencalonan" class="waves-effect"><i class="fa fa-users"></i>Semak Pencalonan</a>
+                            </li>
+                            <li>
                                 <a href="<?php echo BASE_URL ?>language" class="waves-effect"><i class="ti-bookmark-alt"></i><span data-tag="language"></span></a>
                             </li>
                             

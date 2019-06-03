@@ -4,6 +4,13 @@
         <!-- base  -->
         <script src="<?php echo BASE_URL; ?>assets/js/vendor.min.js"></script>
 
+        <script type="text/javascript">// Global back button
+        $('#back').bind('click', function(event){
+            window.history.back();
+            $(form)[0].reset();
+        });
+        </script>
+
         <!-- Page specific -->
         <?php
 

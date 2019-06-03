@@ -15,16 +15,23 @@ class User_model extends Model {
 			return $e->getMessage();
 		}
 	}
+
+	public function listSinglePencalonan($user_id)
+	{
+		$stm  = "SELECT * FROM view_candidates WHERE voter_id = :user_id ORDER BY post_id";
+		$bind = array('user_id' => $user_id);
+
+		try{
+			$result = $this->pdo->fetchAll($stm, $bind);
+			return $result;
+		}
+		catch(Exception $e){
+			return $e->getMessage();
+		}
+	}
 	
 	public function addRecord($data)
 	{
-		$query = $this->insert('user_profile', $data);
-		if(empty($query)){
-			return false;
-		}else{
-			return $query;
-		}
-
 		$stm  = "INSERT INTO user_profile (phone_number, verification_code, sessionid, messageid, last_update) VALUES (:phone_number, :verification_code, :sessionid, :messageid, :last_update)";
 		$bind = array(
 			'phone_number' => $data['phone_number'],
@@ -36,27 +43,19 @@ class User_model extends Model {
 		$result = $this->pdo->fetchAffected($stm, $bind);
 		return $result;
 	}
-	
-	public function editRecord($data, $id)
-	{
-		$query = $this->updateWhere('user_profile', 'user_id', $id, $data);
-		if(empty($query)){
-			return false;
-		}else{
-			return $query;
-		}
-	}
-	
-	public function deleteRecord($id)
-	{
-		$delete_user = $this->delete('user_profile', $id);
-		$delete_approver = $this->deleteWhere('user_approver', 'user_id', $id);
 
-		if(empty($delete_user)){
-			return false;
-		}else{
-			return $delete_user;
-			return $$delete_approver;
+	public function deleteCalon($candidate_id)
+	{
+		try{
+			$stm  = "DELETE FROM candidates WHERE id = :id LIMIT 1";
+			$bind = array(
+				'id' => $candidate_id
+			);
+			
+			return $this->pdo->fetchAffected($stm, $bind);
+		}
+		catch(Exception $e){
+			return $e->getMessage();
 		}
 	}
 }
