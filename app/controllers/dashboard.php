@@ -131,7 +131,7 @@ class Dashboard extends Controller {
 					swal('Makluman', 'Pencalonan anda masih belum lengkap. Terdapat '+ diff + ' lagi kekosongan yang perlu diisi. Sila lengkapkan borang pencalonan anda', 'info')
 				}
 
-				if(toVote === 'no'){
+				if(toVote == 'no'){
 
 					if(parseInt(submission) === parseInt(post)){
 						swal('Terima kasih!', '', 'info');

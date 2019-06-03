@@ -26,19 +26,34 @@ Class Vote_model extends Model {
 
 	public function addCandidate($data)
 	{
-		try{
-			$stm  = "INSERT INTO candidates (voter_id, user_id, post_id, to_vote) VALUES (:voter_id, :user_id, :post_id, :to_vote)";
-			$bind = array(
-				'voter_id' => $data['voter_id'],
-				'user_id' => $data['user_id'],
-				'post_id' => $data['post_id'],
-				'to_vote' => 'no'
-			);
-			
-			return $this->pdo->fetchAffected($stm, $bind);
-		}
-		catch(Exception $e){
-			echo $e->getMessage();
+		// check if data already exist
+		$check = "SELECT * FROM candidates WHERE voter_id = :voter_id AND user_id = :user_id AND post_id = :post_id";
+		$checkBind = array(
+			'voter_id' => $data['voter_id'],
+			'user_id' => $data['user_id'],
+			'post_id' => $data['post_id']
+		);
+
+		$checkResult = $this->pdo->fetchAll($check, $checkBind);
+
+		if($checkResult){
+			return false;
+		}else{
+			try{
+				$stm  = "INSERT INTO candidates (voter_id, user_id, post_id, to_vote) VALUES (:voter_id, :user_id, :post_id, :to_vote)";
+				$bind = array(
+					'voter_id' => $data['voter_id'],
+					'user_id' => $data['user_id'],
+					'post_id' => $data['post_id'],
+					'to_vote' => 'yes'
+				);
+				
+				$this->pdo->fetchAffected($stm, $bind);
+				return true;
+			}
+			catch(Exception $e){
+				echo $e->getMessage();
+			}
 		}
 	}
 
