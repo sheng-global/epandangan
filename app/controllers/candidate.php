@@ -55,7 +55,10 @@ class Candidate extends Controller {
 			            { data: 'jabatan' },
 			            { data: 'count' },
 			            { data: 'action' }
-			        ]
+			        ],
+			        order: [
+						[ 3, 'desc' ]
+					]
     			});
     			
     		});
