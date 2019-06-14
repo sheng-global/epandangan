@@ -57,23 +57,19 @@
                                         <h4 class="mt-3"><a href="#" class="text-dark"><?php echo $data[0]['full_name'] ?></a></h4>
                                         <p class="text-muted"><?php echo $data[0]['post_name'] ?></p>
 
-                                        <button type="button" class="btn btn-success btn-sm waves-effect waves-light">Layak</button>
-                                        <button type="button" class="btn btn-danger btn-sm waves-effect">Tidak</button>
-
+                                        <?php if($check): ?>
+                                            <button type="button" class="btn btn-info btn-sm waves-effect waves-light">Sudah dicalonkan</button>
+                                        <?php else: ?>
+                                        <button type="button" class="btn btn-success btn-sm waves-effect waves-light" data-candidate-id="<?php echo $data[0]['user_id'] ?>" data-post-id="<?php echo $data[0]['post_id'] ?>" id="layak">Layak</button>
+                                        <?php endif; ?>
                                         <div class="row mt-4">
-                                            <div class="col-4">
+                                            <div class="col-6">
                                                 <div class="mt-3">
                                                     <h4><?php echo $data[0]['count'] ?></h4>
                                                     <p class="mb-0 text-muted text-truncate">Pencalonan</p>
                                                 </div>
                                             </div>
-                                            <div class="col-4">
-                                                <div class="mt-3">
-                                                    <h4>$29.8k</h4>
-                                                    <p class="mb-0 text-muted text-truncate">Followers</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
+                                            <div class="col-6">
                                                 <div class="mt-3">
                                                     <h4>1125</h4>
                                                     <p class="mb-0 text-muted text-truncate">Undian</p>
@@ -94,7 +90,8 @@
                                             <p class="text-muted"><?php echo $data[0]['jawatan'] ?></p>
                                             <p class="text-muted"><i class="mdi mdi-office-building"></i> <?php echo $data[0]['jabatan'] ?></p>
 
-                                            <?php if($data[0]['to_vote'] == 'yes') { ?><a href="javascript: void(0);" class="btn- btn-xs btn-info">Hantar E-mail</a><?php } ?>
+                                            <?php if($check) { ?>
+                                            <a href="javascript: void(0);" class="btn- btn-xs btn-info">Hantar E-mail</a>
                                             <a href="javascript: void(0);" class="btn btn-xs btn-secondary" id="tambah-gambar">Tambah Gambar</a>
                                             <div id="add-picture">
                                                 <form method="post" role="form" action="<?php echo BASE_URL ?>candidate/updateNomination" id="update-nomination" enctype="multipart/form-data">
@@ -106,6 +103,7 @@
                                                 <input type="hidden" name="user_id" value="<?php echo $data[0]['user_id'] ?>">
                                                 </form>
                                             </div>
+                                            <?php } ?>
                                         </div>
                                     </div>
 

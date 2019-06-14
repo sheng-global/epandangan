@@ -37,8 +37,35 @@ Class Candidate_model extends Model {
 
 	public function getNomination($user_id)
 	{
-		$stm  = "SELECT * FROM view_candidates WHERE user_id = :user_id";
+		$stm  = "SELECT * FROM view_count WHERE user_id = :user_id";
 		$bind = array('user_id' => $user_id);
+		$result = $this->pdo->fetchAll($stm, $bind);
+		return $result;
+	}
+
+	public function toVote($data)
+	{
+		try{
+			$stm  = "INSERT INTO voting_list (post_id, candidate_id) VALUES (:post_id, :candidate_id)";
+			$bind = array(
+				'post_id' => $data['post_id'],
+				'candidate_id' => $data['candidate_id']
+			);
+			
+			return $this->pdo->fetchAffected($stm, $bind);
+		}
+		catch(Exception $e){
+			return $e->getMessage();
+		}
+	}
+
+	public function checkVoteList($data)
+	{
+		$stm  = "SELECT * FROM voting_list WHERE post_id = :post_id AND candidate_id = :candidate_id";
+		$bind = array(
+			'candidate_id' => $data['candidate_id'],
+			'post_id' => $data['post_id']
+		);
 		$result = $this->pdo->fetchAll($stm, $bind);
 		return $result;
 	}

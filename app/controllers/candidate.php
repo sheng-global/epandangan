@@ -79,12 +79,74 @@ class Candidate extends Controller {
 
 	function nomination($user_id)
 	{
+		$css = array(
+			'assets/libs/sweetalert2/sweetalert2.min.css'
+		);
+
+		$js = array(
+			'assets/libs/sweetalert2/sweetalert2.min.js',
+			'assets/js/pages/sweet-alerts.init.js'
+		);
+
 		$custom_js = "<script>
 		$(document).ready(function(){
+
 			$('#add-picture').hide();
 			$('#tambah-gambar').click(function(){
 				$('#add-picture').toggle('slow');
 			});
+
+			//Parameter
+			var main_url = '".BASE_URL."candidate/nomination/".$user_id."';
+
+		    $('button#layak').on('click', function(){
+
+		    	var candidate_id = $(this).attr('data-candidate-id');
+		    	var post_id = $(this).attr('data-post-id');
+				var nominate_url = '".BASE_URL."candidate/nominate';
+
+		        swal({
+		            title: 'Perhatian!',
+		            text: 'Anda pasti!',
+		            type: 'question',
+		            showCancelButton: true,
+		            confirmButtonText: 'Ya',
+		            cancelButtonText: 'Tidak'
+		        }).then(function(){
+					$.ajax({
+						type: 'POST',
+						url: nominate_url,
+						data: {
+			                postID: post_id,
+			                candidateID: candidate_id
+			            },
+			            dataType: 'html',
+						success: function(){
+							
+						}
+					})
+					.done(function() {
+						swal({
+							title: 'Success',
+							text: 'The record is successfully deleted.',
+							type: 'success'
+						}).then(function() {
+							window.location.href = main_url;
+						});
+					})
+					.error(function() {
+						swal('Oops', 'Error connecting to the server!', 'error');
+					});
+				}, function (dismiss) {
+					if (dismiss === 'cancel') {
+						swal(
+							'Cancelled',
+							'The record is safe :)',
+							'info'
+						)
+					}
+				});
+		    });
 		});
 		</script>";
 
@@ -93,8 +155,18 @@ class Candidate extends Controller {
 		$footer = $this->loadView('footer');
         $template = $this->loadView('candidate/nomination');
 
-		$template->set('data', $this->model->getNomination($user_id));
+		$header->set('css', $css);
+
+		$data = $this->model->getNomination($user_id);
+		$check_data = array(
+			'post_id' => $data[0]['post_id'],
+			'candidate_id' => $data[0]['user_id']
+		);
+
+		$template->set('data', $data);
+		$template->set('check', $this->model->checkVoteList($check_data));
 		$template->set('helper', $this->loadHelper('upload_helper'));
+		$footer->set('js', $js);
 		$footer->set('custom_js', $custom_js);
 		
 		$header->render();
@@ -162,33 +234,29 @@ class Candidate extends Controller {
 		$footer->render();
 	}
 	
-	function create()
+	function nominate()
 	{
-		$model = $this->loadModel('Template_model');
 		if(isset($_POST)){
 			
 			$data = array(
-				'recipient' => '{{EMAIL}}',
-				'subject' => $_POST['subject'],
-				'body' => $_POST['body']
+				'post_id' => $_POST['postID'],
+				'candidate_id' => $_POST['candidateID']
 			);
-			$model->addRecord($data);
+			$this->model->toVote($data);
 
 			# log user action
 			$log = $this->loadHelper('log_helper');
 			$data2 = array(
-				'user_id' => $session->get('user_id'),
-				'controller' => 'Template',
-				'function' => 'create',
-				'action' => 'Add new email template'
+				'user_id' => $this->session->get('user_id'),
+				'controller' => 'Candidate',
+				'function' => 'nominate',
+				'action' => 'Add new nomination'
 			);
 			$log->add($data2);
-
-			$this->redirect('template/index');
 			
 		}else{
 			die('Error: Unable to add the record.');
-		}
+		}	
 	}
 	
 	function edit_post($id)
@@ -326,7 +394,7 @@ class Candidate extends Controller {
 		$datatable = $this->loadHelper('datatable_helper');
 
 		// DB table to use
-		$table = 'view_candidates';
+		$table = 'view_count';
 		 
 		// Table's primary key
 		$primaryKey = 'user_id';
