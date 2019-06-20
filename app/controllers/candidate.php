@@ -397,21 +397,18 @@ class Candidate extends Controller {
 		$datatable = $this->loadHelper('datatable_helper');
 
 		// DB table to use
-		$table = 'view_count';
+		$table = 'view_post_'.$post_id;
 		 
 		// Table's primary key
-		$primaryKey = 'user_id';
-
-		$where = 'post_id = '.$post_id.'';
+		$primaryKey = 'id';
 
 		$columns = array(
-		    array( 'db' => 'post_name', 'dt' => 'post_name' ),
 		    array( 'db' => 'full_name', 'dt' => 'full_name' ),
 		    array( 'db' => 'jawatan', 'dt' => 'jawatan' ),
 		    array( 'db' => 'jabatan', 'dt' => 'jabatan' ),
 		    array( 'db' => 'count', 'dt' => 'count' ),
         	array(
-		    	'db' => 'user_id',
+		    	'db' => 'id',
 		    	'dt' => 'action',
 		    	'formatter' => function( $d, $row ) {
             		return "<a href=\"".BASE_URL."candidate/nomination/".$d."\" class=\"btn btn-info btn-xs\">Papar</a>";
@@ -428,7 +425,7 @@ class Candidate extends Controller {
 		);
 		 
 		$data = json_encode(
-		    $datatable::complex( $_POST, $sql_details, $table, $primaryKey, $columns, $where )
+		    $datatable::simple( $_POST, $sql_details, $table, $primaryKey, $columns )
 		);
 		print_r($data);
 	}
