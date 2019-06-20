@@ -29,7 +29,7 @@
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
-                                    Nota: Sesi pencalonan akan ditutup pada <strong>18 Jun 2019 jam 5.00 petang</strong>.
+                                    Nota: Sesi pencalonan telah ditutup pada <strong>18 Jun 2019 jam 5.00 petang</strong>.
                                 </div>
                             </div>
                         </div>
@@ -54,7 +54,7 @@
                                             <?php endif; ?>
                                             <?php endforeach; ?>
                                             <?php if($i < $post['post_available']): ?>
-                                            <button type="button" class="btn btn-warning waves-effect waves-light open-modal" data-toggle="modal" data-target="#modal" data-post-id="<?php echo $post['id'] ?>">Pilih <?php echo $post['post_available'] - $i ?> calon</button>
+                                            <button type="button" class="btn btn-warning waves-effect waves-light open-modal" data-toggle="modal" data-target="#modal" data-post-id="<?php echo $post['id'] ?>" disabled>Pilih <?php echo $post['post_available'] - $i ?> calon</button>
                                         <?php endif; ?>
                                     </div>
                                 </div>

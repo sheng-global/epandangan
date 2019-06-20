@@ -43,7 +43,7 @@
                     </li>
                     <li class="dropdown d-none d-lg-block">
                         <a class="nav-link waves-effect waves-light" role="button">
-                            <i class="mdi mdi-clock-outline"></i> Pencalonan ditutup lagi <span id="timer"></span>
+                            <i class="mdi mdi-clock-outline"></i> Pemilihan akan dijalankan lagi <span id="timer"></span>
                         </a>
                     </li>
                 </ul>

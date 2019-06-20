@@ -125,7 +125,9 @@ class Dashboard extends Controller {
 
 			$(document).ready(function(){
 
-				var submit_url = '".BASE_URL."vote/updateCandidates';
+				swal('Pencalonan Tutup', 'Terima kasih kerana menggunakan perkhidmatan e-voting bagi pemilihan calon kali ini. Pencalonan telah ditutup.', 'success');
+
+				/* var submit_url = '".BASE_URL."vote/updateCandidates';
 
 				if(parseInt(submission) < parseInt(post)){
 					swal('Makluman', 'Pencalonan anda masih belum lengkap. Terdapat '+ diff + ' lagi kekosongan yang perlu diisi. Sila lengkapkan borang pencalonan anda', 'info')
@@ -177,7 +179,7 @@ class Dashboard extends Controller {
 
 				if(parseInt(submission) === 0){
 					swal('Selamat datang', 'Terima kasih kerana menggunakan perkhidmatan e-voting bagi pemilihan calon kali ini. Sila klik pada butang Pilih Calon bagi setiap jawatan yang dipertandingkan.', 'info')
-				}
+				} */
 			});
 
 		</script>";
