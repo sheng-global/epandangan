@@ -65,7 +65,7 @@
                                 <a href="<?php echo BASE_URL ?>dashboard" class="waves-effect"><i class="fe-users"></i><span> Pencalonan </span></a>
                             </li>
                             <li>
-                                <a href="javascript: void(0);" class="waves-effect" id="notify"><i class="ti-pencil"></i><span> Pemilihan </span></a>
+                                <a href="<?php echo BASE_URL ?>vote" class="waves-effect" id="notify"><i class="ti-pencil"></i><span> Pemilihan </span></a>
                             </li>
                         <?php if($_SESSION['role'] != 'voter'): ?>
                             <li class="menu-title">Administration</li>
@@ -80,6 +80,14 @@
                                 <ul class="nav-second-level" aria-expanded="false">
                                     <?php foreach ($lists as $list) { ?>
                                     <li><a href="<?php echo BASE_URL ?>candidate/view/<?php echo $list['id'] ?>"><?php echo $list['post_name'] ?></a></li>
+                                    <?php } ?>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript: void(0);" class="waves-effect"><i class="fe-layers"></i>Keputusan<span class="menu-arrow"></span></a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <?php foreach ($lists as $list) { ?>
+                                    <li><a href="<?php echo BASE_URL ?>dashboard/view/<?php echo $list['id'] ?>"><?php echo $list['post_name'] ?></a></li>
                                     <?php } ?>
                                 </ul>
                             </li>

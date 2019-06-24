@@ -35,35 +35,52 @@
                         </div>
                                 
                         <?php foreach($posts as $post): ?>
-                        
+
                         <div class="row">
-                            <div class="col-md-12">
-                            <h4 class="mb-4"><?php echo $post['post_name'] ?></h4>
-                            <h5 class="text mt-0"><?php echo $post['post_available'] ?> kekosongan</h5>
-                                <div class="card-columns">
-                                <?php foreach ($candidates as $candidate): ?>
-                                <?php $user = array('id' => $candidate['user_id'], 'controller' => 'candidate'); 
+                            <div class="col-12">
+                                <h4 class="mb-4"><?php echo $post['post_name'] ?></h4>
+                            </div> <!-- end col-->
+                        </div>
+                        
+                        <div class="row"> 
+                            <?php foreach ($candidates as $candidate): ?>
+                                <?php $user = array('id' => $candidate['candidate_id'], 'controller' => 'candidate'); 
                                 $get = $helper->get($user);
                                 if($get) $img = BASE_URL."files/".$get[0]['file'];
                                 else $img = BASE_URL."assets/images/default.jpg"; ?>
+
                                 <?php if($post['id'] == $candidate['post_id']): ?>
-                                    <div class="card">
-                                        <img src="<?php echo $img ?>" class="card-img-top" alt="profile-image">
-
-                                        <div class="card-body">
-
-                                            <h5 class="card-title"><a href="#" class="text-dark"><?php echo $candidate['full_name'] ?></a></h5>
-                                            <p class="card-text"><?php echo $candidate['jawatan'] ?></p>
-                                            <p class="card-text"><?php echo $candidate['jabatan'] ?></p>
-
-                                            <button type="button" class="btn btn-success btn-sm waves-effect waves-light">Pilih</button>
-
-                                        </div> <!-- end card-body-->
-                                    </div>
-                                <?php endif; ?>
-                                <?php endforeach; ?>
+                                <div class="col-md-6 col-xl-3">
+                                    <div class="widget-rounded-circle card-box">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <div class="avatar-lg">
+                                                    <img src="<?php echo $img ?>" class="img-fluid rounded-circle" alt="user-img">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <h5 class="mb-1 mt-2"><?php echo $candidate['full_name'] ?></h5>
+                                                <p class="mb-2 text-muted"><?php echo $candidate['jawatan'] ?> - <?php echo $candidate['jabatan'] ?></p>
+                                                <?php
+                                                $model = new Vote_model;
+                                                $data = array(
+                                                    'user_id' => $candidate['candidate_id'],
+                                                    'voter_id' => $_SESSION['user_id'],
+                                                    'post_id' => $post['id']
+                                                );
+                                                $compare = $model->checkVote($data);
+                                                if(!$compare){
+                                                    $button = "<button type=\"button\" class=\"btn btn-success btn-sm waves-effect waves-light save-vote\" data-post-id=\"".$candidate['post_id']."\" data-user-id=\"".$candidate['candidate_id']."\" data-voter-id=\"".$_SESSION['user_id']."\">Pilih</button>";
+                                                }else{
+                                                    $button = "<button type=\"button\" class=\"btn btn-info btn-sm waves-effect waves-light\">Sudah dipilih</button>";
+                                                } ?>
+                                                <?php echo $button ?>
+                                            </div>
+                                        </div> <!-- end row-->
+                                    </div> <!-- end widget-rounded-circle-->
                                 </div>
-                            </div>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
                         </div>
                         <?php endforeach; ?>
 
@@ -88,35 +105,3 @@
             <!-- ============================================================== -->
             <!-- End Right content here -->
             <!-- ============================================================== -->
-
-            <div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Pilih Calon</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                        </div>
-                        <div class="modal-body p-4">
-                            <form id="voting-form" class="needs-validation" novalidate>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="nama" class="control-label">Calon</label>
-                                        <select name="user_id" class="form-control" id="nama" style="width: 100%" data-toggle="select2" required></select>
-                                        <div class="valid-feedback">
-                                            Looks good!
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Tutup</button>
-                            <button type="submit" class="btn btn-warning waves-effect waves-light" id="save-vote">Pilih</button>
-                            <input type="hidden" name="post_id" id="postID">
-                            <input type="hidden" name="session_id" value="<?php echo $_SESSION['user_id'] ?>">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- /.modal -->

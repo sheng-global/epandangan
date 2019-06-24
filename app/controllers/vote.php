@@ -49,95 +49,55 @@ class Vote extends Controller {
 		);
 
 		$posts = $this->model->getPosts();
-		$candidates = $this->model->getVote();
-		$submission = $this->model->countSubmission($this->filter->isInt($this->session->get('user_id')));
-
-		if($submission){
-			$total = $submission[0]['total'];
-			$toVote = $submission[0]['to_vote'];
-		}else{
-			$total = 0;
-			$toVote = 0;
-		}
+		$candidates = $this->model->getVotingList();
 
 		$post = $this->model->countPost();
 
 		$custom_js = "<script>
 
-			var submission = '".$total."';
-			var post = '".$post[0]['total']."';
-			var toVote = '".$toVote."';
-			var diff = parseInt(post) - parseInt(submission);
-			var voter_id = '".$this->session->get('user_id')."';
+			// post vote
+			function createVote(postData){
 
-			// assign random color to ribbon
-			var klasses = ['ribbon-primary', 'ribbon-info', 'ribbon-success', 'ribbon-warning', 'ribbon-danger', 'ribbon-dark', 'ribbon-blue', 'ribbon-pink', 'ribbon-secondary'];
+				var post_url = '".BASE_URL."vote/addVote';
 
-			$('.ribbon').each(function(i, val) {
-				$(this).addClass(klasses[i]);
+				$.ajax({
+					type: 'POST',
+					url: post_url,
+					dataType: 'html',
+					data: 'user_id=' + postData[0] +'&voter_id=' + postData[1] +'&post_id=' + postData[2],
+					success:function(response){
+						if(parseInt(response) == 0){
+							swal({
+								title: 'Ralat',
+								text: 'Pemilihan bagi jawatan ini telah dipenuhi.',
+								type: 'warning'
+							});
+						}else{
+							swal({
+								title: 'Berjaya',
+								text: 'Pemilihan telah berjaya dibuat.',
+								type: 'success'
+							}).then(function() {
+				                location.reload();
+				            });
+						}
+					}
+			    });
+
+			}
+
+			$('.save-vote').bind('click', function (e) {
+
+				var user_id = $(this).data('user-id');
+				var voter_id = $(this).data('voter-id');
+				var post_id = $(this).data('post-id');
+
+				var postData = new Array(user_id,voter_id,post_id);
+
+				e.preventDefault();
+				$(this).attr('disabled', 'disabled');
+				createVote(postData);
 			});
-
-			$(document).on('click', '.open-modal', function () {
-			    var postID = $(this).data('post-id');
-			    
-			    $('.modal-footer #postID').val( postID );
-			    $('#modal').modal('show');
-
-			    if(parseInt(postID) === 4){
-			    	var nama_url = '".BASE_URL."search.php?action=wanitaOnly';
-		    	}
-		    	else{
-					var nama_url = '".BASE_URL."search.php?action=nama';
-		    	}
-				
-				$('#nama').select2({
-					dropdownParent: $('#modal'),
-					width: 'resolve',
-					placeholder: 'Pilih calon',
-					minimumInputLength: 2,
-				    ajax: {
-				        url: nama_url,
-				        dataType: 'json',
-				        delay: 250,
-				        processResults: function (data) {
-				            return {
-				            	results: data
-				            };
-				        },
-				        cache: true
-				    }
-				});
-
-				// Create vote
-				function createVote(){
-
-					var create_url = '".BASE_URL."vote/addCandidate';
-
-					return $.ajax({
-						type: 'POST',
-						url: create_url,
-						dataType: 'html',
-						data: $('form#voting-form').serialize()
-				    });
-				}
-
-				$('#save-vote').bind('click', function (e) {
-
-					e.preventDefault();
-					$('#save-vote').attr('disabled', 'disabled');
-					createVote();
-					swal({
-						title: 'Berjaya',
-						text: 'Pencalonan telah berjaya dibuat.',
-						type: 'success'
-					}).then(function() {
-		                location.reload();
-		            });
-				});
-
-			});
-
-			
 
 		</script>";
 
@@ -151,7 +111,7 @@ class Vote extends Controller {
         $template = $this->loadView('vote/index');
         $template->set('posts', $posts);
         $template->set('candidates', $candidates);
-		$template->set('helper', $this->loadHelper('upload_helper'));
+        $template->set('helper', $this->loadHelper('upload_helper'));
 		$template->render();
 
 		$footer = $this->loadView('footer');
@@ -263,12 +223,17 @@ class Vote extends Controller {
 	{
 		if(isset($_POST)){
 
+			// check logic of allowable vote per post
+			$post = $this->model->getPostByID($_POST['post_id']);
+
 			$data = array(
-				'user-id' => $_POST['user_id'],
-				'post_id' => $_POST['post_id']
+				'voter_id' => $this->session->get('user_id'),
+				'user_id' => $_POST['user_id'],
+				'post_id' => $_POST['post_id'],
+				'post_count' => $post[0]['post_available']
 			);
 
-			$this->model->addVote($data);
+			$vote = $this->model->addVote($data);
 
 			# log user action
 			$log = $this->loadHelper('log_helper');
@@ -280,7 +245,7 @@ class Vote extends Controller {
 			);
 			$log->add($data2);
 
-			return true;
+			return $vote;
 			
 		}else{
 			return false;
