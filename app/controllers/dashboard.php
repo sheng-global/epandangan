@@ -164,7 +164,7 @@ class Dashboard extends Controller {
 
 				// semak jika user ada terpilih sebagai calon
 				if(nominated == 'yes'){
-					swal('Perhatian', 'Anda mempunyai '+ '".count($nominated)."' + ' pencalonan bagi pemilihan kali ini. Sila semak pencalonan anda dan sahkan samada anda menerima atau menolak pencalonan ini.', 'info')
+					swal('Perhatian', 'Anda mempunyai '+ '".count($nominated)."' + ' pencalonan bagi pemilihan kali ini. Sila semak pencalonan anda dan sahkan samada anda menerima atau menolak pencalonan ini. Jika anda mempunyai lebih dari 2 pencalonan, anda hanya boleh memilih maksima 2 jawatan sahaja.', 'info')
 				}
 
 				// agree to nomination

@@ -40,7 +40,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <h4 class="header-title">Pencalonan diterima</h4>
-                                <p>Sila semak pencalonan yang diterima dan sahkan pencalonan anda samada menerima atau menolak pencalonan ini.</p>
+                                <p>Sila semak pencalonan yang diterima dan sahkan pencalonan anda samada menerima atau menolak pencalonan ini sebelum 28 Jun 2019 jam 5:00 petang.</p>
                             </div>
                         </div>
                         <div class="row">
