@@ -69,4 +69,31 @@ Class Candidate_model extends Model {
 		$result = $this->pdo->fetchAll($stm, $bind);
 		return $result;
 	}
+
+	public function checkVoteListByID($candidate_id)
+	{
+		$stm  = "SELECT * FROM view_voting_list WHERE candidate_id = :candidate_id";
+		$bind = array(
+			'candidate_id' => $candidate_id
+		);
+		$result = $this->pdo->fetchAll($stm, $bind);
+		return $result;
+	}
+
+	public function agreeNomination($data)
+	{
+		try{
+			$stm  = "UPDATE voting_list SET setuju = :setuju WHERE post_id = :post_id AND candidate_id = :candidate_id";
+			$bind = array(
+				'setuju' => $data['setuju'],
+				'post_id' => $data['post_id'],
+				'candidate_id' => $data['candidate_id']
+			);
+			
+			return $this->pdo->fetchAffected($stm, $bind);
+		}
+		catch(Exception $e){
+			echo $e->getMessage();
+		}
+	}
 }

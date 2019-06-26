@@ -9,6 +9,7 @@ class Dashboard extends Controller {
 		$this->model = $this->loadModel('Dashboard_model');
 		$this->filter = $this->loadHelper('filter_helper');
 		$this->vote_model = $this->loadModel('vote_model');
+		$this->Candidate_model = $this->loadModel('Candidate_model');
 
 		$this->css = array(
 			'assets/libs/datatables/dataTables.bootstrap4.css',
@@ -50,6 +51,8 @@ class Dashboard extends Controller {
 			'assets/js/pages/sweet-alerts.init.js'
 		);
 
+		$template = $this->loadView('dashboard');
+
 		$posts = $this->vote_model->getPosts();
 		$candidates = $this->vote_model->getCandidates($this->filter->isInt($this->session->get('user_id')));
 		$submission = $this->vote_model->countSubmission($this->filter->isInt($this->session->get('user_id')));
@@ -69,6 +72,18 @@ class Dashboard extends Controller {
 
 		$post = $this->vote_model->countPost();
 
+		# semak jika user ada terpilih sebagai calon
+		$nominated = $this->Candidate_model->checkVoteListByID($this->session->get('user_id'));
+		if($nominated){
+			if(array_search('yes', $nominated)){
+				$jsNominated = 'no';
+			}else{
+				$jsNominated = 'yes';
+			}
+		}else{
+			$jsNominated = 'no';
+		}
+
 		$custom_js = "<script>
 
 			var submission = '".$total."';
@@ -76,6 +91,7 @@ class Dashboard extends Controller {
 			var diff = parseInt(post) - parseInt(submission);
 			var voter_id = '".$this->session->get('user_id')."';
 			var toVote = '".$checkNomination."';
+			var nominated = '".$jsNominated."';
 
 			// assign random color to ribbon
 			var klasses = ['ribbon-primary', 'ribbon-info', 'ribbon-success', 'ribbon-warning', 'ribbon-danger', 'ribbon-dark', 'ribbon-blue', 'ribbon-pink', 'ribbon-secondary'];
@@ -146,9 +162,43 @@ class Dashboard extends Controller {
 
 			$(document).ready(function(){
 
+				// semak jika user ada terpilih sebagai calon
+				if(nominated == 'yes'){
+					swal('Perhatian', 'Anda mempunyai '+ '".count($nominated)."' + ' pencalonan bagi pemilihan kali ini. Sila semak pencalonan anda dan sahkan samada anda menerima atau menolak pencalonan ini.', 'info')
+				}
+
+				// agree to nomination
+				function agreeNomination(){
+
+					var create_url = '".BASE_URL."candidate/agreeNomination';
+
+					return $.ajax({
+						type: 'POST',
+						url: create_url,
+						dataType: 'html',
+						data: $('form#agree-form').serialize()
+				    });
+				}
+
+				$('#save-nomination').bind('click', function (e) {
+
+					e.preventDefault();
+					$(this).attr('disabled', 'disabled');
+					agreeNomination();
+					swal({
+						title: 'Berjaya',
+						text: 'Persetujuan anda telah diterima dan direkodkan.',
+						type: 'success'
+					}).then(function() {
+		                location.reload();
+		            });
+				});
+
+				/* 
+
 				swal('Pencalonan Tutup', 'Terima kasih kerana menggunakan perkhidmatan e-voting bagi pemilihan calon kali ini. Pencalonan telah ditutup.', 'success');
 
-				/* var submit_url = '".BASE_URL."vote/updateCandidates';
+				var submit_url = '".BASE_URL."vote/updateCandidates';
 
 				if(parseInt(submission) < parseInt(post)){
 					swal('Makluman', 'Pencalonan anda masih belum lengkap. Terdapat '+ diff + ' lagi kekosongan yang perlu diisi. Sila lengkapkan borang pencalonan anda', 'info')
@@ -212,9 +262,9 @@ class Dashboard extends Controller {
 		$navigation = $this->loadView('navigation');
 		$navigation->render();
 
-        $template = $this->loadView('dashboard');
         $template->set('posts', $posts);
         $template->set('candidates', $candidates);
+        $template->set('nomination', $nominated);
 		$template->render();
 
 		$footer = $this->loadView('footer');

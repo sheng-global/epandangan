@@ -48,7 +48,7 @@
         </script>
         <script>
             // Set the date we're counting down to
-            var last_update = '2019-06-25 08:00:00';
+            var last_update = '2019-06-28 08:00:00';
             var countDownDate = new Date(last_update).getTime();
             var distance = 0;
 

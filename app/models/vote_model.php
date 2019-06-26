@@ -34,7 +34,7 @@ Class Vote_model extends Model {
 
 	public function getVotingList()
 	{
-		$stm  = "SELECT * FROM view_voting_list";
+		$stm  = "SELECT * FROM view_voting_list WHERE setuju = 'ya'";
 		$result = $this->pdo->fetchAll($stm);
 		return $result;
 	}

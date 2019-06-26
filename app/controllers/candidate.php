@@ -261,6 +261,32 @@ class Candidate extends Controller {
 			die('Error: Unable to add the record.');
 		}	
 	}
+
+	function agreeNomination()
+	{
+		if(isset($_POST)){
+			
+			$data = array(
+				'post_id' => $_POST['post_id'],
+				'candidate_id' => $_POST['candidate_id'],
+				'setuju' => 'ya'
+			);
+			$this->model->agreeNomination($data);
+
+			# log user action
+			$log = $this->loadHelper('log_helper');
+			$data2 = array(
+				'user_id' => $this->session->get('user_id'),
+				'controller' => 'Candidate',
+				'function' => 'agreeNomination',
+				'action' => 'Agree to nomination'
+			);
+			$log->add($data2);
+			
+		}else{
+			die('Error: Unable to add the record.');
+		}	
+	}
 	
 	function edit_post($id)
 	{
