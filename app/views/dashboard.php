@@ -72,12 +72,8 @@
                                             <p><strong>Apajua keputusan, sukacita diingatkan tuan/puan perlu mempertimbangkan kehendak ahli dan juga proses pemilihan yang dilaksanakan oleh pihak sekretariat agar lebih mudah serta lancar</strong>.</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <form name="agree-form" id="agree-form" class="needs-validation" novalidate>
-                                                <input type="hidden" name="post_id" value="<?php echo $post['post_id'] ?>">
-                                                <input type="hidden" name="candidate_id" value="<?php echo $post['candidate_id'] ?>">
-                                                <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal" id="tidak-setuju">Tidak Setuju</button>
-                                                <button type="submit" class="btn btn-primary waves-effect waves-light" id="save-nomination">Setuju</button>
-                                            </form>
+                                            <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal" id="tidak-setuju">Tidak Setuju</button>
+                                            <button type="button" class="btn btn-primary waves-effect waves-light save-nomination" data-post-id="<?php echo $post['post_id'] ?>" data-candidate-id="<?php echo $post['candidate_id'] ?>">Setuju</button>
                                         </div>
                                     </div>
                                 </div>

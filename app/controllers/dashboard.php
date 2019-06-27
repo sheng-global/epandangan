@@ -175,7 +175,7 @@ class Dashboard extends Controller {
 				});
 
 				// agree to nomination
-				function agreeNomination(){
+				function agreeNomination(postData){
 
 					var create_url = '".BASE_URL."candidate/agreeNomination';
 
@@ -183,15 +183,21 @@ class Dashboard extends Controller {
 						type: 'POST',
 						url: create_url,
 						dataType: 'html',
-						data: $('form#agree-form').serialize()
+						data: 'candidate_id=' + postData[0] +'&post_id=' + postData[1],
 				    });
 				}
 
-				$('#save-nomination').bind('click', function (e) {
+				$('.save-nomination').bind('click', function (e) {
+
+					var candidate_id = $(this).data('candidate-id');
+					var post_id = $(this).data('post-id');
+
+					var postData = new Array(candidate_id,post_id);
 
 					e.preventDefault();
 					$(this).attr('disabled', 'disabled');
-					agreeNomination();
+					agreeNomination(postData);
+
 					swal({
 						title: 'Tahniah',
 						text: 'Sesungguhnya Alah telah memilih dan memberi peluang kepada tuan/puan dalam memperjuangkan agama-Nya melalui persatuan ini. Sila sediakan satu keping gambar kepada urusetia bagi dimuatnaik dalam sistem. Gambar ini akan digunakan semasa proses pemilihan nanti.',
