@@ -29,7 +29,7 @@
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
-                                    Nota: Sesi pemilihan akan ditutup pada <strong>26 Jun 2019 jam 2.00 petang</strong>.
+                                    Nota: Sesi pemilihan akan dijalankan pada <strong>3 Julai 2019 mulai jam 8:30 pagi</strong>.
                                 </div>
                             </div>
                         </div>
@@ -38,6 +38,13 @@
 
                         <div class="row">
                             <div class="col-12">
+                                <?php 
+                                    if($post['id'] == '1' || $post['id'] == '6'){
+                                        $box = "<div class=\"col ribbon-box\"><div class=\"ribbon ribbon-info float-right\"><i class=\"mdi mdi-access-point mr-1\"></i>&nbsp;&nbsp;Menang Tanpa Bertanding &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>";
+                                    }else{
+                                        $box = "<div class=\"col\">";
+                                    }
+                                ?>
                                 <h4 class="mb-4"><?php echo $post['post_name'] ?></h4>
                             </div> <!-- end col-->
                         </div>
@@ -58,7 +65,9 @@
                                                     <img src="<?php echo $img ?>" class="img-fluid rounded-circle" alt="user-img">
                                                 </div>
                                             </div>
-                                            <div class="col">
+
+                                            <?php echo $box ?>
+
                                                 <h5 class="mb-1 mt-2"><?php echo $candidate['full_name'] ?></h5>
                                                 <p class="mb-2 text-muted"><?php echo $candidate['jawatan'] ?> - <?php echo $candidate['jabatan'] ?></p>
                                                 <?php
@@ -70,10 +79,14 @@
                                                 );
                                                 $compare = $model->checkVote($data);
                                                 if(!$compare){
-                                                    $button = "<button type=\"button\" class=\"btn btn-success btn-sm waves-effect waves-light save-vote\" data-post-id=\"".$candidate['post_id']."\" data-user-id=\"".$candidate['candidate_id']."\" data-voter-id=\"".$_SESSION['user_id']."\">Pilih</button>";
+                                                    $button = "<button type=\"button\" class=\"btn btn-success btn-sm waves-effect waves-light save-vote\" data-post-id=\"".$candidate['post_id']."\" data-user-id=\"".$candidate['candidate_id']."\" data-voter-id=\"".$_SESSION['user_id']."\" disabled>Pilih</button>";
                                                 }else{
-                                                    $button = "<button type=\"button\" class=\"btn btn-info btn-sm waves-effect waves-light\">Sudah dipilih</button>";
-                                                } ?>
+                                                    $button = "<button type=\"button\" class=\"btn btn-info btn-sm waves-effect waves-light\" disabled>Sudah dipilih</button>";
+                                                }
+                                                if($post['id'] == '1' || $post['id'] == '6'){
+                                                    $button = '';
+                                                }
+                                                ?>
                                                 <?php echo $button ?>
                                             </div>
                                         </div> <!-- end row-->

@@ -37,9 +37,6 @@
 
         <script src="<?php echo BASE_URL; ?>assets/js/app.min.js"></script>
         <script type="text/javascript">
-            $('#notify').on('click', function(){
-                swal('Makluman','Pemilihan akan dibuka semasa hari pemilihan sahaja.', 'info');
-            });
             $(document).ready(function(){
                 <?php if(getenv('ENVIRONMENT') == 'production'){
                     echo "$('#debug').hide()";
