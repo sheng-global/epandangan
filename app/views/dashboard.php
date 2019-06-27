@@ -29,7 +29,7 @@
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
-                                    Nota: Sesi pencalonan telah ditutup pada <strong>18 Jun 2019 jam 5.00 petang</strong>.
+                                    Nota: Sesi pemilihan akan dijalankan pada <strong>3 Julai 2019 mulai jam 8:30 pagi</strong>.
                                 </div>
 
 
