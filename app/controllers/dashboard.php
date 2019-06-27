@@ -194,7 +194,7 @@ class Dashboard extends Controller {
 					agreeNomination();
 					swal({
 						title: 'Tahniah',
-						text: 'Sesungguhnya Alah telah memilih dan memberi peluang kepada tuan/puan dalam memperjuangkan agama-Nya melalui persatuan ini.',
+						text: 'Sesungguhnya Alah telah memilih dan memberi peluang kepada tuan/puan dalam memperjuangkan agama-Nya melalui persatuan ini. Sila sediakan satu keping gambar kepada urusetia bagi dimuatnaik dalam sistem. Gambar ini akan digunakan semasa proses pemilihan nanti.',
 						type: 'success'
 					}).then(function() {
 		                location.reload();

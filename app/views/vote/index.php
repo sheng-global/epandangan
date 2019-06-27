@@ -50,7 +50,7 @@
                                 else $img = BASE_URL."assets/images/default.jpg"; ?>
 
                                 <?php if($post['id'] == $candidate['post_id']): ?>
-                                <div class="col-md-6 col-xl-3">
+                                <div class="col-md-6 col-xl-4">
                                     <div class="widget-rounded-circle card-box">
                                         <div class="row align-items-center">
                                             <div class="col-auto">
