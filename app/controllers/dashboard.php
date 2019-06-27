@@ -75,7 +75,10 @@ class Dashboard extends Controller {
 		# semak jika user ada terpilih sebagai calon
 		$nominated = $this->Candidate_model->checkVoteListByID($this->session->get('user_id'));
 		if($nominated){
-			if(array_search('yes', $nominated)){
+			$count = array_filter($nominated, function($ar) {
+			   return ($ar['setuju'] == 'ya');
+			});
+			if($count){
 				$jsNominated = 'no';
 			}else{
 				$jsNominated = 'yes';
@@ -167,6 +170,10 @@ class Dashboard extends Controller {
 					swal('Perhatian', 'Anda mempunyai '+ '".count($nominated)."' + ' pencalonan bagi pemilihan kali ini. Sila semak pencalonan anda dan sahkan samada anda menerima atau menolak pencalonan ini. Jika anda mempunyai lebih dari 2 pencalonan, anda hanya boleh memilih maksima 2 jawatan sahaja.', 'info')
 				}
 
+				$('#tidak-setuju').bind('click', function (e) {
+					swal('Terima kasih', 'Semoga Allah merahmati pilihan tuan/puan ini.', 'info')
+				});
+
 				// agree to nomination
 				function agreeNomination(){
 
@@ -186,8 +193,8 @@ class Dashboard extends Controller {
 					$(this).attr('disabled', 'disabled');
 					agreeNomination();
 					swal({
-						title: 'Berjaya',
-						text: 'Persetujuan anda telah diterima dan direkodkan.',
+						title: 'Tahniah',
+						text: 'Sesungguhnya Alah telah memilih dan memberi peluang kepada tuan/puan dalam memperjuangkan agama-Nya melalui persatuan ini.',
 						type: 'success'
 					}).then(function() {
 		                location.reload();

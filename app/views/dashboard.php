@@ -53,7 +53,7 @@
                                     <div class="ribbon-content">
                                         <h5><i class="mdi mdi-account-circle"></i> <?php echo $post['full_name'] ?></h5>
                                         <p class="text-muted"> <small><?php echo $post['jawatan'] ?> - <?php echo $post['jabatan'] ?></small></p>
-                                        <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#modal-<?php echo $post['post_id'] ?>-<?php echo $post['candidate_id'] ?>" data-post-id="<?php echo $post['post_id'] ?>" <?php if($post['setuju'] == 'ya') echo "disabled" ?>>Terima</button>
+                                        <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#modal-<?php echo $post['post_id'] ?>-<?php echo $post['candidate_id'] ?>" data-post-id="<?php echo $post['post_id'] ?>" <?php if($post['setuju'] == 'ya') echo "disabled" ?>>Pilihan Anda</button>
                                     </div>
                                 </div>
                             </div>
@@ -68,13 +68,14 @@
                                             <h5>PENCALONAN SEBAGAI AHLI JAWATANKUASA INDUK SESI 2019-2021 PERSATUAN KAKITANGAN ISLAM DEWAN BANDARAYA KUALA LUMPUR (KESEDARAN)</h5>
                                             <p>Dengan segala hormatnya saya merujuk perkara di atas.</p>
                                             <p>Dimaklumkan bahawa tuan/puan dicalonkan secara majoriti oleh ahli persatuan bagi jawatan <strong><?php echo $post['post_name'] ?></strong> sepanjang tempoh pencalonan melalui E-Voting yang berakhir 18 Jun 2019 lalu</p>
-                                            <p>Sehubungan dengan itu, selaras dengan keperluan pemilihan, tuan/puan dipohon untuk memberikan persetujuan samada  menerima atau menolak pencalonan berkenaan. Apajua keputusan, sukacita diingatkan tuan/puan perlu mempertimbangkan kehendak ahli dan juga proses pemilihan yang dilaksanakan oleh pihak sekretariat agar lebih mudah serta lancar.</p>
+                                            <p>Sehubungan dengan itu, selaras dengan keperluan pemilihan, tuan/puan dipohon untuk memberikan persetujuan samada  menerima atau menolak pencalonan berkenaan. </p>
+                                            <p><strong>Apajua keputusan, sukacita diingatkan tuan/puan perlu mempertimbangkan kehendak ahli dan juga proses pemilihan yang dilaksanakan oleh pihak sekretariat agar lebih mudah serta lancar</strong>.</p>
                                         </div>
                                         <div class="modal-footer">
                                             <form name="agree-form" id="agree-form" class="needs-validation" novalidate>
                                                 <input type="hidden" name="post_id" value="<?php echo $post['post_id'] ?>">
                                                 <input type="hidden" name="candidate_id" value="<?php echo $post['candidate_id'] ?>">
-                                                <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Tidak Setuju</button>
+                                                <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal" id="tidak-setuju">Tidak Setuju</button>
                                                 <button type="submit" class="btn btn-primary waves-effect waves-light" id="save-nomination">Setuju</button>
                                             </form>
                                         </div>
