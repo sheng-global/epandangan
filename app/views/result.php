@@ -17,7 +17,7 @@
                                             <li class="breadcrumb-item active">Keputusan</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">Keputusan Pemilihan Jawatan</h4>
+                                    <h4 class="page-title">Keputusan Pemilihan Jawatan <?php echo $data[0]['post_name'] ?></h4>
                                 </div>
                             </div>
                         </div>     
@@ -30,7 +30,7 @@
 
                                         <h4 class="header-title">Calon</h4>
                                         <p class="text-muted font-13">
-                                            Berikut adalah senarai ahli yang dicalonkan oleh ahli bagi jawatan 
+                                            Berikut adalah jumlah undian bagi jawatan <?php echo $data[0]['post_name'] ?>
                                         </p>
 
                                         <table id="datatable" class="table table-striped dt-responsive nowrap">

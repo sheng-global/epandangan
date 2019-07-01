@@ -45,7 +45,7 @@
                                         $box = "<div class=\"col\">";
                                     }
                                 ?>
-                                <h4 class="mb-4"><?php echo $post['post_name'] ?></h4>
+                                <button class="mb-4 title btn-lg"><?php echo $post['post_name'] ?></button>
                             </div> <!-- end col-->
                         </div>
                         
@@ -79,7 +79,7 @@
                                                 );
                                                 $compare = $model->checkVote($data);
                                                 if(!$compare){
-                                                    $button = "<button type=\"button\" class=\"btn btn-success btn-sm waves-effect waves-light save-vote\" data-post-id=\"".$candidate['post_id']."\" data-user-id=\"".$candidate['candidate_id']."\" data-voter-id=\"".$_SESSION['user_id']."\" disabled>Pilih</button>";
+                                                    $button = "<button type=\"button\" class=\"btn btn-success btn-sm waves-effect waves-light save-vote\" data-post-id=\"".$candidate['post_id']."\" data-user-id=\"".$candidate['candidate_id']."\" data-voter-id=\"".$_SESSION['user_id']."\">Pilih</button>";
                                                 }else{
                                                     $button = "<button type=\"button\" class=\"btn btn-info btn-sm waves-effect waves-light\" disabled>Sudah dipilih</button>";
                                                 }

@@ -97,7 +97,7 @@ class Dashboard extends Controller {
 			var nominated = '".$jsNominated."';
 
 			// assign random color to ribbon
-			var klasses = ['ribbon-primary', 'ribbon-info', 'ribbon-success', 'ribbon-warning', 'ribbon-danger', 'ribbon-dark', 'ribbon-blue', 'ribbon-pink', 'ribbon-secondary'];
+			var klasses = ['ribbon-primary', 'ribbon-info', 'ribbon-success', 'ribbon-pink', 'ribbon-warning', 'ribbon-danger', 'ribbon-pink', 'ribbon-dark', 'ribbon-blue', 'ribbon-secondary'];
 
 			$('.ribbon').each(function(i, val) {
 				$(this).addClass(klasses[i]);
@@ -337,6 +337,7 @@ class Dashboard extends Controller {
 		$header->set('css', $this->css);
 		$footer->set('custom_js', $custom_js);
 		$footer->set('js', $this->js);
+		$template->set('data', $this->Candidate_model->getPosition($id));
 		
 		$header->render();
 		$navigation->render();

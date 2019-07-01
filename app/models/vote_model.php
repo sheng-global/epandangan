@@ -166,23 +166,46 @@ Class Vote_model extends Model {
 		);
 		$result = $this->pdo->fetchAffected($stm, $bind);
 
-		if($data['post_count'] > $result){
-
-			$diff = $data['post_count'] - $result;
+		if(!$result){
 
 			// check if duplicate
-			$stm2  = "SELECT * FROM votes WHERE user_id = :user_id AND post_id = :post_id";
+			$stm2  = "SELECT * FROM votes WHERE voter_id = :voter_id AND user_id = :user_id AND post_id = :post_id";
 			$bind2 = array(
+				'voter_id' => $data['voter_id'],
 				'user_id' => $data['user_id'],
 				'post_id' => $data['post_id']
 			);
 			$result2 = $this->pdo->fetchAffected($stm2, $bind2);
 
 			if($result2){
+
+				// got duplicate so dont proceed
 				echo "0";
 			}else{
 
 				try{
+
+					$stm  = "INSERT INTO votes (user_id, voter_id, post_id) VALUES (:user_id, :voter_id, :post_id)";
+					$bind = array(
+						'voter_id' => $data['voter_id'],
+						'user_id' => $data['user_id'],
+						'post_id' => $data['post_id']
+					);
+					
+					$this->pdo->fetchAffected($stm, $bind);
+				}
+				catch(Exception $e){
+					echo $e->getMessage();
+				}
+			}
+		}else{
+
+			$diff = $data['post_count'] - $result;
+
+			if($diff > 0){
+
+				try{
+
 					$stm  = "INSERT INTO votes (user_id, voter_id, post_id) VALUES (:user_id, :voter_id, :post_id)";
 					$bind = array(
 						'voter_id' => $data['voter_id'],
@@ -196,9 +219,9 @@ Class Vote_model extends Model {
 				catch(Exception $e){
 					echo $e->getMessage();
 				}
+			}else{
+				echo "0";
 			}
-		}else{
-			echo "0";
 		}
 	}
 

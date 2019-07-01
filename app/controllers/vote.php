@@ -55,6 +55,13 @@ class Vote extends Controller {
 
 		$custom_js = "<script>
 
+			// assign random color to button
+			var klasses = ['btn-primary', 'btn-info', 'btn-success', 'btn-pink', 'btn-warning', 'btn-danger', 'btn-pink', 'btn-dark', 'btn-blue', 'btn-secondary'];
+
+			$('.title').each(function(i, val) {
+				$(this).addClass(klasses[i]);
+			});
+
 			// post vote
 			function createVote(postData){
 
@@ -241,7 +248,7 @@ class Vote extends Controller {
 				'user_id' => $this->session->get('user_id'),
 				'controller' => 'Vote',
 				'function' => 'addVote',
-				'action' => 'Add new vote'
+				'action' => serialize($data)
 			);
 			$log->add($data2);
 

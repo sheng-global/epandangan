@@ -61,9 +61,9 @@
                         <ul class="metismenu" id="side-menu">
 
                             <li class="menu-title">Navigation</li>
-                            <li>
+                            <!-- <li>
                                 <a href="<?php echo BASE_URL ?>dashboard" class="waves-effect"><i class="fe-users"></i><span> Pencalonan </span></a>
-                            </li>
+                            </li> -->
                             <li>
                                 <a href="<?php echo BASE_URL ?>vote" class="waves-effect" id="notify"><i class="ti-pencil"></i><span> Pemilihan </span></a>
                             </li>
