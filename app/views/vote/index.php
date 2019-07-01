@@ -81,7 +81,7 @@
                                                 if(!$compare){
                                                     $button = "<button type=\"button\" class=\"btn btn-success btn-sm waves-effect waves-light save-vote\" data-post-id=\"".$candidate['post_id']."\" data-user-id=\"".$candidate['candidate_id']."\" data-voter-id=\"".$_SESSION['user_id']."\">Pilih</button>";
                                                 }else{
-                                                    $button = "<button type=\"button\" class=\"btn btn-info btn-sm waves-effect waves-light\" disabled>Sudah dipilih</button>";
+                                                    $button = "<button type=\"button\" class=\"btn btn-danger btn-sm waves-effect waves-light delete-vote\" data-post-id=\"".$candidate['post_id']."\" data-user-id=\"".$candidate['candidate_id']."\" data-voter-id=\"".$_SESSION['user_id']."\">Padam</button>";
                                                 }
                                                 if($post['id'] == '1' || $post['id'] == '6'){
                                                     $button = '';

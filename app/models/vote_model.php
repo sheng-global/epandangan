@@ -235,4 +235,21 @@ Class Vote_model extends Model {
 		);
 		return $this->pdo->fetchAffected($stm, $bind);
 	}
+
+	public function deleteVote($data)
+	{
+		try{
+			$stm  = "DELETE FROM votes WHERE voter_id = :voter_id AND user_id = :user_id AND post_id = :post_id";
+			$bind = array(
+				'voter_id' => $data['voter_id'],
+				'user_id' => $data['user_id'],
+				'post_id' => $data['post_id']
+			);
+			
+			return $this->pdo->fetchAffected($stm, $bind);
+		}
+		catch(Exception $e){
+			return $e->getMessage();
+		}
+	}
 }

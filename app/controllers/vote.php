@@ -106,6 +106,42 @@ class Vote extends Controller {
 				createVote(postData);
 			});
 
+			// delete vote
+			function deleteVote(postData){
+
+				var post_url = '".BASE_URL."vote/deleteVote';
+
+				$.ajax({
+					type: 'POST',
+					url: post_url,
+					dataType: 'html',
+					data: 'user_id=' + postData[0] +'&voter_id=' + postData[1] +'&post_id=' + postData[2],
+					success:function(response){
+						swal({
+							title: 'Info',
+							text: 'Undian telah dibatalkan. Sila pilih undian yang baru.',
+							type: 'info'
+						}).then(function() {
+			                location.reload();
+			            });
+					}
+			    });
+
+			}
+
+			$('.delete-vote').bind('click', function (e) {
+
+				var user_id = $(this).data('user-id');
+				var voter_id = $(this).data('voter-id');
+				var post_id = $(this).data('post-id');
+
+				var postData = new Array(user_id,voter_id,post_id);
+
+				e.preventDefault();
+				$(this).attr('disabled', 'disabled');
+				deleteVote(postData);
+			});
+
 		</script>";
 
 		$header = $this->loadView('header');
@@ -253,6 +289,33 @@ class Vote extends Controller {
 			$log->add($data2);
 
 			return $vote;
+			
+		}else{
+			return false;
+		}
+	}
+
+	public function deleteVote()
+	{
+		if(isset($_POST)){
+
+			$data = array(
+				'voter_id' => $this->session->get('user_id'),
+				'user_id' => $_POST['user_id'],
+				'post_id' => $_POST['post_id']
+			);
+
+			$vote = $this->model->deleteVote($data);
+
+			# log user action
+			$log = $this->loadHelper('log_helper');
+			$data2 = array(
+				'user_id' => $this->session->get('user_id'),
+				'controller' => 'Vote',
+				'function' => 'deleteVote',
+				'action' => serialize($data)
+			);
+			$log->add($data2);
 			
 		}else{
 			return false;
