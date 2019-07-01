@@ -215,7 +215,7 @@ class Auth extends Controller {
 
 				if(getenv('2FA') == 'no'){
 
-					$this->redirect('dashboard');
+					$this->redirect('vote');
 					exit;
 
 				}else{
