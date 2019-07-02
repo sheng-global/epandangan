@@ -70,7 +70,7 @@
                         <?php if($_SESSION['role'] != 'voter'): ?>
                             <li class="menu-title">Administration</li>
                             <li>
-                                <a href="<?php echo BASE_URL ?>dashboard/admin" class="waves-effect"><i class="fe-airplay"></i><span> Dashboard </span></a>
+                                <a href="<?php echo BASE_URL ?>vote/result" class="waves-effect"><i class="fe-airplay"></i><span> Keputusan Semasa </span></a>
                             </li>
                             <li>
                                 <?php $model = new Controller;

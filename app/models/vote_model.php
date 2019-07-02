@@ -287,4 +287,11 @@ Class Vote_model extends Model {
 			return $e->getMessage();
 		}
 	}
+
+	public function viewResultOne($table)
+	{
+		$stm  = "SELECT * FROM ".$table." ORDER BY count DESC";
+		$result = $this->pdo->fetchAll($stm);
+		return $result;
+	}
 }

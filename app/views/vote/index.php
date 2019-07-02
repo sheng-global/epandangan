@@ -45,7 +45,8 @@
                                         $box = "<div class=\"col\">";
                                     }
                                 ?>
-                                <button class="mb-4 title btn-lg"><?php echo $post['post_name'] ?></button>
+                                <p class="title lead"><?php echo $post['post_name'] ?></p>
+                                <p class="sub-header">Pilih <?php echo $post['post_available'] ?> calon sahaja</p>
                             </div> <!-- end col-->
                         </div>
                         

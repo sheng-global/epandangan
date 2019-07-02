@@ -113,7 +113,7 @@ class Vote extends Controller {
 			}
 
 			// assign random color to button
-			var klasses = ['btn-primary', 'btn-info', 'btn-success', 'btn-pink', 'btn-warning', 'btn-danger', 'btn-pink', 'btn-dark', 'btn-blue', 'btn-secondary'];
+			var klasses = ['text-primary', 'text-info', 'text-success', 'text-pink', 'text-warning', 'text-danger', 'text-pink', 'text-dark', 'text-blue', 'text-secondary'];
 
 			$('.title').each(function(i, val) {
 				$(this).addClass(klasses[i]);
@@ -217,6 +217,38 @@ class Vote extends Controller {
 		$footer = $this->loadView('footer');
         $footer->set('custom_js', $custom_js);
         $footer->set('js', $js);
+		$footer->render();
+	}
+
+	public function result()
+	{
+		$custom_css = "<style>
+			.bg-gradient {
+				background-color: -webkit-linear-gradient(left, red 0%, green 100%); /* Chrome10-25,Safari5.1-6 */
+			}
+		</style>";
+
+		$post = $this->model->getPosts();
+
+		$header = $this->loadView('header');
+		$header->set('custom_css', $custom_css);
+		$header->render();
+
+		$navigation = $this->loadView('navigation');
+		$navigation->render();
+
+        $template = $this->loadView('vote/result');
+        $template->set('post2', $this->model->viewResultOne('view_result_2'));
+        $template->set('post3', $this->model->viewResultOne('view_result_3'));
+        $template->set('post4', $this->model->viewResultOne('view_result_4'));
+        $template->set('post5', $this->model->viewResultOne('view_result_5'));
+        $template->set('post7', $this->model->viewResultOne('view_result_7'));
+        $template->set('post8', $this->model->viewResultOne('view_result_8'));
+        $template->set('post9', $this->model->viewResultOne('view_result_9'));
+        $template->set('helper', $this->loadHelper('upload_helper'));
+		$template->render();
+
+		$footer = $this->loadView('footer');
 		$footer->render();
 	}
 
