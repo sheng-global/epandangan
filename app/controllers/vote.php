@@ -79,6 +79,7 @@ class Vote extends Controller {
 				if(confirmation == 1){
 					// do nothing and disable all button
 					$('.btn').prop('disabled', true);
+					swal('Makluman', 'Sessi pemilihan anda telah selesai. Keputusan pemilihan akan dikeluarkan sebelum mesyuarat agong berakhir.', 'success');
 				}else{
 					Swal.fire({
 						title: 'Anda pasti?',
