@@ -25,12 +25,6 @@
 
                         <div class="row">
                             <div class="col-12">
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    <pre id="debug"><?php var_dump($data) ?></pre>
-                                </div>
                                 <div class="card">
                                     <div class="card-body">
 
@@ -90,7 +84,7 @@
                                             <p class="text-muted"><?php echo $data[0]['jawatan'] ?></p>
                                             <p class="text-muted"><i class="mdi mdi-office-building"></i> <?php echo $data[0]['jabatan'] ?></p>
 
-                                            <?php if($check) { ?>
+                                            <?php //if($check) { ?>
                                             <a href="javascript: void(0);" class="btn- btn-xs btn-info">Hantar E-mail</a>
                                             <a href="javascript: void(0);" class="btn btn-xs btn-secondary" id="tambah-gambar">Tambah Gambar</a>
                                             <div id="add-picture">
@@ -103,7 +97,7 @@
                                                 <input type="hidden" name="user_id" value="<?php echo $data[0]['user_id'] ?>">
                                                 </form>
                                             </div>
-                                            <?php } ?>
+                                            <?php //} ?>
                                         </div>
                                     </div>
 
