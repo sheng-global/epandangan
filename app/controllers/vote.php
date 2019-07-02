@@ -90,26 +90,25 @@ class Vote extends Controller {
 						cancelButtonColor: '#d33',
 						confirmButtonText: 'Muktamad',
 						cancelButtonText: 'Batal',
-						showLoaderOnConfirm: true,
 						preConfirm: function() {
-						return new Promise(function(resolve) {
+						return new Promise(function(result) {
 							$.ajax({
 								url: confirm_url,
-								type: 'POST'
+								type: 'POST',
+								success:function(response){
+									swal(
+										'Tahniah!',
+    									'Pemilihan anda telah diterima. Terima kasih kerana menggunakan perkhidmatan e-voting bagi pemilihan kali ini.',
+    									'success'
+    								).then(function() {
+						                location.reload();
+						            });
+								}
 							})
-							.done(function(response){
-								swal('Tahniah!', 'Pemilihan anda telah diterima. Terima kasih kerana menggunakan perkhidmatan e-voting bagi pemilihan kali ini.', 'success');
-								$('.btn').prop('disabled', true);
-							})
-							.fail(function(){
-								swal('Oops...', 'Something went wrong with ajax!', 'error');
-							});
 						});
 						},
-						allowOutsideClick: false
-					}).then(function() {
-		                location.reload();
-		            });
+						allowOutsideClick: () => !Swal.isLoading()
+					})
 				}
 			}
 
