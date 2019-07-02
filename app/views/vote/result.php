@@ -25,6 +25,8 @@
 
                         <div class="row">
 
+                            <?php if($post2): ?>
+
                             <div class="col-md-6">
 
                                 <div class="row">
@@ -71,6 +73,10 @@
                                 </div>
 
                             </div>
+
+                            <?php endif; ?>
+                            <?php if($post3): ?>
+
                             <div class="col-md-6">
 
                                 <div class="row">
@@ -117,7 +123,11 @@
                                 </div>
 
                             </div>
+
+                            <?php endif; ?>
                         </div>
+                        
+                        <?php if($post4): ?>
 
                         <div class="row">
                             <div class="col-12">
@@ -162,6 +172,9 @@
                             <?php endforeach; ?>
                         </div>
 
+                        <?php endif; ?>
+                        <?php if($post5): ?>
+
                         <div class="row">
                             <div class="col-12">
                                 <button class="mb-2 btn-warning btn-lg">Setiausaha</button>
@@ -204,6 +217,9 @@
                                 </div>
                             <?php endforeach; ?>
                         </div>
+
+                        <?php endif; ?>
+                        <?php if($post7): ?>
 
                         <div class="row">
                             <div class="col-12">
@@ -248,6 +264,9 @@
                             <?php endforeach; ?>
                         </div>
 
+                        <?php endif; ?>
+                        <?php if($post8): ?>
+
                         <div class="row">
                             <div class="col-12">
                                 <button class="mb-2 btn-dark btn-lg">Ahli Jawatankuasa</button>
@@ -291,6 +310,9 @@
                             <?php endforeach; ?>
                         </div>
 
+                        <?php endif; ?>
+                        <?php if($post9): ?>
+
                         <div class="row">
                             <div class="col-12">
                                 <button class="mb-2 btn-blue btn-lg">Pemeriksa Kira Kira</button>
@@ -333,6 +355,8 @@
                                 </div>
                             <?php endforeach; ?>
                         </div>
+
+                        <?php endif; ?>
 
                     </div> <!-- container -->
                                
