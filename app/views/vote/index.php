@@ -61,7 +61,7 @@
                                     <div class="widget-rounded-circle card-box">
                                         <div class="row align-items-center">
                                             <div class="col-auto">
-                                                <div class="avatar-lg" style="width:150px !important;">
+                                                <div style="width:150px !important;">
                                                     <img src="<?php echo $img ?>" class="img-fluid" alt="<?php echo $candidate['full_name'] ?>">
                                                 </div>
                                             </div>
