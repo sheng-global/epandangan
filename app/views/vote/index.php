@@ -62,7 +62,7 @@
                                         <div class="row align-items-center">
                                             <div class="col-auto">
                                                 <div class="avatar-lg">
-                                                    <img src="<?php echo $img ?>" class="img-fluid rounded-circle" alt="user-img">
+                                                    <img src="<?php echo $img ?>" class="img-fluid" alt="<?php echo $candidate['full_name'] ?>">
                                                 </div>
                                             </div>
 
