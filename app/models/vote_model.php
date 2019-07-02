@@ -278,7 +278,7 @@ Class Vote_model extends Model {
 		try{
 			$stm  = "INSERT INTO confirmation (voter_id) VALUES (:voter_id)";
 			$bind = array(
-				'voter_id' => voter_id
+				'voter_id' => $voter_id
 			);
 			
 			return $this->pdo->fetchAffected($stm, $bind);

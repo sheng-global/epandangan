@@ -98,6 +98,7 @@ class Vote extends Controller {
 							})
 							.done(function(response){
 								swal('Tahniah!', 'Pemilihan anda telah diterima. Terima kasih kerana menggunakan perkhidmatan e-voting bagi pemilihan kali ini.', 'success');
+								$('.btn').prop('disabled', true);
 							})
 							.fail(function(){
 								swal('Oops...', 'Something went wrong with ajax!', 'error');
@@ -105,7 +106,9 @@ class Vote extends Controller {
 						});
 						},
 						allowOutsideClick: false
-					});
+					}).then(function() {
+		                location.reload();
+		            });
 				}
 			}
 
