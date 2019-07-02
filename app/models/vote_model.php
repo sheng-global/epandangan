@@ -252,4 +252,39 @@ Class Vote_model extends Model {
 			return $e->getMessage();
 		}
 	}
+
+	public function countVoteSubmission($voter_id)
+	{
+		$stm  = "SELECT COUNT(voter_id) AS total FROM votes WHERE voter_id = :voter_id";
+		$bind = array(
+			'voter_id' => $voter_id
+		);
+		$result = $this->pdo->fetchAll($stm, $bind);
+		return $result;
+	}
+
+	public function checkConfirmVote($voter_id)
+	{
+		$stm  = "SELECT * FROM confirmation WHERE voter_id = :voter_id";
+		$bind = array(
+			'voter_id' => $voter_id
+		);
+		$result = $this->pdo->fetchAll($stm, $bind);
+		return $result;
+	}
+
+	public function confirmVote($voter_id)
+	{
+		try{
+			$stm  = "INSERT INTO confirmation (voter_id) VALUES (:voter_id)";
+			$bind = array(
+				'voter_id' => voter_id
+			);
+			
+			return $this->pdo->fetchAffected($stm, $bind);
+		}
+		catch(Exception $e){
+			return $e->getMessage();
+		}
+	}
 }

@@ -79,7 +79,7 @@
                                                 );
                                                 $compare = $model->checkVote($data);
                                                 if(!$compare){
-                                                    $button = "<button type=\"button\" class=\"btn btn-success btn-sm waves-effect waves-light save-vote\" data-post-id=\"".$candidate['post_id']."\" data-user-id=\"".$candidate['candidate_id']."\" data-voter-id=\"".$_SESSION['user_id']."\">Pilih</button>";
+                                                    $button = "<button type=\"button\" class=\"btn btn-secondary btn-sm waves-effect waves-light save-vote\" data-post-id=\"".$candidate['post_id']."\" data-user-id=\"".$candidate['candidate_id']."\" data-voter-id=\"".$_SESSION['user_id']."\">Pilih</button>";
                                                 }else{
                                                     $button = "<button type=\"button\" class=\"btn btn-danger btn-sm waves-effect waves-light delete-vote\" data-post-id=\"".$candidate['post_id']."\" data-user-id=\"".$candidate['candidate_id']."\" data-voter-id=\"".$_SESSION['user_id']."\">Padam</button>";
                                                 }

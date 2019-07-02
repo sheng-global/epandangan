@@ -50,10 +50,64 @@ class Vote extends Controller {
 
 		$posts = $this->model->getPosts();
 		$candidates = $this->model->getVotingList();
-
 		$post = $this->model->countPost();
+		$submission = $this->model->countVoteSubmission($this->session->get('user_id'));
+		$confirmation = $this->model->checkConfirmVote($this->session->get('user_id'));
+		if($confirmation){
+			$confirmationData = 1;
+		}else{
+			$confirmationData = 0;
+		}
 
 		$custom_js = "<script>
+
+			var submission = '".$submission[0]['total']."';
+			var diff = 13 - submission;
+			var confirm_url = '".BASE_URL."vote/confirmVote';
+			var confirmation = '".$confirmationData."';
+
+			if(parseInt(submission) < 13){
+				swal({
+					title: 'Makluman',
+					text: 'Pemilihan anda belum lengkap. Ada lagi ' + diff + ' calon perlu dipilih.',
+					type: 'warning'
+				});
+			}
+
+			if(parseInt(submission) == 13){
+
+				if(confirmation == 1){
+					// do nothing and disable all button
+					$('.btn').prop('disabled', true);
+				}else{
+					Swal.fire({
+						title: 'Anda pasti?',
+						text: 'Pemilihan anda telah lengkap. Jika tiada sebarang perubahan, sila sahkan pemilihan anda',
+						type: 'warning',
+						showCancelButton: true,
+						confirmButtonColor: '#3085d6',
+						cancelButtonColor: '#d33',
+						confirmButtonText: 'Muktamad',
+						cancelButtonText: 'Batal',
+						showLoaderOnConfirm: true,
+						preConfirm: function() {
+						return new Promise(function(resolve) {
+							$.ajax({
+								url: confirm_url,
+								type: 'POST'
+							})
+							.done(function(response){
+								swal('Tahniah!', 'Pemilihan anda telah diterima. Terima kasih kerana menggunakan perkhidmatan e-voting bagi pemilihan kali ini.', 'success');
+							})
+							.fail(function(){
+								swal('Oops...', 'Something went wrong with ajax!', 'error');
+							});
+						});
+						},
+						allowOutsideClick: false
+					});
+				}
+			}
 
 			// assign random color to button
 			var klasses = ['btn-primary', 'btn-info', 'btn-success', 'btn-pink', 'btn-warning', 'btn-danger', 'btn-pink', 'btn-dark', 'btn-blue', 'btn-secondary'];
@@ -314,6 +368,27 @@ class Vote extends Controller {
 				'controller' => 'Vote',
 				'function' => 'deleteVote',
 				'action' => serialize($data)
+			);
+			$log->add($data2);
+			
+		}else{
+			return false;
+		}
+	}
+
+	public function confirmVote()
+	{
+		if(isset($_POST)){
+
+			$vote = $this->model->confirmVote($this->session->get('user_id'));
+
+			# log user action
+			$log = $this->loadHelper('log_helper');
+			$data2 = array(
+				'user_id' => $this->session->get('user_id'),
+				'controller' => 'Vote',
+				'function' => 'confirmVote',
+				'action' => 'Confirmed vote'
 			);
 			$log->add($data2);
 			
