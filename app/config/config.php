@@ -14,7 +14,7 @@ $config['upload_tmp'] = getenv('UPLOAD_TMP_FOLDER');
 
 $config['site_title'] = getenv('SITE_TITLE');
 $config['company'] = getenv('COMPANY_NAME');
-$config['default_controller'] = 'auth'; // Default controller to load
+$config['default_controller'] = 'site'; // Default controller to load
 $config['error_controller'] = 'oops'; // Controller used for errors (e.g. 404, 500 etc)
 
 # STMP setting
