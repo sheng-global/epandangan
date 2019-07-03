@@ -294,4 +294,11 @@ Class Vote_model extends Model {
 		$result = $this->pdo->fetchAll($stm);
 		return $result;
 	}
+
+	public function viewCount($table)
+	{
+		$stm  = "SELECT SUM(count) AS total FROM ".$table."";
+		$result = $this->pdo->fetchAll($stm);
+		return $result;
+	}
 }

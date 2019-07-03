@@ -238,6 +238,7 @@ class Vote extends Controller {
 		$navigation->render();
 
         $template = $this->loadView('vote/result');
+
         $template->set('post2', $this->model->viewResultOne('view_result_2'));
         $template->set('post3', $this->model->viewResultOne('view_result_3'));
         $template->set('post4', $this->model->viewResultOne('view_result_4'));
@@ -245,6 +246,15 @@ class Vote extends Controller {
         $template->set('post7', $this->model->viewResultOne('view_result_7'));
         $template->set('post8', $this->model->viewResultOne('view_result_8'));
         $template->set('post9', $this->model->viewResultOne('view_result_9'));
+
+        $template->set('count2', $this->model->viewCount('view_result_2'));
+        $template->set('count3', $this->model->viewCount('view_result_3'));
+        $template->set('count4', $this->model->viewCount('view_result_4'));
+        $template->set('count5', $this->model->viewCount('view_result_5'));
+        $template->set('count7', $this->model->viewCount('view_result_7'));
+        $template->set('count8', $this->model->viewCount('view_result_8'));
+        $template->set('count9', $this->model->viewCount('view_result_9'));
+
         $template->set('helper', $this->loadHelper('upload_helper'));
 		$template->render();
 
