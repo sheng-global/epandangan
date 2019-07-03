@@ -26,7 +26,7 @@
                         <div class="text-center">
                             <h2>
                                 <a href="index.html">
-                                    <img src="<?php echo BASE_URL ?>assets/images/logo.png" alt="">
+                                    <img src="<?php echo BASE_URL ?>assets/images/logo.png" alt="" class="img-fluid">
                                 </a>
                             </h2>
 
