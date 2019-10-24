@@ -2,3 +2,4 @@ vendor
 *.xls
 __DS_Store
 languages
+tmp/*
