@@ -1,6 +1,12 @@
 <?php
-use \Dolondro\GoogleAuthenticator as Authenticator;
+use Carbon\Carbon as Carbon;
+
 class Auth extends Controller {
+
+	function __construct()
+	{
+		$this->model = $this->loadModel('Auth_model');
+	}
 
 	public function admin()
 	{
@@ -35,15 +41,8 @@ class Auth extends Controller {
 		}
 	}
 
-	# Voter login page
-	public function index()
+	public function register()
 	{
-		$js = array(
-			'assets/libs/jquery-mask-plugin/jquery.mask.min.js',
-			'assets/libs/autonumeric/autoNumeric-min.js',
-			'assets/js/pages/form-masks.init.js'
-		);
-
 		# load EasyCSRF and session provider
 		$session = new EasyCSRF\NativeSessionProvider();
 
@@ -57,7 +56,7 @@ class Auth extends Controller {
 
 			$header = $this->loadView('auth-header');
 			$footer = $this->loadView('auth-footer');
-	        $template = $this->loadView('login-voter');
+	        $template = $this->loadView('register');
 
 	        $custom_js = "<script>
 				var referrer = document.referrer;
@@ -66,7 +65,109 @@ class Auth extends Controller {
 				});
 			</script>";
 
-			$footer->set('js', $js);
+			$footer->set('custom_js', $custom_js);
+			$template->set('token', $token);
+
+			$header->render();
+			$template->render();
+			$footer->render();
+		}
+	}
+
+	# user login page
+	public function index()
+	{
+		# load EasyCSRF and session provider
+		$session = new EasyCSRF\NativeSessionProvider();
+
+		if($session->get('loggedin')){
+			$this->redirect('dashboard');
+		}else{
+			$easyCSRF = new EasyCSRF\EasyCSRF($session);
+
+			# generate token
+			$token = $easyCSRF->generate('token');
+
+			$header = $this->loadView('auth-header');
+			$footer = $this->loadView('auth-footer');
+	        $template = $this->loadView('login-user');
+
+	        $custom_js = "<script>
+				var referrer = document.referrer;
+				$(document).ready(function() {
+					$('#redirect').val(referrer);
+				});
+			</script>";
+
+			$footer->set('custom_js', $custom_js);
+			$template->set('token', $token);
+
+			$header->render();
+			$template->render();
+			$footer->render();
+		}
+	}
+
+	# user recover password page
+	public function recover()
+	{
+		# load EasyCSRF and session provider
+		$session = new EasyCSRF\NativeSessionProvider();
+
+		if($session->get('loggedin')){
+			$this->redirect('dashboard');
+		}else{
+			$easyCSRF = new EasyCSRF\EasyCSRF($session);
+
+			# generate token
+			$token = $easyCSRF->generate('token');
+
+			$header = $this->loadView('auth-header');
+			$footer = $this->loadView('auth-footer');
+	        $template = $this->loadView('recover');
+
+	        $custom_js = "<script>
+				var referrer = document.referrer;
+				$(document).ready(function() {
+					$('#redirect').val(referrer);
+				});
+			</script>";
+
+			$footer->set('custom_js', $custom_js);
+			$template->set('token', $token);
+			$template->set('expiry', Carbon::now()->addMinutes(15));
+
+			$header->render();
+			$template->render();
+			$footer->render();
+		}
+	}
+
+	# reset password with token
+	public function password_token()
+	{
+		# load EasyCSRF and session provider
+		$session = new EasyCSRF\NativeSessionProvider();
+
+		if($session->get('loggedin')){
+			$this->redirect('dashboard');
+		}else{
+			$easyCSRF = new EasyCSRF\EasyCSRF($session);
+
+			# generate token
+			$token = $easyCSRF->generate('token');
+
+			$header = $this->loadView('auth-header');
+			$footer = $this->loadView('auth-footer');
+	        $template = $this->loadView('token');
+
+	        $custom_js = "<script>
+				var referrer = document.referrer;
+				$(document).ready(function() {
+					$('#redirect').val(referrer);
+				});
+			</script>";
+
 			$footer->set('custom_js', $custom_js);
 			$template->set('token', $token);
 
@@ -83,8 +184,6 @@ class Auth extends Controller {
 		$session = new EasyCSRF\NativeSessionProvider();
 		$easyCSRF = new EasyCSRF\EasyCSRF($session);
 
-		$model = $this->loadModel('Auth_model');
-
 		try{
 			$easyCSRF->check('token', $_POST['token']);
 		}catch(Exception $e){
@@ -97,7 +196,8 @@ class Auth extends Controller {
 				'username' => $_POST['username'],
 				'password' => $_POST['password']
 			);
-			$return = $model->processLogin($data);
+
+			$return = $this->model->processLogin($data);
 			
 			if(!is_array($return)){
 
@@ -119,31 +219,23 @@ class Auth extends Controller {
 			}else{
 
 				# get user data
-				$user = $model->getUser($_POST['username']);
+				$user = $this->model->getUserProfileByEmail($_POST['username']);
 
 				$session->set('loggedin', '1');
-				$session->set('role', 'admin');
 				$session->set('user_id', $user[0]['user_id']);
 				$session->set('email', $user[0]['email']);
-				$session->set('full_name', htmlspecialchars_decode($user[0]['full_name']));
+				$session->set('full_name', htmlspecialchars_decode($user[0]['nama_penuh']));
 				$session->set('permission', $user[0]['permission']);
 				$session->set('timestamp', date('Y-m-d H:i:s'));
 				$session->set('last_ip', $_SERVER['REMOTE_ADDR']);
 
-				# 2FA logic goes here if not required redirect to Dashboard
-
-				if(getenv('2FA') == 'no'){
-
-					$this->redirect('dashboard/admin');
-					exit;
-
+				if($user[0]['permission'] == 'user'){
+					$this->redirect('dashboard');
 				}else{
-
-					$session->set('token', false);
-					$session->set('authy_id', $user[0]['authy_id']);
-					$this->redirect('auth/login_token');
-					exit;
+					$this->redirect('dashboard/admin');
 				}
+				
+				exit;
 			}
 
 		}else{
@@ -151,102 +243,120 @@ class Auth extends Controller {
 		}
 	}
 
-	# Process login for voter
-	public function process_login_voter()
+	# Process register for user
+	public function process_register()
 	{
 		# load EasyCSRF and session provider
 		$session = new EasyCSRF\NativeSessionProvider();
 		$easyCSRF = new EasyCSRF\EasyCSRF($session);
 
-		$model = $this->loadModel('Auth_model');
-		$filter = $this->loadHelper('filter_helper');
-
-		$msg = array();
-
 		try{
 			$easyCSRF->check('token', $_POST['token']);
-			$csrf = NULL;
 		}catch(Exception $e){
-			$csrf = $e->getMessage();
+			$msg = array(
+				'error_msg' => $e->getMessage(),
+				'error_type' => 'danger',
+				'error_code' => '400'
+			);
 		}
 
 		if(isset($_POST['submit'])){
 			
-			$data = array(
-				'ic_passport' => $filter->sanitize($_POST['ic_passport']),
-				'no_gaji' => $filter->sanitize($_POST['no_gaji'])
+			$dataUser = array(
+				'username' => $_POST['username'],
+				'password' => $_POST['password']
 			);
-			$return = $model->processLoginVoter($data);
+
+			# check if user already exist
+			$exist = $this->model->getUserByEmail($_POST['username']);
 			
-			if(!is_array($return)){
+			if(!$exist){
 
-				$msg = array(
-					'error_msg' => $return,
-					'error_type' => 'danger',
-					'error_code' => '300',
-					'csrf' => $csrf
+				# add new user credential
+				$this->model->addUser($dataUser);
+
+				# get user ID
+				$id = $this->model->getUserByEmail($_POST['username']);
+
+				$dataProfile = array(
+					'user_id' => $id[0]['id'],
+					'nama_penuh' => $_POST['fullname']
 				);
+
+				# add new user profile
+				$this->model->addProfile($dataProfile);
+
+				# send welcoming email
+				$email = $this->loadHelper('Email_helper');
 				
-				$header = $this->loadView('auth-header');
-				$footer = $this->loadView('auth-footer');
-		        $template = $this->loadView('error/view');
-				$template->set('data', $msg);
+				# choose email template
+				$e_model = $this->loadModel('Mailer_model');
+				$template = $e_model->getByID(1);
+				$body = $template[0]['body'];
+				$subject = "Pendaftaran dalam e-Pandangan";
 
-				$header->render();
-				$template->render();
-				$footer->render();
+				$full_name = htmlspecialchars($_POST['fullname'], ENT_QUOTES);
 
-			}else{
+				$vars = array(
+					"{{EMAIL}}" => $_POST['username'],
+					"{{FULLNAME}}" => $full_name,
+					"{{PASSWORD}}" => $_POST['password'],
+					"{{BUTTON}}" => '<tr style="font-family: Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+				<td class="content-block aligncenter" style="font-family: Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top"><a href="'.BASE_URL.'auth/login" class="login">Log masuk</a></td></tr>'
+				);
 
-				# get user data
-				$user = $model->getVoter($filter->sanitize($_POST['ic_passport']));
+				$content = strtr($body, $vars);
 
-				$session->set('loggedin', '1');
-				$session->set('role', 'voter');
-				$session->set('user_id', $user[0]['id']);
-				$session->set('jawatan', $user[0]['jawatan']);
-				$session->set('full_name', htmlspecialchars_decode($user[0]['full_name']));
-				$session->set('gred_jawatan', $user[0]['gred_jawatan']);
-				$session->set('jabatan', $user[0]['jabatan']);
-				$session->set('timestamp', date('Y-m-d H:i:s'));
-				$session->set('last_ip', $_SERVER['REMOTE_ADDR']);
+				$email_data = array(
+					'email' => $_POST['username'], 
+					'subject' => $subject, 
+					'content' => $content 
+				);
 
-				# 2FA logic goes here if not required redirect to Dashboard
+				# send the email
+				$send = $email->send($email_data);
 
-				if(getenv('2FA') == 'no'){
-
-					$this->redirect('vote');
-					exit;
-
+				if($send){
+					$msg = array(
+						'error_msg' => 'Satu e-mail telah dihantar kepada alamat e-mail anda mengandungi maklumat log masuk dan kata laluan. Sila semak e-mail anda nanti.',
+						'error_type' => 'success',
+						'error_title' => 'Pendaftaran berjaya'
+					);
 				}else{
-
-					$session->set('token', false);
-					$session->set('authy_id', $user[0]['authy_id']);
-					$this->redirect('auth/login_token');
-					exit;
+					$msg = array(
+						'error_msg' => 'Kami tidak berjaya menghantar e-mail kepada alamat yang anda masukkan. Sila semak semula samada ada kesalahan ejaan dan cuba semula.',
+						'error_type' => 'danger',
+						'error_title' => 'Gagal menghantar e-mail'
+					);
 				}
+			}else{
+				$msg = array(
+					'error_msg' =>'Maklumat pendaftaran menggunakan alamat e-mail '.$_POST['username'].' telah wujud dalam sistem kami. Jika anda pasti ia adalah e-mail anda yang betul, sila klik pada pautan Log Masuk atau Lupa Kata Laluan bagi mendapatkan semula maklumat log masuk anda.',
+					'error_type' => 'warning',
+					'error_title' => 'Pendaftaran telah wujud'
+				);
 			}
-
 		}else{
-			die('Error! Invalid or missing CSRF token');
+			$msg = array(
+				'error_msg' => 'Tiada maklumat pendaftaran diterima. Sila cuba semula.',
+				'error_type' => 'danger',
+				'error_title' => 'Tiada maklumat'
+			);
 		}
-	}
 
-	public function login_token()
-	{
 		$header = $this->loadView('auth-header');
 		$footer = $this->loadView('auth-footer');
-		$template = $this->loadView('2fa');
-		
+        $template = $this->loadView('error/info');
+		$template->set('data', $msg);
+
 		$header->render();
 		$template->render();
 		$footer->render();
 	}
 
-	public function otp(){
-
-		$googleAuthenticator = new Authenticator\GoogleAuthenticator();
-
+	# Process recover password
+	public function process_recover()
+	{
 		# load EasyCSRF and session provider
 		$session = new EasyCSRF\NativeSessionProvider();
 		$easyCSRF = new EasyCSRF\EasyCSRF($session);
@@ -254,85 +364,289 @@ class Auth extends Controller {
 		try{
 			$easyCSRF->check('token', $_POST['token']);
 		}catch(Exception $e){
-			echo $e->getMessage();
+			$msg = array(
+				'error_msg' => $e->getMessage(),
+				'error_type' => 'danger',
+				'error_code' => '400'
+			);
 		}
 
-		$secretKey = $session->get('authy_id');
-		$code = $_POST['otp'];
-		$verify = $googleAuthenticator->authenticate($secretKey, $code);
-
-	    if ($verify != false) {
+		if(isset($_POST['submit'])){
 			
-			# add authenticated session
-			$session->set('token', true);
+			$dataUser = array(
+				'username' => $_POST['username']
+			);
 
-			# TODO: set 2fa logic
-			$this->redirect('dashboard/index');
+			# check if email already exist
+			$exist = $this->model->getUserByEmail($_POST['username']);
+			
+			if($exist){
 
-	    } else {
-	        $this->redirect('site/page/invalid-token');
-	    }
+				$dataToken = array(
+					'user_id' => $exist[0]['id'],
+					'token' => $_POST['token'],
+					'expiry' => $_POST['expiry']
+				);
+
+				# store recovery token
+				$this->model->addRecoveryToken($dataToken);
+
+				# get user by ID
+				$profile = $this->model->getUserProfile($exist[0]['id']);
+
+				# send reset password instruction email
+				$email = $this->loadHelper('Email_helper');
+				
+				# choose email template
+				$e_model = $this->loadModel('Mailer_model');
+				$template = $e_model->getByID(2);
+				$body = $template[0]['body'];
+				$subject = "Set semula kata laluan";
+
+				$full_name = htmlspecialchars($profile[0]['nama_penuh'], ENT_QUOTES);
+
+				$vars = array(
+					"{{EMAIL}}" => $_POST['username'],
+					"{{FULLNAME}}" => $full_name,
+					"{{BUTTON}}" => '<tr style=\"font-family: Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+				<td class="content-block aligncenter" style="font-family: Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top"><a href="'.BASE_URL.'auth/token/'.$_POST['token'].'" class="login">Set semula kata laluan</a></td></tr>'
+				);
+
+				$content = strtr($body, $vars);
+
+				$email_data = array(
+					'email' => $_POST['username'], 
+					'subject' => $subject, 
+					'content' => $content 
+				);
+
+				# send the email
+				$send = $email->send($email_data);
+
+				if($send){
+					$msg = array(
+						'error_msg' => 'Satu e-mail telah dihantar kepada alamat e-mail anda mengandungi pautan untuk set semula kata laluan anda. Sila semak e-mail anda nanti. Kod pengaktifan ini hanya sah bermula 15 minit dari sekarang.',
+						'error_type' => 'success',
+						'error_title' => 'Arahan set semula kata laluan berjaya'
+					);
+				}else{
+					$msg = array(
+						'error_msg' => 'Kami tidak berjaya menghantar e-mail kepada alamat yang anda masukkan. Sila semak semula samada ada kesalahan ejaan dan cuba semula.',
+						'error_type' => 'danger',
+						'error_title' => 'Gagal menghantar e-mail'
+					);
+				}
+			}else{
+				$msg = array(
+					'error_msg' =>'Tiada maklumat pendaftaran menggunakan alamat e-mail '.$_POST['username'].' wujud dalam sistem kami. Jika anda pasti ia adalah e-mail anda yang betul, sila klik pada pautan Log Masuk atau Lupa Kata Laluan bagi mendapatkan semula maklumat log masuk anda.',
+					'error_type' => 'warning',
+					'error_title' => 'E-mail tidak wujud'
+				);
+			}
+		}else{
+			$msg = array(
+				'error_msg' => 'Tiada maklumat e-mail diterima. Sila cuba semula.',
+				'error_type' => 'danger',
+				'error_title' => 'Tiada maklumat'
+			);
+		}
+
+		$header = $this->loadView('auth-header');
+		$footer = $this->loadView('auth-footer');
+        $template = $this->loadView('error/info');
+		$template->set('data', $msg);
+
+		$header->render();
+		$template->render();
+		$footer->render();
 	}
 
-	public function sms(){
-
-		$sms = $this->loadHelper('sms_helper');
+	# Process reset password
+	public function process_reset_password()
+	{
+		# load EasyCSRF and session provider
 		$session = new EasyCSRF\NativeSessionProvider();
+		$easyCSRF = new EasyCSRF\EasyCSRF($session);
 
-		// get phone number from session
-		$phone_number = $session->get('phone_no');
-		$session->set('otp', 0);
-
-
-		// check if this user already request for OTP
-		$row = $model->checkSMS($phone_number);
-		
-		if($row){
-
-			// alert user that an sms has been sent earlier and not yet verified
-			$msg = $lang['otp_msg_unverified_1'].$phone_number.$lang['otp_msg_unverified_2'];
-			$session->set('msgid', $row['messageid']);
-
-		}else{
-
-			// send new OTP
-			(string) $newSessionID = $sms->login();
-
-			// generate OTP number
-			$otp_code = strtoupper(bin2hex(openssl_random_pseudo_bytes(3)));
-			$otp_timestamp = date('Y-m-d h:i:s');
-
-			// Prepare OTP message
-			$message = $lang['otp_sms_1'].$otp_code.$lang['otp_sms_2'].$otp_timestamp;
-
-			// send OTP to user mobile phone
-			$sendData = array(
-			    'sessionid' => $newSessionID,
-			    'message' => $message,
-			    'to' => $phone_number
+		try{
+			$easyCSRF->check('token', $_POST['token']);
+		}catch(Exception $e){
+			$msg = array(
+				'error_msg' => $e->getMessage(),
+				'error_type' => 'danger',
+				'error_code' => '400'
 			);
-			(string) $newMsgid = $sms->send($sendData);
-
-			// Insert into DB
-			$data = array(
-				'phone_number' => $phone_number, 
-				'verification_code' => $otp_code, 
-				'sessionid' => (string) $newSessionID, 
-				'messageid' => (string) $newMsgid, 
-				'last_update' => date('Y-m-d H:i:s')
-			);
-
-			$model->insertSMS($data);
-
-			// inform user that SMS has been successfully sent
-			$msg = $lang['otp_msg_verified_1'].$phone_number.$lang['otp_msg_verified_2'];
-
-			$session->set('msgid', (string) $newMsgid);
 		}
 
-		$session->set('msg', $msg);
-		$this->redirect('pop');
-		exit;
+		if(isset($_POST['submit']) && isset($_POST['expiry_token'])){
+
+			# check if token exist
+			$valid = $this->model->checkToken($_POST['expiry_token']);
+			
+			if(is_array($valid)){
+
+				# get user by ID
+				$profile = $this->model->getUserProfile($valid[0]['user_id']);
+
+				$passwordData = array(
+					'id' => $valid[0]['user_id'],
+					'password' => $_POST['password']
+				);
+
+				# update new password
+				$this->model->updatePassword($passwordData);
+
+				# delete recovery token
+				$this->model->deleteRecoveryToken($_POST['expiry_token']);
+
+				# send new password detail email
+				$email = $this->loadHelper('Email_helper');
+				
+				# choose email template
+				$e_model = $this->loadModel('Mailer_model');
+				$template = $e_model->getByID(3);
+				$body = $template[0]['body'];
+				$subject = "Kata laluan baru";
+
+				$full_name = htmlspecialchars($profile[0]['nama_penuh'], ENT_QUOTES);
+
+				$vars = array(
+					"{{EMAIL}}" => $profile[0]['email'],
+					"{{FULLNAME}}" => $full_name,
+					"{{PASSWORD}}" => $_POST['password'],
+					"{{BUTTON}}" => '<tr style=\"font-family: Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+				<td class="content-block aligncenter" style="font-family: Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top"><a href="'.BASE_URL.'auth" class="login">Log masuk</a></td></tr>'
+				);
+
+				$content = strtr($body, $vars);
+
+				$email_data = array(
+					'email' => $profile[0]['email'], 
+					'subject' => $subject, 
+					'content' => $content 
+				);
+
+				# send the email
+				$send = $email->send($email_data);
+
+				if($send){
+					$msg = array(
+						'error_msg' => 'Satu e-mail telah dihantar kepada alamat e-mail anda mengandungi maklumat kata laluan baru anda. Sila semak e-mail anda nanti. Anda boleh masuk ke e-Pandangan dengan menggunakan kata laluan yang baru ini.',
+						'error_type' => 'success',
+						'error_title' => 'Set semula kata laluan berjaya'
+					);
+				}else{
+					$msg = array(
+						'error_msg' => 'Kami tidak berjaya menghantar e-mail kepada alamat yang anda masukkan. Sila semak semula samada ada kesalahan ejaan dan cuba semula.',
+						'error_type' => 'danger',
+						'error_title' => 'Gagal menghantar e-mail'
+					);
+				}
+			}else{
+				$msg = array(
+					'error_msg' =>'Tiada maklumat pendaftaran menggunakan alamat e-mail '.$profile[0]['email'].' wujud dalam sistem kami. Jika anda pasti ia adalah e-mail anda yang betul, sila klik pada pautan Log Masuk atau Lupa Kata Laluan bagi mendapatkan semula maklumat log masuk anda.',
+					'error_type' => 'warning',
+					'error_title' => 'E-mail tidak wujud'
+				);
+			}
+		}else{
+			$msg = array(
+				'error_msg' => 'Tiada maklumat e-mail diterima. Sila cuba semula.',
+				'error_type' => 'danger',
+				'error_title' => 'Tiada maklumat'
+			);
+		}
+
+		$header = $this->loadView('auth-header');
+		$footer = $this->loadView('auth-footer');
+        $template = $this->loadView('error/info');
+		$template->set('data', $msg);
+
+		$header->render();
+		$template->render();
+		$footer->render();
+	}
+
+	# Process token from email link
+	public function token($token)
+	{
+		if(isset($token)){
+
+			$check = $this->model->checkToken($token);
+
+			# token match
+			if(isset($check[0]['token']) && $check[0]['token'] == $token){
+
+				# token is not expired
+				if($check[0]['expiry'] > Carbon:: now()){
+
+					# redirect to reset password page
+					$this->redirect('reset_password/'.$check[0]['user_id']);
+
+				}else{
+					$msg = array(
+						'error_msg' =>'Pautan set semula kata laluan anda telah tamat tempoh. Sila dapatkan pautan baru.',
+						'error_type' => 'danger',
+						'error_title' => 'Pautan tamat tempoh'
+					);
+				}
+			}else{
+				$msg = array(
+					'error_msg' =>'Pautan set semula kata laluan anda tidak sah. Sila dapatkan pautan baru.',
+					'error_type' => 'danger',
+					'error_title' => 'Pautan tidak sah'
+				);
+			}
+		}else{
+			$msg = array(
+				'error_msg' =>'Pautan set semula kata laluan tidak mempunyai maklumat token yang diperlukan. Sila dapatkan pautan baru.',
+				'error_type' => 'danger',
+				'error_title' => 'Tiada token'
+			);
+		}
+
+		$header = $this->loadView('auth-header');
+		$footer = $this->loadView('auth-footer');
+        $template = $this->loadView('error/info');
+		$template->set('data', $msg);
+
+		$header->render();
+		$template->render();
+		$footer->render();
+	}
+
+	public function reset_password($expiry_token)
+	{
+		# load EasyCSRF and session provider
+		$session = new EasyCSRF\NativeSessionProvider();
+
+		if($session->get('loggedin')){
+			$this->redirect('dashboard');
+		}else{
+			$easyCSRF = new EasyCSRF\EasyCSRF($session);
+
+			# generate token
+			$token = $easyCSRF->generate('token');
+
+			$header = $this->loadView('auth-header');
+			$footer = $this->loadView('auth-footer');
+	        $template = $this->loadView('reset');
+
+	        $custom_js = "<script>
+				var referrer = document.referrer;
+				$(document).ready(function() {
+					$('#redirect').val(referrer);
+				});
+			</script>";
+
+			$footer->set('custom_js', $custom_js);
+			$template->set('token', $token);
+			$template->set('expiry_token', $expiry_token);
+
+			$header->render();
+			$template->render();
+			$footer->render();
+		}
 	}
 
 	private function formSubmit($msg)

@@ -10,7 +10,7 @@ class Upload_helper extends Model {
 	public function add($data){
 
 		// Simple validation (max file size 2MB and only two allowed mime types)
-		$validator = new \FileUpload\Validator\Simple('2M', ['image/gif', 'image/jpeg', 'image/pjpeg', 'image/png']);
+		$validator = new \FileUpload\Validator\Simple(getenv('UPLOAD_SIZE'), ['application/pdf', 'image/jpeg', 'image/pjpeg', 'image/png']);
 
 		// Simple path resolver, where uploads will be put
 		$pathresolver = new \FileUpload\PathResolver\Simple(getenv('UPLOAD_FOLDER'));
@@ -23,7 +23,7 @@ class Upload_helper extends Model {
 
 		// file extension
 		$extension = end(explode(".", $data['files']['name']));
-		$newFileName = $data['controller'].$data['file_id'].".".strtolower($extension);
+		$newFileName = $data['file_id'].".".strtolower($extension);
 
 		// rename file
 		$filenamegenerator = new \FileUpload\FileNameGenerator\Custom($newFileName);
@@ -53,10 +53,9 @@ class Upload_helper extends Model {
 		        // Call any method on an SplFileInfo instance
 		        var_dump($file->isFile());
 
-		        $stm  = "SELECT * FROM attachment WHERE file_id = :file_id AND controller = :controller";
+		        $stm  = "SELECT * FROM attachment WHERE file_id = :file_id";
 				$bind = array(
-					'file_id' => $data['file_id'],
-					'controller' => $data['controller']
+					'file_id' => $data['file_id']
 				);
 
 				$checkQuery = $this->pdo->fetchAll($stm, $bind);
@@ -79,10 +78,9 @@ class Upload_helper extends Model {
 		        }
 
 				try{
-					$stm  = "INSERT INTO attachment (file_id, controller, extension, type, tmp_name, error, size) VALUES (:file_id, :controller, :extension, :type, :tmp_name, :error, :size)";
+					$stm  = "INSERT INTO attachment (file_id, extension, type, tmp_name, error, size) VALUES (:file_id, :extension, :type, :tmp_name, :error, :size)";
 					$bind = array(
 						'file_id' => $data['file_id'],
-						'controller' => $data['controller'],
 						'extension' => $extension,
 						'type' => $data['files']['type'],
 						'tmp_name' => $data['files']['tmp_name'],
@@ -102,10 +100,9 @@ class Upload_helper extends Model {
 
 	public function get($data){
 
-		$stm  = "SELECT CONCAT(controller, file_id, '.', extension) AS file FROM attachment WHERE file_id = :file_id AND controller = :controller";
+		$stm  = "SELECT CONCAT(file_id, '.', extension) AS file FROM attachment WHERE file_id = :file_id";
 		$bind = array(
-			'file_id' => $data['id'],
-			'controller' => $data['controller']
+			'file_id' => $data['id']
 		);
 
 		$result = $this->pdo->fetchAll($stm, $bind);

@@ -8,8 +8,6 @@ class Dashboard extends Controller {
 		$this->date = $this->loadHelper('date_helper');
 		$this->model = $this->loadModel('Dashboard_model');
 		$this->filter = $this->loadHelper('filter_helper');
-		$this->vote_model = $this->loadModel('vote_model');
-		$this->Candidate_model = $this->loadModel('Candidate_model');
 
 		$this->css = array(
 			'assets/libs/datatables/dataTables.bootstrap4.css',
@@ -41,247 +39,35 @@ class Dashboard extends Controller {
 	{
 		$css = array(
 			'assets/libs/select2/select2.min.css',
-			'assets/libs/sweetalert2/sweetalert2.min.css'
+			'assets/libs/sweetalert2/sweetalert2.min.css',
+			'assets/libs/bootstrap-table/bootstrap-table.min.css'
 		);
 
 		$js = array(
 			'assets/libs/select2/select2.min.js',
 			'assets/js/pages/select2.init.js',
 			'assets/libs/sweetalert2/sweetalert2.min.js',
-			'assets/js/pages/sweet-alerts.init.js'
+			'assets/js/pages/sweet-alerts.init.js',
+			'assets/libs/bootstrap-table/bootstrap-table.min.js',
+			'assets/js/pages/bootstrap-tables.init.js'
 		);
 
+		$this->borang_model = $this->loadModel('Borang_model');
+		$ptkl = $this->borang_model->getByUserID('ptkl', $this->session->get('user_id'));
+
 		$template = $this->loadView('dashboard');
-
-		$posts = $this->vote_model->getPosts();
-		$candidates = $this->vote_model->getCandidates($this->filter->isInt($this->session->get('user_id')));
-		$submission = $this->vote_model->countSubmission($this->filter->isInt($this->session->get('user_id')));
-		$toVote = $this->vote_model->checkNomination($this->filter->isInt($this->session->get('user_id')));
-
-		if($submission){
-			$total = $submission[0]['total'];
-		}else{
-			$total = 0;
-		}
-
-		if($toVote){
-			$checkNomination = $toVote[0]['status'];
-		}else{
-			$checkNomination = 'no';
-		}
-
-		$post = $this->vote_model->countPost();
-
-		# semak jika user ada terpilih sebagai calon
-		$nominated = $this->Candidate_model->checkVoteListByID($this->session->get('user_id'));
-		if($nominated){
-			$count = array_filter($nominated, function($ar) {
-			   return ($ar['setuju'] == 'ya');
-			});
-			if($count){
-				$jsNominated = 'no';
-			}else{
-				$jsNominated = 'yes';
-			}
-		}else{
-			$jsNominated = 'no';
-		}
-
-		$custom_js = "<script>
-
-			var submission = '".$total."';
-			var post = '".$post[0]['total']."';
-			var diff = parseInt(post) - parseInt(submission);
-			var voter_id = '".$this->session->get('user_id')."';
-			var toVote = '".$checkNomination."';
-			var nominated = '".$jsNominated."';
-
-			// assign random color to ribbon
-			var klasses = ['ribbon-primary', 'ribbon-info', 'ribbon-success', 'ribbon-pink', 'ribbon-warning', 'ribbon-danger', 'ribbon-pink', 'ribbon-dark', 'ribbon-blue', 'ribbon-secondary'];
-
-			$('.ribbon').each(function(i, val) {
-				$(this).addClass(klasses[i]);
-			});
-
-			$(document).on('click', '.open-modal', function () {
-			    var postID = $(this).data('post-id');
-			    
-			    $('.modal-footer #postID').val( postID );
-			    $('#modal').modal('show');
-
-			    if(parseInt(postID) === 4 || parseInt(postID) === 7){
-			    	var nama_url = '".BASE_URL."search.php?action=wanitaOnly';
-		    	}
-		    	else{
-					var nama_url = '".BASE_URL."search.php?action=nama';
-		    	}
-				
-				$('#nama').select2({
-					dropdownParent: $('#modal'),
-					width: 'resolve',
-					placeholder: 'Pilih calon',
-					minimumInputLength: 2,
-				    ajax: {
-				        url: nama_url,
-				        dataType: 'json',
-				        delay: 250,
-				        processResults: function (data) {
-				            return {
-				            	results: data
-				            };
-				        },
-				        cache: true
-				    }
-				});
-
-				// Create vote
-				function createVote(){
-
-					var create_url = '".BASE_URL."vote/addCandidate';
-
-					return $.ajax({
-						type: 'POST',
-						url: create_url,
-						dataType: 'html',
-						data: $('form#voting-form').serialize()
-				    });
-				}
-
-				$('#save-vote').bind('click', function (e) {
-
-					e.preventDefault();
-					$('#save-vote').attr('disabled', 'disabled');
-					createVote();
-					swal({
-						title: 'Berjaya',
-						text: 'Pencalonan telah berjaya dibuat.',
-						type: 'success'
-					}).then(function() {
-		                location.reload();
-		            });
-				});
-
-			});
-
-			$(document).ready(function(){
-
-				// semak jika user ada terpilih sebagai calon
-				if(nominated == 'yes'){
-					swal('Perhatian', 'Anda mempunyai '+ '".count($nominated)."' + ' pencalonan bagi pemilihan kali ini. Sila semak pencalonan anda dan sahkan samada anda menerima atau menolak pencalonan ini. Jika anda mempunyai lebih dari 2 pencalonan, anda hanya boleh memilih maksima 2 jawatan sahaja.', 'info')
-				}
-
-				$('#tidak-setuju').bind('click', function (e) {
-					swal('Terima kasih', 'Semoga Allah merahmati pilihan tuan/puan ini.', 'info')
-				});
-
-				// agree to nomination
-				function agreeNomination(postData){
-
-					var create_url = '".BASE_URL."candidate/agreeNomination';
-
-					return $.ajax({
-						type: 'POST',
-						url: create_url,
-						dataType: 'html',
-						data: 'candidate_id=' + postData[0] +'&post_id=' + postData[1],
-				    });
-				}
-
-				$('.save-nomination').bind('click', function (e) {
-
-					var candidate_id = $(this).data('candidate-id');
-					var post_id = $(this).data('post-id');
-
-					var postData = new Array(candidate_id,post_id);
-
-					e.preventDefault();
-					$(this).attr('disabled', 'disabled');
-					agreeNomination(postData);
-
-					swal({
-						title: 'Tahniah',
-						text: 'Sesungguhnya Alah telah memilih dan memberi peluang kepada tuan/puan dalam memperjuangkan agama-Nya melalui persatuan ini. Sila sediakan satu keping gambar kepada urusetia bagi dimuatnaik dalam sistem. Gambar ini akan digunakan semasa proses pemilihan nanti.',
-						type: 'success'
-					}).then(function() {
-		                location.reload();
-		            });
-				});
-
-				/* 
-
-				swal('Pencalonan Tutup', 'Terima kasih kerana menggunakan perkhidmatan e-voting bagi pemilihan calon kali ini. Pencalonan telah ditutup.', 'success');
-
-				var submit_url = '".BASE_URL."vote/updateCandidates';
-
-				if(parseInt(submission) < parseInt(post)){
-					swal('Makluman', 'Pencalonan anda masih belum lengkap. Terdapat '+ diff + ' lagi kekosongan yang perlu diisi. Sila lengkapkan borang pencalonan anda', 'info')
-				}
-
-				if(toVote == 'no'){
-
-					if(parseInt(submission) === parseInt(post)){
-						swal('Terima kasih!', '', 'info');
-						swal({
-				            title: 'Tahniah!',
-				            text: 'Anda telah melengkapkan borang pencalonan ini. Jika anda bersetuju dengan pencalonan anda, sila klik pada butang Hantar untuk mengesahkan pencalonan anda. Jika anda ingin menukar pencalonan anda, sila tekan butang Batal.',
-				            type: 'question',
-				            showCancelButton: true,
-				            confirmButtonText: 'Hantar',
-				            cancelButtonText: 'Batal'
-				        }).then(function(){
-							$.ajax({
-								type: 'POST',
-								url: submit_url,
-								data: 'voter_id='+ voter_id,
-								success: function(){
-									swal({
-										title: 'Berjaya',
-										text: 'Borang pencalonan anda telah dihantar. Terima kasih kerana menggunakan perkhidmatan e-voting ini.',
-										type: 'success'
-									}).then(function() {
-										location.reload();
-									})
-								}
-							})
-							.error(function() {
-								swal('Oops', 'Error connecting to the server!', 'error');
-							});
-						}, function (dismiss) {
-							if (dismiss === 'cancel') {
-								swal(
-									'Batal',
-									'Pencalonan anda belum dihantar kepada urusetia. Sila sahkan pencalonan anda sebelum tamat tempoh pencalonan.',
-									'info'
-								)
-							}
-						});
-					}
-
-				}else{
-					swal('Terima kasih', 'Terima kasih kerana menggunakan perkhidmatan e-voting bagi pemilihan calon kali ini. Pencalonan anda telah selesai.', 'success')
-				}
-
-				if(parseInt(submission) === 0){
-					swal('Selamat datang', 'Terima kasih kerana menggunakan perkhidmatan e-voting bagi pemilihan calon kali ini. Sila klik pada butang Pilih Calon bagi setiap jawatan yang dipertandingkan.', 'info')
-				} */
-			});
-
-		</script>";
 
 		$header = $this->loadView('header');
         $header->set('css', $css);
 		$header->render();
 
-		$navigation = $this->loadView('navigation');
-		$navigation->render();
+		$topbar = $this->loadView('topbar');
+		$topbar->render();
 
-        $template->set('posts', $posts);
-        $template->set('candidates', $candidates);
-        $template->set('nomination', $nominated);
+		$template->set('ptkl', $ptkl);
 		$template->render();
 
 		$footer = $this->loadView('footer');
-        $footer->set('custom_js', $custom_js);
         $footer->set('js', $js);
 		$footer->render();
 	}
@@ -289,12 +75,12 @@ class Dashboard extends Controller {
 	public function admin()
 	{
 		$header = $this->loadView('header');
-		$navigation = $this->loadView('navigation');
+		$topbar = $this->loadView('topbar');
         $template = $this->loadView('dashboard-admin');
 		$footer = $this->loadView('footer');
 		
 		$header->render();
-		$navigation->render();
+		$topbar->render();
 		$template->render();
 		$footer->render();
 	}

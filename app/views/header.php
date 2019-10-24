@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="<?php echo ($_SESSION['lang']) ? $_SESSION['lang'] : 'my' ?>">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -44,3 +44,4 @@
         }
         </script>
 	</head>
+    <body class="gradient-topbar topbar-dark" onload="load()">

@@ -1,5 +1,14 @@
-        </div>
-        <!-- END wrapper -->   
+        <!-- Footer Start -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php echo getenv('FOOTER') ?>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- end Footer -->  
              
         <!-- base  -->
         <script src="<?php echo BASE_URL; ?>assets/js/vendor.min.js"></script>

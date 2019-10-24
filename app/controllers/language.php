@@ -31,9 +31,6 @@ class Language extends Controller {
 			'assets/libs/datatables/dataTables.buttons.min.js',
 			'assets/libs/datatables/buttons.html5.min.js',
 			'assets/libs/datatables/buttons.flash.min.js',
-			'assets/libs/datatables/buttons.print.min.js',
-			'assets/libs/pdfmake/pdfmake.min.js',
-			'assets/libs/pdfmake/vfs_fonts.js',
 			'assets/js/pages/datatables.init.js',
 			'assets/libs/sweetalert2/sweetalert2.min.js',
 			'assets/js/pages/sweet-alerts.init.js'
@@ -75,7 +72,7 @@ class Language extends Controller {
 				var main_url = '".BASE_URL."language/index/';
 
     			$('#regenerate-language').on('click', function(){
-			        swal({
+			        Swal.fire({
 			            title: 'Are you sure?',
 			            text: 'New language files will be regenerate.',
 			            type: 'question',
@@ -91,7 +88,7 @@ class Language extends Controller {
 							}
 						})
 						.done(function() {
-							swal({
+							Swal.fire({
 								title: 'Success',
 								text: 'The language files is successfully generated.',
 								type: 'success'
@@ -100,11 +97,11 @@ class Language extends Controller {
 							});
 						})
 						.error(function() {
-							swal('Oops', 'Error connecting to the server!', 'error');
+							Swal.fire('Oops', 'Error connecting to the server!', 'error');
 						});
 					}, function (dismiss) {
 						if (dismiss === 'cancel') {
-							swal(
+							Swal.fire(
 								'Cancelled',
 								'The record is safe :)',
 								'info'
@@ -117,7 +114,7 @@ class Language extends Controller {
 		</script>";
 		
 		$header = $this->loadView('header');
-		$navigation = $this->loadView('navigation');
+		$navigation = $this->loadView('topbar');
 		$footer = $this->loadView('footer');
         $template = $this->loadView('language/index');
 
@@ -177,7 +174,7 @@ class Language extends Controller {
 		    	'db' => 'id',
 		    	'dt' => 'action',
 		    	'formatter' => function( $d, $row ) {
-            		return "<a href=\"".BASE_URL."language/edit/".$d."\" class=\"btn btn-primary btn-xs\">Edit</a>";
+            		return "<a href=\"".BASE_URL."language/edit/".$d."\" class=\"btn btn-primary btn-xs\">Ubah</a>";
         		}
         	)
 		);
@@ -200,7 +197,7 @@ class Language extends Controller {
 	function add()
 	{
 		$header = $this->loadView('header');
-		$navigation = $this->loadView('navigation');
+		$navigation = $this->loadView('topbar');
 		$footer = $this->loadView('footer');
         $template = $this->loadView('language/add');
 		
@@ -256,7 +253,7 @@ class Language extends Controller {
 			var main_url = '".BASE_URL."language/index/';
 
 		    $('#delete').click(function(){
-		        swal({
+		        Swal.fire({
 		            title: 'Are you sure?',
 		            text: 'You will not be able to recover this record!',
 		            type: 'warning',
@@ -274,7 +271,7 @@ class Language extends Controller {
 						}
 					})
 					.done(function() {
-						swal({
+						Swal.fire({
 							title: 'Success',
 							text: 'The record is successfully deleted.',
 							type: 'success'
@@ -283,7 +280,7 @@ class Language extends Controller {
 						});
 					})
 					.error(function() {
-						swal('Oops', 'Error connecting to the server!', 'error');
+						Swal.fire('Oops', 'Error connecting to the server!', 'error');
 					});
 				});
 		    });
@@ -292,7 +289,7 @@ class Language extends Controller {
 		$data = $this->model->get($id);
 
 		$header = $this->loadView('header');
-		$navigation = $this->loadView('navigation');
+		$navigation = $this->loadView('topbar');
 		$footer = $this->loadView('footer');
         $template = $this->loadView('language/edit');
 
@@ -307,7 +304,6 @@ class Language extends Controller {
 	
 	function update()
 	{
-		$model = $this->loadModel('Template_model');
 		if(isset($_POST)){
 			$id = $_POST['id'];
 			$data = array(
@@ -330,29 +326,6 @@ class Language extends Controller {
 			
 		}else{
 			die('Error: Unable to update the record.');
-		}
-	}
-	
-	function delete($id)
-	{
-		if(isset($id)){
-
-			$model = $this->loadModel('Template_model');
-			$model->deleteRecord($id);
-
-			# log user action
-			$log = $this->loadHelper('log_helper');
-			$data2 = array(
-				'user_id' => $this->session->get('user_id'),
-				'controller' => 'Template',
-				'function' => 'delete',
-				'action' => 'Delete email template #'.$id
-			);
-			$log->add($data2);
-
-			$this->redirect('template/index');
-		}else{
-			die('Error: Unable to delete the record.');
 		}
 	}
 

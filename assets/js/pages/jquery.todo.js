@@ -1,1 +1,244 @@
-!function(t){"use strict";var o=function(){this.$body=t("body"),this.$todoContainer=t("#todo-container"),this.$todoMessage=t("#todo-message"),this.$todoRemaining=t("#todo-remaining"),this.$todoTotal=t("#todo-total"),this.$archiveBtn=t("#btn-archive"),this.$todoList=t("#todo-list"),this.$todoDonechk=".todo-done",this.$todoForm=t("#todo-form"),this.$todoInput=t("#todo-input-text"),this.$todoBtn=t("#todo-btn-submit"),this.$todoData=[{id:"1",text:"Design One page theme",done:!1},{id:"2",text:"Build a js based app",done:!0},{id:"3",text:"Creating component page",done:!0},{id:"4",text:"Testing??",done:!0},{id:"5",text:"Hehe!! This is looks cool!",done:!1},{id:"6",text:"Create new version 3.0",done:!1},{id:"7",text:"Build an angular app",done:!0}],this.$todoCompletedData=[],this.$todoUnCompletedData=[]};o.prototype.markTodo=function(t,o){for(var e=0;e<this.$todoData.length;e++)this.$todoData[e].id==t&&(this.$todoData[e].done=o)},o.prototype.addTodo=function(t){this.$todoData.push({id:this.$todoData.length,text:t,done:!1}),this.generate()},o.prototype.archives=function(){this.$todoUnCompletedData=[];for(var t=0;t<this.$todoData.length;t++){var o=this.$todoData[t];1==o.done?this.$todoCompletedData.push(o):this.$todoUnCompletedData.push(o)}this.$todoData=[],this.$todoData=[].concat(this.$todoUnCompletedData),this.generate()},o.prototype.generate=function(){this.$todoList.html("");for(var t=0,o=0;o<this.$todoData.length;o++){var e=this.$todoData[o];1==e.done?this.$todoList.prepend('<li class="list-group-item border-0 pl-1"><div class="checkbox checkbox-primary"><input class="todo-done" id="'+e.id+'" type="checkbox" checked><label for="'+e.id+'">'+e.text+"</label></div></li>"):(t+=1,this.$todoList.prepend('<li class="list-group-item border-0 pl-1"><div class="checkbox checkbox-primary"><input class="todo-done" id="'+e.id+'" type="checkbox"><label for="'+e.id+'">'+e.text+"</label></div></li>"))}this.$todoTotal.text(this.$todoData.length),this.$todoRemaining.text(t)},o.prototype.init=function(){var o=this;this.generate(),this.$archiveBtn.on("click",function(t){return t.preventDefault(),o.archives(),!1}),t(document).on("change",this.$todoDonechk,function(){this.checked?o.markTodo(t(this).attr("id"),!0):o.markTodo(t(this).attr("id"),!1),o.generate()}),this.$todoBtn.on("click",function(){""==o.$todoInput.val()||void 0===o.$todoInput.val()||null==o.$todoInput.val()?(sweetAlert("Oops...","You forgot to enter todo text","error"),o.$todoInput.focus()):o.addTodo(o.$todoInput.val())})},t.TodoApp=new o,t.TodoApp.Constructor=o}(window.jQuery),function(t){"use strict";window.jQuery.TodoApp.init()}();
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 18);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./resources/js/pages/jquery.todo.js":
+/*!*******************************************!*\
+  !*** ./resources/js/pages/jquery.todo.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*
+Template Name: Ubold - Responsive Bootstrap 4 Admin Dashboard
+Author: CoderThemes
+Version: 3.0.0
+Website: https://coderthemes.com/
+Contact: support@coderthemes.com
+File: Todo widget
+*/
+!function ($) {
+  "use strict";
+
+  var TodoApp = function TodoApp() {
+    this.$body = $("body"), this.$todoContainer = $('#todo-container'), this.$todoMessage = $("#todo-message"), this.$todoRemaining = $("#todo-remaining"), this.$todoTotal = $("#todo-total"), this.$archiveBtn = $("#btn-archive"), this.$todoList = $("#todo-list"), this.$todoDonechk = ".todo-done", this.$todoForm = $("#todo-form"), this.$todoInput = $("#todo-input-text"), this.$todoBtn = $("#todo-btn-submit"), this.$todoData = [{
+      'id': '1',
+      'text': 'Design One page theme',
+      'done': false
+    }, {
+      'id': '2',
+      'text': 'Build a js based app',
+      'done': true
+    }, {
+      'id': '3',
+      'text': 'Creating component page',
+      'done': true
+    }, {
+      'id': '4',
+      'text': 'Testing??',
+      'done': true
+    }, {
+      'id': '5',
+      'text': 'Hehe!! This is looks cool!',
+      'done': false
+    }, {
+      'id': '6',
+      'text': 'Create new version 3.0',
+      'done': false
+    }, {
+      'id': '7',
+      'text': 'Build an angular app',
+      'done': true
+    }];
+    this.$todoCompletedData = [];
+    this.$todoUnCompletedData = [];
+  }; //mark/unmark - you can use ajax to save data on server side
+
+
+  TodoApp.prototype.markTodo = function (todoId, complete) {
+    for (var count = 0; count < this.$todoData.length; count++) {
+      if (this.$todoData[count].id == todoId) {
+        this.$todoData[count].done = complete;
+      }
+    }
+  }, //adds new todo
+  TodoApp.prototype.addTodo = function (todoText) {
+    this.$todoData.push({
+      'id': this.$todoData.length,
+      'text': todoText,
+      'done': false
+    }); //regenerate list
+
+    this.generate();
+  }, //Archives the completed todos
+  TodoApp.prototype.archives = function () {
+    this.$todoUnCompletedData = [];
+
+    for (var count = 0; count < this.$todoData.length; count++) {
+      //geretaing html
+      var todoItem = this.$todoData[count];
+
+      if (todoItem.done == true) {
+        this.$todoCompletedData.push(todoItem);
+      } else {
+        this.$todoUnCompletedData.push(todoItem);
+      }
+    }
+
+    this.$todoData = [];
+    this.$todoData = [].concat(this.$todoUnCompletedData); //regenerate todo list
+
+    this.generate();
+  }, //Generates todos
+  TodoApp.prototype.generate = function () {
+    //clear list
+    this.$todoList.html("");
+    var remaining = 0;
+
+    for (var count = 0; count < this.$todoData.length; count++) {
+      //geretaing html
+      var todoItem = this.$todoData[count];
+      if (todoItem.done == true) this.$todoList.prepend('<li class="list-group-item border-0 pl-1"><div class="checkbox checkbox-primary"><input class="todo-done" id="' + todoItem.id + '" type="checkbox" checked><label for="' + todoItem.id + '">' + todoItem.text + '</label></div></li>');else {
+        remaining = remaining + 1;
+        this.$todoList.prepend('<li class="list-group-item border-0 pl-1"><div class="checkbox checkbox-primary"><input class="todo-done" id="' + todoItem.id + '" type="checkbox"><label for="' + todoItem.id + '">' + todoItem.text + '</label></div></li>');
+      }
+    } //set total in ui
+
+
+    this.$todoTotal.text(this.$todoData.length); //set remaining
+
+    this.$todoRemaining.text(remaining);
+  }, //init todo app
+  TodoApp.prototype.init = function () {
+    var $this = this; //generating todo list
+
+    this.generate(); //binding archive
+
+    this.$archiveBtn.on("click", function (e) {
+      e.preventDefault();
+      $this.archives();
+      return false;
+    }); //binding todo done chk
+
+    $(document).on("change", this.$todoDonechk, function () {
+      if (this.checked) $this.markTodo($(this).attr('id'), true);else $this.markTodo($(this).attr('id'), false); //regenerate list
+
+      $this.generate();
+    }); //binding the new todo button
+
+    this.$todoBtn.on("click", function () {
+      if ($this.$todoInput.val() == "" || typeof $this.$todoInput.val() == 'undefined' || $this.$todoInput.val() == null) {
+        sweetAlert("Oops...", "You forgot to enter todo text", "error");
+        $this.$todoInput.focus();
+      } else {
+        $this.addTodo($this.$todoInput.val());
+      }
+    });
+  }, //init TodoApp
+  $.TodoApp = new TodoApp(), $.TodoApp.Constructor = TodoApp;
+}(window.jQuery), //initializing todo app
+function ($) {
+  "use strict";
+
+  $.TodoApp.init();
+}(window.jQuery);
+
+/***/ }),
+
+/***/ 18:
+/*!*************************************************!*\
+  !*** multi ./resources/js/pages/jquery.todo.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! F:\wamp\www\Ubold\laravel\ubold-horizontal\resources\js\pages\jquery.todo.js */"./resources/js/pages/jquery.todo.js");
+
+
+/***/ })
+
+/******/ });

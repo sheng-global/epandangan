@@ -1,74 +1,82 @@
             <!-- ============================================================== -->
-            <!-- Start right Content here -->
-            <!-- ============================================================== -->                      
-            <div class="content-page">
-                <div class="content">
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
 
-                    <!-- Start Content-->
-                    <div class="container-fluid">
+            <div class="wrapper">
+                <div class="container-fluid">
 
-                        <!-- start page title -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box">
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);"><?php echo SITE_TITLE ?></a></li>
-                                            <li class="breadcrumb-item active">Dashboard</li>
-                                        </ol>
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);"><?php echo SITE_TITLE ?></a></li>
+                                        <li class="breadcrumb-item active">Dashboard</li>
+                                    </ol>
+                                </div>
+                                <h4 class="page-title">Dashboard</h4>
+                            </div>
+                        </div>
+                    </div>     
+                    <!-- end page title -->
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card-box bg-pattern">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="avatar-md bg-blue rounded">
+                                            <i class="fe-layers avatar-title font-22 text-white"></i>
+                                        </div>
                                     </div>
-                                    <h4 class="page-title">Dashboard</h4>
+                                    <div class="col-6">
+                                        <div class="text-right">
+                                            <h3 class="text-dark my-1"><span data-plugin="counterup">120</span></h3>
+                                            <p class="text-muted mb-0 text-truncate">Active Deals</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>     
-                        <!-- end page title -->
+                            </div> <!-- end card-box-->
+                        </div> <!-- end col -->
 
-                        <div class="row">
-                            <div class="col-md-6 col-xl-3">
-                                <div class="card-box">
-                                    <h4 class="mt-0 font-16">Pencalonan</h4>
-                                    <h2 class="text-primary my-3 text-center"><span data-plugin="counterup">31,570</span></h2>
-                                    <p class="text-muted mb-0">Jumlah Calon<span class="float-right"><i class="fa fa-caret-down text-danger mr-1"></i>7.85%</span></p>
+                        <div class="col-md-3">
+                            <div class="card-box bg-pattern">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="avatar-md bg-success rounded">
+                                            <i class="fe-award avatar-title font-22 text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="text-right">
+                                            <h3 class="text-dark my-1"><span data-plugin="counterup">741</span></h3>
+                                            <p class="text-muted mb-0 text-truncate">Won Deals</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6 col-xl-3">
-                                <div class="card-box">
-                                    <h4 class="mt-0 font-16">Pemilihan</h4>
-                                    <h2 class="text-primary my-3 text-center"><span data-plugin="counterup">31,570</span></h2>
-                                    <p class="text-muted mb-0">Jumlah Pemilihan<span class="float-right"><i class="fa fa-caret-down text-danger mr-1"></i>7.85%</span></p>
+                            </div> <!-- end card-box-->
+                        </div> <!-- end col -->
+                        <div class="col-md-3">
+                            <div class="card-box bg-pattern">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="avatar-md bg-danger rounded">
+                                            <i class="fe-delete avatar-title font-22 text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="text-right">
+                                            <h3 class="text-dark my-1"><span data-plugin="counterup">256</span></h3>
+                                            <p class="text-muted mb-0 text-truncate">Lost Deals</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6 col-xl-3">
-                                <div class="card-box">
-                                    <h4 class="mt-0 font-16">Undi</h4>
-                                    <h2 class="text-primary my-3 text-center"><span data-plugin="counterup">31,570</span></h2>
-                                    <p class="text-muted mb-0">Jumlah Undi<span class="float-right"><i class="fa fa-caret-down text-danger mr-1"></i>7.85%</span></p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-xl-3">
-                                <div class="card-box">
-                                    <h4 class="mt-0 font-16">Undi Rosak</h4>
-                                    <h2 class="text-primary my-3 text-center"><span data-plugin="counterup">31,570</span></h2>
-                                    <p class="text-muted mb-0">Jumlah Undi<span class="float-right"><i class="fa fa-caret-down text-danger mr-1"></i>7.85%</span></p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div> <!-- container -->
-                               
-                </div> <!-- content -->
-
-                <!-- Footer Start -->
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <?php echo getenv('FOOTER') ?>
-                            </div>
-                        </div>
+                            </div> <!-- end card-box-->
+                        </div> <!-- end col -->
                     </div>
-                </footer>
-                <!-- end Footer -->
+
+                </div> <!-- container -->
 
             </div>
             

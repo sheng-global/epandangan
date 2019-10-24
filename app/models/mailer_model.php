@@ -2,45 +2,16 @@
 
 class Mailer_model extends Model {
 	
-	public function listAll()
+	public function getByID($id)
 	{
-		$result = $this->selectAll('email_template');
-		return $result;
-	}
-	
-	public function listSingle($id)
-	{
-		$result = $this->selectSingleById('email_template','id',$id);
-		return $result;
-	}
-	
-	public function addRecord($data)
-	{
-		$query = $this->insert('email_template', $data);
-		if(empty($query)){
-			return false;
-		}else{
-			return $query;
+		try{
+			$stm  = "SELECT * FROM email_template WHERE id = :id";
+			$bind = array('id' => $id);
+			$result = $this->pdo->fetchAll($stm, $bind);
+			return $result;
 		}
-	}
-	
-	public function editRecord($data,$id)
-	{
-		$query = $this->update('email_template', $id, $data);
-		if(empty($query)){
-			return false;
-		}else{
-			return $query;
-		}
-	}
-	
-	public function deleteRecord($id)
-	{
-		$query = $this->delete('email_template', $id);
-		if(empty($query)){
-			return false;
-		}else{
-			return $query;
+		catch(Exception $e){
+			echo $e->getMessage();
 		}
 	}
 }

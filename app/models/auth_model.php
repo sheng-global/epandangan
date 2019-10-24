@@ -8,7 +8,7 @@ class Auth_model extends Model {
 		$password = $data['password'];
 		$error_msg = NULL;
 		
-		$user = $this->getUser($username);
+		$user = $this->getUserByEmail($username);
 		$result = password_verify($password, $user[0]['password']);
 		$success = ($result) ? 'true': 'false';
 
@@ -29,66 +29,134 @@ class Auth_model extends Model {
 		}
 	}
 
-	public function processLoginVoter($data)
+	public function getUserByEmail($email)
 	{
-		$error_msg = NULL;
-		$user = $this->checkIC($data);
-
-		if(empty($user)){
-			return $error_msg = "No. gaji atau kad pengenalan tidak sah";
-		}else{
-			return $user;
+		try{
+			$stm  = "SELECT * FROM users WHERE email = :email LIMIT 1";
+			$bind = array('email' => $email);
+			$result = $this->pdo->fetchAll($stm, $bind);
+			return $result;
+		}
+		catch(Exception $e){
+			echo $e->getMessage();
 		}
 	}
 
-	public function checkSMS($phone_no)
+	public function getUserProfile($user_id)
 	{
-		$stm  = "SELECT * FROM otp WHERE phone_number = :phone_no AND verified = '0'";
-		$bind = array('phone_no' => $phone_no);
-		$result = $this->pdo->fetchAll($stm, $bind);
-		return $result;
+		try{
+			$stm  = "SELECT * FROM view_profile WHERE user_id = :user_id LIMIT 1";
+			$bind = array('user_id' => $user_id);
+			$result = $this->pdo->fetchAll($stm, $bind);
+			return $result;
+		}
+		catch(Exception $e){
+			echo $e->getMessage();
+		}
 	}
 
-	public function getUser($username)
+	public function getUserProfileByEmail($email)
 	{
-		$stm  = "SELECT * FROM view_users WHERE email = :email";
-		$bind = array('email' => $username);
-		$result = $this->pdo->fetchAll($stm, $bind);
-		return $result;
+		try{
+			$stm  = "SELECT * FROM view_profile WHERE email = :email LIMIT 1";
+			$bind = array('email' => $email);
+			$result = $this->pdo->fetchAll($stm, $bind);
+			return $result;
+		}
+		catch(Exception $e){
+			echo $e->getMessage();
+		}
 	}
 
-	public function checkIC($data)
+	public function addUser($data)
 	{
-		$stm  = "SELECT * FROM user_profile WHERE ic_passport = :ic_passport AND no_gaji = :no_gaji";
-		$bind = array(
-			'ic_passport' => $data['ic_passport'],
-			'no_gaji' => $data['no_gaji']
-		);
-		$result = $this->pdo->fetchAssoc($stm, $bind);
-		return $result;
+		try{
+			$stm  = "INSERT INTO users (email, password, permission) VALUES (:email, :password, :permission)";
+			$bind = array(
+				'email' => $data['username'],
+				'password' => password_hash($data['password'], PASSWORD_DEFAULT),
+				'permission' => 'user'
+			);
+			
+			return $this->pdo->fetchAffected($stm, $bind);
+		}
+		catch(Exception $e){
+			return $e->getMessage();
+		}
 	}
 
-	public function getVoter($ic_passport)
+	public function addProfile($data)
 	{
-		$stm  = "SELECT * FROM user_profile WHERE ic_passport = :ic_passport";
-		$bind = array('ic_passport' => $ic_passport);
-		$result = $this->pdo->fetchAll($stm, $bind);
-		return $result;
+		try{
+			$stm  = "INSERT INTO profile (user_id, nama_penuh) VALUES (:user_id, :nama_penuh)";
+			$bind = array(
+				'user_id' => $data['user_id'],
+				'nama_penuh' => $data['nama_penuh']
+			);
+
+			return $this->pdo->fetchAffected($stm, $bind);
+		}
+		catch(Exception $e){
+			return $e->getMessage();
+		}
 	}
 
-	# insert otp sms
-	public function insertSMS($data)
+	public function addRecoveryToken($data)
 	{
-		$stm  = "INSERT INTO otp (phone_number, verification_code, sessionid, messageid, last_update) VALUES (:phone_number, :verification_code, :sessionid, :messageid, :last_update)";
-		$bind = array(
-			'phone_number' => $data['phone_number'],
-			'verification_code' => $data['verification_code'],
-			'sessionid' => $data['sessionid'],
-			'messageid' => $data['messageid'],
-			'last_update' => $data['last_update']
-		);
-		$result = $this->pdo->fetchAffected($stm, $bind);
-		return $result;
+		try{
+			$stm  = "INSERT INTO user_token (user_id, token, expiry) VALUES (:user_id, :token, :expiry)";
+			$bind = array(
+				'user_id' => $data['user_id'],
+				'token' => $data['token'],
+				'expiry' => $data['expiry']
+			);
+
+			return $this->pdo->fetchAffected($stm, $bind);
+		}
+		catch(Exception $e){
+			return $e->getMessage();
+		}
+	}
+
+	public function checkToken($token)
+	{
+		try{
+			$stm  = "SELECT * FROM user_token WHERE token = :token LIMIT 1";
+			$bind = array('token' => $token);
+			return $this->pdo->fetchAll($stm, $bind);
+		}
+		catch(Exception $e){
+			return $e->getMessage();
+		}
+	}
+
+	public function deleteRecoveryToken($token)
+	{
+		try{
+			$stm  = "DELETE FROM user_token WHERE token = :token LIMIT 1";
+			$bind = array('token' => $token);
+			$result = $this->pdo->fetchAll($stm, $bind);
+			return $result;
+		}
+		catch(Exception $e){
+			echo $e->getMessage();
+		}
+	}
+
+	public function updatePassword($data)
+	{
+		try{
+			$stm  = "UPDATE users SET password = :password WHERE id = :id";
+			$bind = array(
+				'password' => password_hash($data['password'], PASSWORD_DEFAULT),
+				'id' => $data['id']
+			);
+			
+			return $this->pdo->fetchAffected($stm, $bind);
+		}
+		catch(Exception $e){
+			return $e->getMessage();
+		}
 	}
 	
 }
