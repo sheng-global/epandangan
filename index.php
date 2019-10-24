@@ -2,7 +2,7 @@
 
 // Defines
 define('ROOT_DIR', realpath(dirname(__FILE__)) .'/');
-define('APP_DIR', ROOT_DIR .'app/');
+define('APP_DIR', ROOT_DIR .'application/');
 
 //Start the Session
 session_save_path(ROOT_DIR.'tmp');
