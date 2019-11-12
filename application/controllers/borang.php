@@ -170,7 +170,7 @@ class Borang extends Controller {
 
 			Swal.fire({
 				title: 'Makluman',
-				text: 'Sila baca Panduan Mengisi Borang telebih dahulu sebelum mengisi borang pandangan awam ini.',
+				text: 'Sila baca Panduan Mengisi Borang terlebih dahulu sebelum mengisi borang penyertaan awam ini.',
 				type: 'info'
 			});
 

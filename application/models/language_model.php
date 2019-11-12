@@ -50,4 +50,22 @@ Class Language_model extends Model {
 			return $e->getMessage();
 		}
 	}
+
+	public function update($data)
+	{
+		try{
+			$stm  = "UPDATE languages SET slug = :slug, content = :content, language = :language WHERE id = :id";
+			$bind = array(
+				'slug' => $data['slug'],
+				'content' => $data['content'],
+				'language' => $data['language'],
+				'id' => $data['id']
+			);
+			
+			return $this->pdo->fetchAffected($stm, $bind);
+		}
+		catch(Exception $e){
+			return $e->getMessage();
+		}
+	}
 }

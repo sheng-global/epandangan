@@ -10,7 +10,7 @@
                                     <!-- LOGO -->
                                     <a href="<?php echo BASE_URL ?>" class="logo text-center">
                                         <span class="logo-lg">
-                                            <span class="logo-lg-text-dark">epandangan <i class="dripicons-message"></i></span>
+                                            <span class="logo-lg-text-dark"><span class="text-lowercase">e</span><span data-tag="pandangan"></span> <i class="dripicons-message"></i></span>
                                         </span>
                                         <span class="logo-sm">
                                             <span class="logo-sm-text-dark"><i class="dripicons-message"></i></span>
@@ -41,6 +41,8 @@
                                     <input type="hidden" name="redirect" id="redirect">
                                     <input type="hidden" name="token" value="<?php echo $token ?>">
                                 </form>
+
+                                <a class="language" href="#" data-lang="en">English</a> | <a href="#" class="language" data-lang="my">Bahasa Melayu</a>
 
                             </div> <!-- end card-body -->
                         </div>

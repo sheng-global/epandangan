@@ -7,11 +7,19 @@
 
         <!-- App js -->
         <script src="<?php echo BASE_URL; ?>assets/js/app.min.js"></script>
+        <script src="<?php echo BASE_URL; ?>assets/js/cookie.js"></script>
 
         <script type="text/javascript">// Global back button
         $('#back').bind('click', function(event){
             window.history.back();
             $(form)[0].reset();
+        });
+
+        // change language
+        $('.language').bind('click', function(event){
+            var lang = $(this).data('lang');
+            checkCookie(lang);
+            window.location.reload();
         });
         </script>
         

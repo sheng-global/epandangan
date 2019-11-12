@@ -3,21 +3,31 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <?php echo getenv('FOOTER') ?>
+                        <?php echo getenv('FOOTER') ?> | <a class="language" href="#" data-lang="en">English</a> | <a href="#" class="language" data-lang="my">Bahasa Melayu</a>
                     </div>
                 </div>
             </div>
         </footer>
-        <!-- end Footer -->  
+        <!-- end Footer -->
              
         <!-- base  -->
         <script src="<?php echo BASE_URL; ?>assets/js/vendor.min.js"></script>
+        <script src="<?php echo BASE_URL; ?>assets/js/cookie.js"></script>
 
-        <script type="text/javascript">// Global back button
-        $('#back').bind('click', function(event){
-            window.history.back();
-            $(form)[0].reset();
-        });
+        <script type="text/javascript">
+
+            // Global back button
+            $('#back').bind('click', function(event){
+                window.history.back();
+                $(form)[0].reset();
+            });
+
+            // change language
+            $('.language').bind('click', function(event){
+                var lang = $(this).data('lang');
+                checkCookie(lang);
+                window.location.reload();
+            });
         </script>
 
         <!-- Page specific -->

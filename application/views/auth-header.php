@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<?php echo ($_SESSION['lang']) ? $_SESSION['lang'] : 'my' ?>">
+<html lang="<?php echo ($_COOKIE['lang']) ? $_COOKIE['lang'] : 'my' ?>">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -35,9 +35,12 @@
         }
         ?>
 
+        <script type="text/javascript">
+            var BASE_URL = '<?php echo BASE_URL; ?>';
+        </script>
         <script src="<?php echo BASE_URL; ?>assets/js/translate.js"></script>
         <script>
-        var currentLng = "<?php echo $_SESSION['lang'] ?>";
+        var currentLng = "<?php echo $_COOKIE['lang'] ?>";
         function load(){
             var translate = new Translate();
             var attributeName = 'data-tag';

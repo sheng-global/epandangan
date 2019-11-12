@@ -2,7 +2,7 @@ function Translate() {
 
     //initialization
     this.init =  function(attribute, lng, dictPath){
-        dictPath = '/languages/';
+        dictPath = BASE_URL+'languages/';
         this.attribute = attribute;
         this.lng = lng;
         this.dictPath = dictPath;
@@ -10,8 +10,11 @@ function Translate() {
 
     //translate 
     this.process = function(){
+
+        console.log(BASE_URL);
         _self = this;
         var xrhFile = new XMLHttpRequest();
+
         //load content data 
         xrhFile.open('GET', this.dictPath+this.lng+'.json', true);
         xrhFile.onload = function ()

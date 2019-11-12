@@ -45,7 +45,6 @@ class Dashboard extends Controller {
 
 		$js = array(
 			'assets/libs/select2/select2.min.js',
-			'assets/js/pages/select2.init.js',
 			'assets/libs/sweetalert2/sweetalert2.min.js',
 			'assets/js/pages/sweet-alerts.init.js',
 			'assets/libs/bootstrap-table/bootstrap-table.min.js',

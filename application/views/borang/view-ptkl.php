@@ -44,7 +44,7 @@
                                         <p><?php echo $data[0]['pandangan_awam'] ?></p>
                                     </dd>
 
-                                    <dt class="col-sm-3">Cadangan</dt>
+                                    <dt class="col-sm-3">Cadangan Penambahbaikan</dt>
                                     <dd class="col-sm-9">
                                         <p><?php echo @$data[0]['cadangan'] ?></p>
                                     </dd>

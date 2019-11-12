@@ -108,6 +108,40 @@ class Auth extends Controller {
 		}
 	}
 
+	# user login page
+	public function admin_login()
+	{
+		# load EasyCSRF and session provider
+		$session = new EasyCSRF\NativeSessionProvider();
+
+		if($session->get('loggedin')){
+			$this->redirect('dashboard/admin');
+		}else{
+			$easyCSRF = new EasyCSRF\EasyCSRF($session);
+
+			# generate token
+			$token = $easyCSRF->generate('token');
+
+			$header = $this->loadView('auth-header');
+			$footer = $this->loadView('auth-footer');
+	        $template = $this->loadView('login-user');
+
+	        $custom_js = "<script>
+				var referrer = document.referrer;
+				$(document).ready(function() {
+					$('#redirect').val(referrer);
+				});
+			</script>";
+
+			$footer->set('custom_js', $custom_js);
+			$template->set('token', $token);
+
+			$header->render();
+			$template->render();
+			$footer->render();
+		}
+	}
+
 	# user recover password page
 	public function recover()
 	{

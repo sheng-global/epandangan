@@ -19,7 +19,6 @@
                 
                         <li class="dropdown notification-list">
                             <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="<?php echo BASE_URL ?>assets/images/users/user-1.jpg" alt="user-image" class="rounded-circle">
                                 <span class="pro-user-name ml-1">
                                     <?php echo $_SESSION['full_name'] ?> <i class="mdi mdi-chevron-down"></i> 
                                 </span>
@@ -29,13 +28,13 @@
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item">
                                     <i class="fe-user"></i>
-                                    <span>Akaun Saya</span>
+                                    <span data-tag="akaun-saya"></span>
                                 </a>
                 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item">
                                     <i class="fe-settings"></i>
-                                    <span>Tetapan</span>
+                                    <span data-tag="tetapan"></span>
                                 </a>
                 
                                 <div class="dropdown-divider"></div>
@@ -43,16 +42,10 @@
                                 <!-- item-->
                                 <a href="<?php echo BASE_URL ?>auth/logout" class="dropdown-item notify-item">
                                     <i class="fe-log-out"></i>
-                                    <span>Log Keluar</span>
+                                    <span data-tag="logout"></span>
                                 </a>
                 
                             </div>
-                        </li>
-                
-                        <li class="dropdown notification-list">
-                            <a href="javascript:void(0);" class="nav-link right-bar-toggle waves-effect">
-                                <i class="fe-settings noti-icon"></i>
-                            </a>
                         </li>
                 
                     </ul>
@@ -61,7 +54,7 @@
                     <div class="logo-box">
                         <a href="index" class="logo text-center">
                             <span class="logo-lg">
-                                <span class="logo-lg-text-light">epandangan <i class="dripicons-message"></i></span>
+                                <span class="logo-lg-text-light"><span class="text-lowercase">e</span><span data-tag="pandangan"></span> <i class="dripicons-message"></i></span>
                             </span>
                             <span class="logo-sm">
                                 <span class="logo-sm-text-light"><i class="dripicons-message"></i></span>

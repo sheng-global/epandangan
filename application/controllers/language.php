@@ -154,12 +154,6 @@ class Language extends Controller {
 		$log->add($log_data);
 	}
 
-	function changeLanguage($lang)
-	{
-		setcookie('lang', $lang, time() + (3600 * 24 * 30));
-		$session->set('lang', $lang);
-	}
-
 	public function process()
 	{
 		$table = 'languages';
@@ -305,24 +299,26 @@ class Language extends Controller {
 	function update()
 	{
 		if(isset($_POST)){
-			$id = $_POST['id'];
+
 			$data = array(
-				'subject' => $_POST['subject'], 
-				'body' => $_POST['body']
+				'id' => $_POST['id'],
+				'slug' => $_POST['slug'], 
+				'language' => $_POST['language'],
+				'content' => $_POST['content']
 			);
-			$model->editRecord($data,$id);
+			$this->model->update($data);
 
 			# log user action
 			$log = $this->loadHelper('log_helper');
 			$data2 = array(
 				'user_id' => $this->session->get('user_id'),
-				'controller' => 'Template',
+				'controller' => 'Language',
 				'function' => 'update',
-				'action' => 'Update email template #'.$id
+				'action' => 'Update language #'.$id
 			);
 			$log->add($data2);
 
-			$this->redirect('template/index');
+			$this->redirect('language/index');
 			
 		}else{
 			die('Error: Unable to update the record.');

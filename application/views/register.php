@@ -10,7 +10,7 @@
                                     <!-- LOGO -->
                                     <a href="<?php echo BASE_URL ?>" class="logo text-center">
                                         <span class="logo-lg">
-                                            <span class="logo-lg-text-dark">epandangan <i class="dripicons-message"></i></span>
+                                            <span class="logo-lg-text-dark"><span class="text-lowercase">e</span><span data-tag="pandangan"></span> <i class="dripicons-message"></i></span>
                                         </span>
                                         <span class="logo-sm">
                                             <span class="logo-sm-text-dark"><i class="dripicons-message"></i></span>
@@ -33,7 +33,7 @@
 
                                     <div class="form-group mb-3">
                                         <label for="fullname" data-tag="fullname"></label>
-                                        <input class="form-control" name="fullname" type="text" required="" placeholder="Nama penuh">
+                                        <input class="form-control" name="nama-penuh" type="text" required="" placeholder="Nama penuh">
                                     </div>
 
                                     <div class="form-group mb-3">
@@ -43,7 +43,7 @@
 
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="checkbox-signup">
-                                        <label class="custom-control-label" for="checkbox-signup">Saya terima <a href="javascript: void(0);" class="text-dark">Terma dan Syarat</a></label>
+                                        <label class="custom-control-label" for="checkbox-signup"><span data-tag="i-accept"></span> <a href="javascript: void(0);" class="text-dark"><span data-tag="tnc"></span></a></label>
                                     </div>
 
                                     <div class="form-group pt-1 text-center">
@@ -52,19 +52,16 @@
                                     <input type="hidden" name="redirect" id="redirect">
                                     <input type="hidden" name="token" value="<?php echo $token ?>">
                                 </form>
-
+                                <div class="text-center m-auto">
+                                    <p><span data-tag="account-exist"></span> <a href="<?php echo BASE_URL ?>auth" class="ml-1"><b><span data-tag="login"></span></b></a></p>
+                                    <p><a class="language" href="#" data-lang="en">English</a> | <a href="#" class="language" data-lang="my">Bahasa Melayu</a></p>
+                                </div>
                             </div> <!-- end card-body -->
                         </div>
                         <!-- end card -->
                     </div> <!-- end col -->
                 </div>
                 <!-- end row -->
-                <div class="row mt-3">
-                    <div class="col-12 text-center">
-                        <p class="text-white-50">Sudah mempunyai akaun? <a href="<?php echo BASE_URL ?>auth" class="text-white ml-1"><b>Log Masuk</b></a></p>
-                    </div> <!-- end col -->
-                </div>
-            </div>
             <!-- end container -->
         </div>
         <!-- end page -->

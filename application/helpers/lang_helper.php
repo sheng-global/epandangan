@@ -10,10 +10,6 @@ class Lang_helper extends Model {
 	
 	function createLanguageFile($lang, $regenerate = FALSE)
 	{
-		if($regenerate){
-			unlink(ROOT_DIR.'languages/'.$lang.'.json');
-		}
-
 		$filename = ROOT_DIR.'languages/'.$lang.'.json';
 
 		if (!file_exists($filename)) {

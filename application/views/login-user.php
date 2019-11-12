@@ -10,7 +10,7 @@
                                     <!-- LOGO -->
                                     <a href="<?php echo BASE_URL ?>" class="logo text-center">
                                         <span class="logo-lg">
-                                            <span class="logo-lg-text-dark">epandangan <i class="dripicons-message"></i></span>
+                                            <span class="logo-lg-text-dark"><span class="text-lowercase">e</span><span data-tag="pandangan"></span> <i class="dripicons-message"></i></span>
                                         </span>
                                         <span class="logo-sm">
                                             <span class="logo-sm-text-dark"><i class="dripicons-message"></i></span>
@@ -41,11 +41,16 @@
 
                                             <div class="form-group mb-0 text-center">
                                                 <button class="btn btn-primary" type="submit" name="submit" data-tag="login"></button>
-                                                <a href="<?php echo BASE_URL ?>auth/register" class="btn btn-info" data-tag="register">Daftar</a>
+                                                <a href="<?php echo BASE_URL ?>auth/register" class="btn btn-info" data-tag="register"></a>
                                             </div>
                                             <input type="hidden" name="redirect" id="redirect">
                                             <input type="hidden" name="token" value="<?php echo $token ?>">
                                         </form>
+
+                                        <div class="text-center m-auto">
+                                            <p><a href="<?php echo BASE_URL ?>auth/recover" class="ml-1" data-tag="forgot-password"></a></p>
+                                            <p><a class="language" href="#" data-lang="en">English</a> | <a href="#" class="language" data-lang="my">Bahasa Melayu</a></p>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -55,8 +60,7 @@
 
                         <div class="row mt-3">
                             <div class="col-12 text-center">
-                                <p> <a href="<?php echo BASE_URL ?>auth/recover" class="text-white-50 ml-1">Lupa kata laluan?</a></p>
-                                <p class="text-white">English | Bahasa Melayu</p>
+                                
                             </div> <!-- end col -->
                         </div>
 

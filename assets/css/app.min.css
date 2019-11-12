@@ -11,36 +11,36 @@ File: Main Css File
 
 @font-face {
   font-family: "Cerebri Sans,sans-serif";
-  src: url(/fonts/cerebrisans-light.eot?78c6363053ccaebd166e34349fac8cc9);
-  src: local("Cerebri-sans Light"), url(/fonts/cerebrisans-light.woff?f4a3a566f81278afa2d1e037b90e6e52) format("woff");
+  src: url('/fonts/cerebrisans-light.eot');
+  src: local("Cerebri-sans Light"), url('/fonts/cerebrisans-light.woff') format("woff");
   font-weight: 300;
 }
 
 @font-face {
   font-family: "Cerebri Sans,sans-serif";
-  src: url(/fonts/cerebrisans-regular.eot?e63b280fde60f13c59b2eab17adfe03a);
-  src: local("Cerebri-sans Regular"), url(/fonts/cerebrisans-regular.woff?548f02352f33620b89e5bc6284981c36) format("woff");
+  src: url('/fonts/cerebrisans-regular.eot');
+  src: local("Cerebri-sans Regular"), url('/fonts/cerebrisans-regular.woff') format("woff");
   font-weight: 400;
 }
 
 @font-face {
   font-family: "Cerebri Sans,sans-serif";
-  src: url(/fonts/cerebrisans-medium.eot?c01e4a7dd60f3988a32c1b87e2b05cf0);
-  src: local("Cerebri-sans Medium"), url(/fonts/cerebrisans-medium.woff?abe53acee44a549766b43bd32c22c9ce) format("woff");
+  src: url('/fonts/cerebrisans-medium.eot');
+  src: local("Cerebri-sans Medium"), url('/fonts/cerebrisans-medium.woff') format("woff");
   font-weight: 500;
 }
 
 @font-face {
   font-family: "Cerebri Sans,sans-serif";
-  src: url(/fonts/cerebrisans-semibold.eot?2a1663dd85b07223f419fc0e9b5abb53);
-  src: local("Cerebri-sans Semibold"), url(/fonts/cerebrisans-semibold.woff?16e9c1c603cf10ff7ea81296e40c8c1f) format("woff");
+  src: url('/fonts/cerebrisans-semibold.eot');
+  src: local("Cerebri-sans Semibold"), url('/fonts/cerebrisans-semibold.woff') format("woff");
   font-weight: 600;
 }
 
 @font-face {
   font-family: "Cerebri Sans,sans-serif";
-  src: url(/fonts/cerebrisans-bold.eot?43a5f55cc9a045dada7f83636531d112);
-  src: local("Cerebri-sans Bold"), url(/fonts/cerebrisans-bold.woff?73d4b8359e1109cdef80c83fac87864f) format("woff");
+  src: url('/fonts/cerebrisans-bold.eot');
+  src: local("Cerebri-sans Bold"), url('/fonts/cerebrisans-bold.woff') format("woff");
   font-weight: 700;
 }
 
@@ -2077,7 +2077,7 @@ Responsive Menu
 }
 
 .bg-pattern {
-  background-image: url(/assets/images/bg-pattern-2.png?8d35d918ee3c17f63cb7f20ed02e215a);
+  background-image: url(/assets/images/bg-pattern-2.png);
   background-size: cover;
 }
 
@@ -2088,8 +2088,8 @@ body.authentication-bg {
 }
 
 body.authentication-bg-pattern {
-  background-image: url(/assets/images/bg-pattern.png?34b2b253e78da7365b7fbcbfafb1fa94);
-  background-color: #6658dd;
+  background-image: url(/assets/images/bg-pattern.png);
+  background-color: #343a40;
 }
 
 .logout-icon {
