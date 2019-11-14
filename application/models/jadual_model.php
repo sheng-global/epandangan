@@ -26,7 +26,7 @@ Class Jadual_model extends Model {
 		}
 	}
 
-	public function addJadual($data)
+	public function addSesi($data)
 	{
 		try{
 			$stm  = "INSERT INTO sesi_jadual (lokasi_id, zon_id, tarikh, slot_masa, chairman, ajk_1, ajk_2, keterangan) VALUES (:lokasi_id, :zon_id, :tarikh, :slot_masa, :chairman, :ajk_1, :ajk_2, :keterangan)";

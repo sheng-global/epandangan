@@ -12,7 +12,9 @@ class Jadual extends Controller {
 			'assets/libs/datatables/buttons.bootstrap4.css',
 			'assets/libs/datatables/select.bootstrap4.css',
 			'assets/libs/custombox/custombox.min.css',
-			'assets/libs/sweetalert2/sweetalert2.min.css'
+			'assets/libs/sweetalert2/sweetalert2.min.css',
+			'assets/libs/select2/select2.min.css',
+			'assets/libs/flatpickr/flatpickr.min.css'
 		);
 
 		$this->js = array(
@@ -30,7 +32,8 @@ class Jadual extends Controller {
 			'assets/js/pages/sweet-alerts.init.js',
 			'assets/libs/parsleyjs/parsleyjs.min.js',
 			'assets/libs/parsleyjs/il8n/ms.js',
-			'assets/libs/jquery-countdown/jquery-countdown.min.js'
+			'assets/libs/select2/select2.min.js',
+			'assets/libs/flatpickr/flatpickr.min.js'
 		);
 
 		if(empty($this->session->get('loggedin'))){
@@ -122,6 +125,153 @@ class Jadual extends Controller {
 		$footer->render();
 	}
 
+	function tambahSesi()
+	{
+		$easyCSRF = new EasyCSRF\EasyCSRF($this->session);
+
+		# generate token
+		$token = $easyCSRF->generate('token');
+
+		$custom_js = "<script>
+		var select_lokasi = '".BASE_URL."search.php?table=lokasi';
+		var select_zon = '".BASE_URL."search.php?table=zon';
+
+		$(document).ready(function(){
+			
+			$('#lokasi').select2({
+				placeholder: 'Pilih lokasi',
+			    ajax: {
+			        url: select_lokasi,
+			        dataType: 'json',
+			        processResults: function (data) {
+			            return {
+			            	results: data
+			            };
+			        }
+			    },
+			    cache: true
+			});
+
+			$('#zon').select2({
+				placeholder: 'Pilih zon strategik',
+			    ajax: {
+			        url: select_zon,
+			        dataType: 'json',
+			        processResults: function (data) {
+			            return {
+			            	results: data
+			            };
+			        }
+			    },
+			    cache: true
+			});
+
+			$('#datepicker').flatpickr({
+				altInput: true,
+				minDate: \"today\",
+				altFormat: \"j F Y\",
+				dateFormat: \"Y-m-d\"
+			});
+
+			$('.timepicker').flatpickr({
+				enableTime: true,
+				noCalendar: true,
+				dateFormat: \"H:i K\"
+			});
+		});
+
+		$(function () {
+			$('#borang-sesi').parsley().on('field:validated', function() {
+				var ok = $('.parsley-error').length === 0;
+				$('.bs-callout-info').toggleClass('hidden', !ok);
+				$('.bs-callout-warning').toggleClass('hidden', ok);
+			});
+		});
+		</script>";
+
+		$header = $this->loadView('header');
+		$navigation = $this->loadView('topbar');
+		$footer = $this->loadView('footer');
+        $template = $this->loadView('jadual/tambah-sesi');
+
+        $header->set('css', $this->css);
+        $template->set('token', $token);
+        $footer->set('js', $this->js);
+        $footer->set('custom_js', $custom_js);
+		
+		$header->render();
+		$navigation->render();
+		$template->render();
+		$footer->render();
+	}
+
+	function createSesi()
+	{
+		$easyCSRF = new EasyCSRF\EasyCSRF($this->session);
+
+		try{
+			$easyCSRF->check('token', $_POST['token']);
+		}catch(Exception $e){
+			echo $e->getMessage();
+		}
+
+		if(isset($_POST['submit'])){
+
+			$this->filter = $this->loadHelper('Filter_helper');
+			
+			$data = array(
+				'lokasi_id' => $this->filter->sanitize($_POST['lokasi_id']),
+				'zon_id' => $this->filter->sanitize($_POST['zon_id']),
+				'tarikh' => $this->filter->sanitize($_POST['tarikh']),
+				'slot_masa' => $this->filter->sanitize($_POST['masa_mula']).'-'.$this->filter->sanitize($_POST['masa_tamat']),
+				'chairman' => $this->filter->sanitize($_POST['chairman']),
+				'ajk_1' => $this->filter->sanitize($_POST['ajk_1']),
+				'ajk_2' => $this->filter->sanitize($_POST['ajk_2']),
+				'keterangan' => $this->filter->sanitize($_POST['keterangan'])
+			);
+
+			$insert = $this->model->addSesi($data);
+
+			if($this->filter->isInt($insert)){
+
+				$msg = array(
+					'error_msg' => 'Maklumat jadual sesi pendengaran ini telah berjaya disimpan.',
+					'error_url' => BASE_URL.'jadual/senarai',
+					'error_type' => 'success',
+					'error_title' => 'Sesi berjaya disimpan'
+				);
+
+			}else{
+
+				$msg = array(
+					'error_msg' => 'Tiada maklumat jadual sesi pendengaran diterima. Sila cuba semula.',
+					'error_url' => BASE_URL.'jadual/tambahSesi',
+					'error_type' => 'danger',
+					'error_title' => 'Tiada maklumat disimpan'
+				);
+			}
+
+			# log user action
+			$log = $this->loadHelper('log_helper');
+			$data2 = array(
+				'user_id' => $this->session->get('user_id'),
+				'controller' => 'Jadual',
+				'function' => 'createSesi',
+				'action' => 'Tambah sesi pendengaran'
+			);
+			$log->add($data2);
+
+			$header = $this->loadView('auth-header');
+			$footer = $this->loadView('auth-footer');
+	        $template = $this->loadView('error/notification');
+			$template->set('data', $msg);
+
+			$header->render();
+			$template->render();
+			$footer->render();
+		}
+	}
+
 	public function process_senarai()
 	{
 		$table = 'view_sesi_jadual';
@@ -130,8 +280,8 @@ class Jadual extends Controller {
 
 		$columns = array(
 		    array( 'db' => 'id', 'dt' => 'id' ),
-		    array( 'db' => 'lokasi_id', 'dt' => 'lokasi_id' ),
-		    array( 'db' => 'zon_id', 'dt' => 'zon_id' ),
+		    array( 'db' => 'lokasi', 'dt' => 'lokasi_id' ),
+		    array( 'db' => 'zon', 'dt' => 'zon_id' ),
 		    array( 'db' => 'tarikh', 'dt' => 'tarikh' ),
 		    array( 'db' => 'slot_masa', 'dt' => 'slot_masa' ),
 		    array( 'db' => 'chairman', 'dt' => 'chairman' ),

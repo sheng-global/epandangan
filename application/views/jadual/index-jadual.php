@@ -26,7 +26,7 @@
                     <div class="col-12">
                         <div class="text-sm-right">
                             <div class="btn-group pull-right m-t-15">
-                                <a href="<?php echo BASE_URL ?>jadual/addSesi" class="btn btn-info waves-effect waves-light mb-2 mr-1"><i class="mdi mdi-plus-circle mr-1"></i> Tambah Jadual</a>
+                                <a href="<?php echo BASE_URL ?>jadual/tambahSesi" class="btn btn-info waves-effect waves-light mb-2 mr-1"><i class="mdi mdi-plus-circle mr-1"></i> Tambah Jadual</a>
                             </div>
                         </div>
                         <div class="card">
@@ -35,7 +35,7 @@
                                 <table id="datatable" class="table table-striped dt-responsive nowrap">
     								<thead>
     									<tr>
-                                            <th>id</th>
+                                            <th>Sesi</th>
                                             <th>Lokasi</th>
     										<th>Zon</th>
                                             <th>Tarikh</th>
