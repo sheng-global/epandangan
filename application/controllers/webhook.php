@@ -9,35 +9,13 @@
 class Webhook extends Controller {
 
 	/**
-	* Run pull command
-	*/
-	public function pull()
-	{
-		$this->github();
-
-		// The commands
-		$commands = array(
-			'cd /var/www/html/eshop',
-			'git fetch',
-			'git reset --hard origin/master',
-			'git pull -rebase',
-			'git status && git log -1 --pretty=%B%h',
-		);
-		foreach($commands AS $command){
-			// Run it
-			$tmp = shell_exec($command);
-		}
-		echo $tmp;
-	}
-
-	/**
 	 * GitHub webhook handler template.
 	 * 
 	 * @see  https://developer.github.com/webhooks/
 	 * @author  Miloslav Hůla (https://github.com/milo)
 	 */
 
-	private function github(){
+	public function pull(){
 
 		$hookSecret = 'rJFaLnArRh4v;BYrNh&awsWHIs4q.(5w4';  # set NULL to disable check
 
@@ -96,11 +74,24 @@ class Webhook extends Controller {
 				echo 'pong';
 				break;
 
-		//	case 'push':
-		//		break;
+			case 'push':
+				// The commands
+				$commands = array(
+					'cd /home/apadgama/epandangan.apadmedia.website',
+					'git fetch',
+					'git reset --hard github/master',
+					'git pull -rebase',
+					'git status && git log -1 --pretty=%B%h',
+				);
+				foreach($commands AS $command){
+					// Run it
+					$tmp = shell_exec($command);
+				}
+				echo $tmp;
+				break;
 
-		//	case 'create':
-		//		break;
+			case 'create':
+				break;
 
 			default:
 				header('HTTP/1.0 404 Not Found');
