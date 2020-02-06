@@ -74,9 +74,9 @@
                             <li><a href="<?php echo BASE_URL ?>dashboard/admin"><i class="fe-home"></i>Dashboard</a></li>
                             <li class="has-submenu"><a href="#"><i class="fe-layers"></i>Borang</a>
                                 <ul class="submenu">
-                                    <li><a href="<?php echo BASE_URL ?>borang/pskl"><i class="fe-file-text"></i> PSKL 2040</a></li>
-                                    <li><a href="<?php echo BASE_URL ?>borang/ptkl"><i class="fe-file-text"></i> PBRKL 2040</a></li>
-                                    <li><a href="<?php echo BASE_URL ?>borang/tetapan"><i class="fe-settings"></i> Tetapan</a></li>
+                                    <li><a href="<?php echo BASE_URL ?>borang/ptkl"><i class="fe-file-text"></i> Draf Perubahan 1 PBRKL 2020</a></li>
+                                    <li><a href="<?php echo BASE_URL ?>borang/ptkl2"><i class="fe-file-text"></i> Draf Perubahan 2 PBRKL 2020</a></li>
+                                    <li><a href="<?php echo BASE_URL ?>borang/pskl"><i class="fe-file-text"></i> Draf PSKL 2040</a></li>
                                 </ul>
                             </li>
                             <li class="has-submenu"><a href="#"><i class="fe-calendar"></i>Jadual</a>
@@ -84,14 +84,12 @@
                                     <li><a href="<?php echo BASE_URL ?>jadual/sesi"><i class="fe-clock"></i> Kalendar Sesi</a></li>
                                     <li><a href="<?php echo BASE_URL ?>jadual/senarai"><i class="fe-list"></i> Senarai Sesi</a></li>
                                     <li><a href="<?php echo BASE_URL ?>jadual/surat"><i class="fe-mail"></i> Surat Jemputan</a></li>
-                                    <li><a href="<?php echo BASE_URL ?>jadual/tetapan"><i class="fe-settings"></i> Tetapan</a></li>
                                 </ul>
                             </li>
                             <li class="has-submenu"><a href="#"><i class="fe-users"></i>Pengguna</a>
                                 <ul class="submenu">
                                     <li><a href="<?php echo BASE_URL ?>pengguna/senarai"><i class="fe-list"></i> Senarai Pengguna</a></li>
                                     <li><a href="<?php echo BASE_URL ?>pengguna/tambah"><i class="fe-plus-circle"></i> Tambah Pengguna</a></li>
-                                    <li><a href="<?php echo BASE_URL ?>pengguna/tetapan"><i class="fe-settings"></i> Tetapan</a></li>
                                 </ul>
                             </li>
                             <li class="has-submenu"><a href="#"><i class="fe-pie-chart"></i>Laporan</a>

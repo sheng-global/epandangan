@@ -22,27 +22,23 @@
                                     </svg>
                                 </div>
 
-                                <div class="row">
-                                    <div class="p-sm-3">
-                                        <!-- title-->
-                                        <p class="text-muted mb-4" data-tag="recover-info"></p>
+                                <!-- title-->
+                                <p class="text-muted mb-4" data-tag="recover-info"></p>
 
-                                        <form method="post" action="<?php echo BASE_URL ?>auth/process_recover">
+                                <form method="post" action="<?php echo BASE_URL ?>auth/process_recover">
 
-                                            <div class="form-group mb-3">
-                                                <label for="username" data-tag="username"></label>
-                                                <input class="form-control" name="username" type="email" required="">
-                                            </div>
-
-                                            <div class="form-group mb-0 text-center">
-                                                <button class="btn btn-primary" type="submit" name="submit" data-tag="recover"></button>
-                                            </div>
-                                            <input type="hidden" name="redirect" id="redirect">
-                                            <input type="hidden" name="token" value="<?php echo $token ?>">
-                                            <input type="hidden" name="expiry" value="<?php echo $expiry ?>">
-                                        </form>
+                                    <div class="form-group mb-3">
+                                        <label for="username" data-tag="username"></label>
+                                        <input class="form-control" name="username" type="email" required="">
                                     </div>
-                                </div>
+
+                                    <div class="form-group mb-0 text-center">
+                                        <button class="btn btn-primary" type="submit" name="submit" data-tag="recover"></button>
+                                    </div>
+                                    <input type="hidden" name="redirect" id="redirect">
+                                    <input type="hidden" name="token" value="<?php echo $token ?>">
+                                    <input type="hidden" name="expiry" value="<?php echo $expiry ?>">
+                                </form>
 
                             </div> <!-- end card-body -->
                         </div>

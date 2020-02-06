@@ -141,17 +141,27 @@ class Language extends Controller {
 	{
 		$lang = new Lang_helper();
 		$lang->createLanguageFile('en',true);
-		$lang->createLanguageFile('my',true);
 
 		# log user action
 		$log = $this->loadHelper('log_helper');
-		$log_data = array(
+		$log_data1 = array(
 			'user_id' => $this->session->get('user_id'),
 			'controller' => 'Language',
 			'function' => 'regenerate',
-			'action' => 'New languages file regerated'
+			'action' => 'MY languages file regerated'
 		);
-		$log->add($log_data);
+		$log->add($log_data1);
+
+		$lang->createLanguageFile('my',true);
+
+		# log user action
+		$log_data2 = array(
+			'user_id' => $this->session->get('user_id'),
+			'controller' => 'Language',
+			'function' => 'regenerate',
+			'action' => 'EN languages file regerated'
+		);
+		$log->add($log_data2);
 	}
 
 	public function process()

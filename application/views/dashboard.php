@@ -27,10 +27,14 @@
                             <?php if(getenv('ENVIRONMENT') == 'development'): ?>
                             <pre><?php var_dump($ptkl) ?></pre>
                             <?php endif; ?>
-                            <a href="<?php echo BASE_URL ?>borang/pandangan/ptkl" id="demo-delete-row" class="btn btn-danger btn-rounded mb-3"><i class="mdi mdi-plus"></i> <span data-tag="pandangan-awam"></span></a>
+                            <a href="<?php echo BASE_URL ?>borang/pandangan/ptkl" class="btn btn-primary btn-rounded mb-3"><i class="mdi mdi-plus"></i> Borang Draf Perubahan 1 PBRKL 2020</a>
+                            <a href="<?php echo BASE_URL ?>borang/pandangan/ptkl-2" class="btn btn-success btn-rounded mb-3"><i class="mdi mdi-plus"></i> Borang Draf Perubahan 2 PBRKL 2020</a>
+                            <a href="<?php echo BASE_URL ?>borang/pandangan/pskl" class="btn btn-info btn-rounded mb-3"><i class="mdi mdi-plus"></i> Borang Draf Perubahan PSKL 2040</a>
+
+                            <h4>Senarai borang Pandangan Awam Draf Perubahan 1 PBRKL 2020</h4>
                             <table class="table-bordered table table-hover">
-                                <thead class="thead-light">
-                                    <tr>
+                                <thead>
+                                    <tr class="bg-primary text-white">
                                         <th data-tag="no-pandangan"></th>
                                         <th data-tag="tarikh-terima"></th>
                                         <th data-tag="kehadiran"></th>
@@ -42,11 +46,61 @@
                                 <tbody>
                                     <?php foreach ($ptkl as $value): ?>
                                     <tr>
-                                        <td>PBRKL2020/DRAF/<?php echo $value['borang_id'] ?></td>
+                                        <td>PBRKL2020/DRAF/1/<?php echo $value['borang_id'] ?></td>
                                         <td><?php echo $value['tarikh_terima'] ?></td>
                                         <td><?php echo $value['hadir'] ?></td>
                                         <td><?php echo $value['kategori'] ?></td>
                                         <td><a href="<?php echo BASE_URL ?>borang/papar_ptkl/<?php echo $value['borang_id'] ?>" class="btn btn-xs btn-primary" data-tag="papar"></a></td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+
+                            <h4>Senarai borang Pandangan Awam Draf Perubahan 2 PBRKL 2020</h4>
+                            <table class="table-bordered table table-hover">
+                                <thead>
+                                    <tr class="bg-success text-white">
+                                        <th data-tag="no-pandangan"></th>
+                                        <th data-tag="tarikh-terima"></th>
+                                        <th data-tag="kehadiran"></th>
+                                        <th data-tag="kategori"></th>
+                                        <th data-tag="tindakan"></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <?php foreach ($ptkl as $value): ?>
+                                    <tr>
+                                        <td>PBRKL2020/DRAF/2/<?php echo $value['borang_id'] ?></td>
+                                        <td><?php echo $value['tarikh_terima'] ?></td>
+                                        <td><?php echo $value['hadir'] ?></td>
+                                        <td><?php echo $value['kategori'] ?></td>
+                                        <td><a href="<?php echo BASE_URL ?>borang/papar_ptkl_2/<?php echo $value['borang_id'] ?>" class="btn btn-xs btn-success" data-tag="papar"></a></td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+
+                            <h4>Senarai borang Pandangan Awam Draf PSKL 2040</h4>
+                            <table class="table-bordered table table-hover">
+                                <thead>
+                                    <tr class="bg-info text-white">
+                                        <th data-tag="no-pandangan"></th>
+                                        <th data-tag="tarikh-terima"></th>
+                                        <th data-tag="kehadiran"></th>
+                                        <th data-tag="kategori"></th>
+                                        <th data-tag="tindakan"></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <?php foreach ($ptkl as $value): ?>
+                                    <tr>
+                                        <td>PSKL2040/DRAF/<?php echo $value['borang_id'] ?></td>
+                                        <td><?php echo $value['tarikh_terima'] ?></td>
+                                        <td><?php echo $value['hadir'] ?></td>
+                                        <td><?php echo $value['kategori'] ?></td>
+                                        <td><a href="<?php echo BASE_URL ?>borang/papar_pskl/<?php echo $value['borang_id'] ?>" class="btn btn-xs btn-info" data-tag="papar"></a></td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>

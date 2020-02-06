@@ -16,7 +16,7 @@
                                     <li class="breadcrumb-item"><a href="javascript: void(0);" data-tag="pandangan-awam"></a></li>
                                 </ol>
                             </div>
-                            <h4 class="page-title" data-tag="borang-ptkl"></h4>
+                            <h4 class="page-title" data-tag="borang-ptkl-2"></h4>
                         </div>
                     </div>
                 </div>     
@@ -201,18 +201,18 @@
                                     <ol>
                                         <li>Sila gunakan ruang yang telah disediakan untuk memberi pandangan.</li>
                                         <li>Sila sertakan gambar-gambar berkaitan dengan tapak dan persekitaran (jika perlu). Muat naik lampiran anda dalam ruangan <strong class="text-dark">Lampiran 2</strong></li>
-                                        <li>Pandangan awam perlulah berkaitan dengan kandungan Draf Perubahan PBRKL 2020 sahaja.</li>
+                                        <li>Pandangan awam perlulah berkaitan dengan kandungan Draf Perubahan PBRKL 2020 (Perubahan 2) sahaja.</li>
                                         <li>Pandangan awam mestilah berasaskan kepada keperluan masyarakat umum dan tidak kepada kepentingan individu.</li> 
                                         <li>Pandangan awam secara bertulis sahaja yang akan didengar dan dipertimbangkan oleh Jawatankuasa Pendengaran Pandangan Awam.</li>
                                     </ol>
                                 </p>
                                 <div class="alert alert-info" role="alert">
-                                    <i class="mdi mdi-alert-circle-outline mr-2"></i> Maklumat lanjut mengenai Draf Perubahan PBRKL2020 (Perubahan 1) boleh diperoleh dengan menghubungi talian 03 – 2617 9512 / 9519 (Seksyen Perancangan Pelan Tempatan, Jabatan Perancangan Bandaraya).
+                                    <i class="mdi mdi-alert-circle-outline mr-2"></i> Maklumat lanjut mengenai Draf Perubahan PBRKL2020 (Perubahan 2) boleh diperoleh dengan menghubungi talian 03 – 2617 9512 / 9519 / 9533 (Seksyen Perancangan Pelan Tempatan, Jabatan Perancangan Bandaraya).
                                 </div>
                                 <div class="alert alert-warning" role="alert">
                                     <i class="mdi mdi-alert-outline mr-2"></i>
-                                    <p>Borang yang telah lengkap diisi hendaklah dihantar sebelum 14 Nov 2019 (Khamis)</p>
-                                    <div data-countdown="2019/11/14"></div>
+                                    Borang yang telah lengkap diisi hendaklah dihantar sebelum 10 Mac 2020 (Selasa)
+                                    <div data-countdown="2020/03/10"></div>
                                 </div>
                                 
                             </div>

@@ -1,6 +1,6 @@
 <?php
 
-class User_model extends Model {
+class Pengguna_model extends Model {
 	
 	public function listSingle($user_id)
 	{

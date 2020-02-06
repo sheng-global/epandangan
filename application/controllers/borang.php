@@ -122,6 +122,103 @@ class Borang extends Controller {
 		$footer->render();
 	}
 
+	function pskl()
+	{
+		$custom_js = "<script type=\"text/javascript\">
+
+			$('#rootwizard').bootstrapWizard({
+		        'onNext': function (tab, navigation, index) {
+		            var form = $($(tab).data(\"targetForm\"));
+		            if (form) {
+		                form.addClass('was-validated');
+		                if (form[0].checkValidity() === false) {
+		                    event.preventDefault();
+		                    event.stopPropagation();
+		                    return false;
+		                }
+		            }
+		        }
+		    });
+
+			var base_url = '".BASE_URL."borang/process/borang_pskl';
+
+			$(document).ready(function() {
+
+    			$('#datatable').DataTable({
+    				serverSide : true,
+    				processing : true,
+    				ajax : {
+    					url : base_url,
+    					type : 'POST'
+    				},
+    				deferRender : true,
+    				error : true,
+    				columns: [
+			            { data: 'id' },
+			            { data: 'nama_penuh' },
+			            { data: 'ic_passport' },
+			            { data: 'tarikh_terima' },
+			            { data: 'action' }
+			        ],
+			        columnDefs: [
+					    { width: '5%', 'targets': 0 },
+					    { width: '50%', 'targets': 1 },
+					    { width: '20%', 'targets': 2 },
+					    { width: '10%', 'targets': 3 },
+					    { width: '10%', 'targets': 4 }
+					]
+    			});
+
+    			// create entry
+				function create(){
+
+					var post_url = '".BASE_URL."borang/addPSKL';
+
+					$.ajax({
+						type: 'POST',
+						url: post_url,
+						dataType: 'html',
+						data: $('form#pskl').serialize(),
+						success:function(response){
+							if(parseInt(response) == 0){
+								Swal.fire({
+									title: 'Ralat',
+									text: 'Ruangan nama adalah kosong. Sila isi dengan betul.',
+									type: 'warning'
+								});
+							}else{
+								Swal.fire({
+									title: 'Berjaya',
+									text: 'Maklumat telah berjaya ditambah.',
+									type: 'success'
+								}).then(function() {
+					                location.reload();
+					            });
+							}
+						}
+				    });
+
+				}
+    			
+    		});
+
+		</script>";
+		
+		$header = $this->loadView('header');
+		$navigation = $this->loadView('topbar');
+		$footer = $this->loadView('footer');
+        $template = $this->loadView('borang/index-pskl');
+
+		$header->set('css', $this->css);
+		$footer->set('custom_js', $custom_js);
+		$footer->set('js', $this->js);
+		
+		$header->render();
+		$navigation->render();
+		$template->render();
+		$footer->render();
+	}
+
 	function papar_ptkl($id)
 	{
 		$custom_css = "<style>
@@ -299,6 +396,116 @@ class Borang extends Controller {
 				$msg = array(
 					'error_msg' => 'Tiada maklumat pandangan awam diterima. Sila cuba semula.',
 					'error_url' => BASE_URL.'borang/pandangan/ptkl',
+					'error_type' => 'danger',
+					'error_title' => 'Tiada maklumat'
+				);
+			}
+
+			# log user action
+			$log = $this->loadHelper('log_helper');
+			$data2 = array(
+				'user_id' => $this->session->get('user_id'),
+				'controller' => 'Borang',
+				'function' => 'add',
+				'action' => 'Add new PTKL form'
+			);
+			$log->add($data2);
+
+			$header = $this->loadView('auth-header');
+			$footer = $this->loadView('auth-footer');
+	        $template = $this->loadView('error/notification');
+			$template->set('data', $msg);
+
+			$header->render();
+			$template->render();
+			$footer->render();
+		}
+	}
+
+	function add_pskl()
+	{
+		$easyCSRF = new EasyCSRF\EasyCSRF($this->session);
+
+		try{
+			$easyCSRF->check('token', $_POST['token']);
+		}catch(Exception $e){
+			echo $e->getMessage();
+		}
+
+		if(isset($_POST['submit'])){
+
+			$this->filter = $this->loadHelper('Filter_helper');
+			
+			$dataBorang = array(
+				'kategori' => $this->filter->sanitize($_POST['kategori']),
+				'nama_organisasi' => $this->filter->sanitize($_POST['nama_organisasi']),
+				'jumlah_nama' => $this->filter->sanitize($_POST['jumlah_nama']),
+				'peta_indeks' => $this->filter->sanitize($_POST['peta_indeks']),
+				'no_lot' => $this->filter->sanitize($_POST['no_lot']),
+				'muka_surat' => $this->filter->sanitize($_POST['muka_surat']),
+				'pandangan_awam' => $this->filter->sanitize($_POST['pandangan_awam']),
+				'cadangan' => $this->filter->sanitize($_POST['cadangan']),
+				'user_id' => $this->session->get('user_id'),
+				'tarikh_terima' => Carbon::now()->toDateString(),
+				'hadir' => $this->filter->sanitize($_POST['hadir'])
+			);
+
+			$insert = $this->model->addPTKL($dataBorang);
+
+			$dataProfile = array(
+				'nama_penuh' => $this->filter->sanitize($_POST['nama_penuh']),
+				'ic_passport' => $this->filter->sanitize($_POST['ic_passport']),
+				'alamat' => $this->filter->sanitize($_POST['alamat']),
+				'poskod' => $this->filter->sanitize($_POST['poskod']),
+				'telefon_rumah' => $this->filter->sanitize($_POST['telefon_rumah']),
+				'telefon_pejabat' => $this->filter->sanitize($_POST['telefon_pejabat']),
+				'telefon_bimbit' => $this->filter->sanitize($_POST['telefon_bimbit']),
+				'user_id' => $this->session->get('user_id'),
+			);
+
+			$this->u_model = $this->loadModel('User_model');
+			$this->u_model->updateProfile($dataProfile);
+
+			# TODO: hantar notifikasi email
+
+			$msg = array(
+				'error_msg' => 'Maklumat borang pandangan awam anda telah berjaya dihantar.',
+				'error_url' => BASE_URL.'dashboard',
+				'error_type' => 'success',
+				'error_title' => 'Borang berjaya dihantar'
+			);
+
+			if($this->filter->isInt($insert)){
+
+				if(isset($_FILES)){
+
+					$this->upload = $this->loadHelper('upload_helper');
+
+					if(isset($_FILES['lampiran_a'])){
+
+						$lampiran_a = array(
+							'files' => $_FILES['lampiran_a'],
+							'file_id' => $insert
+						);
+
+						$this->upload->add($lampiran_a);
+					}
+
+					if(isset($_FILES['lampiran_c'])){
+
+						$lampiran_c = array(
+							'files' => $_FILES['lampiran_c'],
+							'file_id' => $insert
+						);
+
+						$this->upload->add($lampiran_c);
+					}
+				}
+
+			}else{
+				$msg = array(
+					'error_msg' => 'Tiada maklumat pandangan awam diterima. Sila cuba semula.',
+					'error_url' => BASE_URL.'borang/pandangan/pskl',
 					'error_type' => 'danger',
 					'error_title' => 'Tiada maklumat'
 				);
