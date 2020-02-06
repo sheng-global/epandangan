@@ -3,3 +3,6 @@ vendor
 __DS_Store
 tmp/*
 .env
+.env-local
+.env-local-mac
+.env-staging
