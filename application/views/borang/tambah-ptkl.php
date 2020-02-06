@@ -83,7 +83,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-3">
                                         <label for="poskod"><span data-tag="poskod"></span> <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="poskod" id="poskod" required="" data-parsley-type="number" data-parsley-minlength="5" value="<?php echo @$profile[0]['psokod'] ?>">
+                                        <input type="text" class="form-control" name="poskod" id="poskod" required="" data-parsley-type="number" data-parsley-minlength="5" value="<?php echo @$profile[0]['poskod'] ?>">
                                     </div>
                                 </div>
 
@@ -123,7 +123,7 @@
 
                                 <div class="form-group">
                                     <label for="pandangan_awam"><span data-tag="pandangan-awam"></span> <span class="text-danger">*</span></label>
-                                    <textarea id="pandangan_awam" class="form-control" name="pandangan_awam" rows="10" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
+                                    <textarea id="pandangan_awam" class="form-control" name="pandangan_awam" rows="10" data-parsley-trigger="keyup" data-parsley-minlength="10" data-parsley-validation-threshold="5" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
                                 </div>
 
                                 <div class="form-group">
