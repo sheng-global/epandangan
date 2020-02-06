@@ -121,16 +121,6 @@
                                 <h4 class="header-title"><span data-tag="part"></span> C</h4>
                                 <p class="sub-header" data-tag="part-c-description"></p>
 
-                                <div class="form-group">
-                                    <label for="pandangan_awam"><span data-tag="pandangan-awam"></span> <span class="text-danger">*</span></label>
-                                    <textarea id="pandangan_awam" class="form-control" name="pandangan_awam" rows="10" data-parsley-trigger="keyup" data-parsley-minlength="10" data-parsley-validation-threshold="50" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="cadangan" data-tag="cadangan-penambahbaikan"></label>
-                                    <textarea id="cadangan" class="form-control" name="cadangan" rows="10" placeholder="Contoh: Tukar zon gunatanah mengikut Syarat Nyata"></textarea>
-                                </div>
-
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label for="peta_indeks"><span data-tag="peta-indeks"></span> <span class="text-danger">*</span></label>
@@ -144,6 +134,16 @@
                                         <label for="muka_surat"><span data-tag="muka-surat"></span> <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="muka_surat" id="muka_surat" required="" data-parsley-type="number">
                                     </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="pandangan_awam"><span data-tag="pandangan-awam"></span> <span class="text-danger">*</span></label>
+                                    <textarea id="pandangan_awam" class="form-control" name="pandangan_awam" rows="10" data-parsley-trigger="keyup" data-parsley-minlength="10" data-parsley-validation-threshold="50" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="cadangan" data-tag="cadangan-penambahbaikan"></label>
+                                    <textarea id="cadangan" class="form-control" name="cadangan" rows="10" placeholder="Contoh: Tukar zon gunatanah mengikut Syarat Nyata"></textarea>
                                 </div>
 
                                 <h4 class="header-title"><span data-tag="lampiran"></span> 1</h4>
@@ -211,7 +211,7 @@
                                 </div>
                                 <div class="alert alert-warning" role="alert">
                                     <i class="mdi mdi-alert-outline mr-2"></i>
-                                    Borang yang telah lengkap diisi hendaklah dihantar sebelum 10 Mac 2020 (Selasa)
+                                    Borang yang telah lengkap diisi hendaklah dihantar sebelum atau pada 10 Mac 2020 (Selasa)
                                     <div data-countdown="2020/03/10"></div>
                                 </div>
                                 
