@@ -75,6 +75,7 @@ class Webhook extends Controller {
 				break;
 
 			case 'push':
+				echo 'Receiving new push request...';
 				// The commands
 				$commands = array(
 					'cd /home/apadgama/epandangan.apadmedia.website',
@@ -87,7 +88,10 @@ class Webhook extends Controller {
 					// Run it
 					$tmp = shell_exec($command);
 				}
+				
+				print_r($payload); # For debug only. Can be found in GitHub hook log.
 				echo $tmp;
+				
 				break;
 
 			case 'create':
