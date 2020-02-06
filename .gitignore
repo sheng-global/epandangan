@@ -6,3 +6,4 @@ tmp/*
 .env-local
 .env-local-mac
 .env-staging
+.well-known/
