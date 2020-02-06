@@ -81,6 +81,7 @@ class Auth extends Controller {
 		$session = new EasyCSRF\NativeSessionProvider();
 
 		if(isset($id)) $session->set('source',$id);
+		else $session->set('source', getenv('CURRENT_SOURCE'));
 
 		if($session->get('loggedin')){
 			$this->redirect('dashboard');
