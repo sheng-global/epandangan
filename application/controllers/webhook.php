@@ -17,7 +17,7 @@ class Webhook extends Controller {
 
 	public function pull(){
 
-		$hookSecret = 'rJFaLnArRh4v;BYrNh&awsWHIs4q.(5w4';  # set NULL to disable check
+		$hookSecret = 'rJFaLnArRh4v;BYrNh&awsWHIs4q.(5w4';  # set NULL to disable check, make sure this is the same as gihub secret
 
 		set_error_handler(function($severity, $message, $file, $line) {
 			throw new \ErrorException($message, 0, $severity, $file, $line);
@@ -91,7 +91,7 @@ class Webhook extends Controller {
 				
 				print_r($payload); # For debug only. Can be found in GitHub hook log.
 				echo $tmp;
-				
+
 				break;
 
 			case 'create':
