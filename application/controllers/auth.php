@@ -75,10 +75,13 @@ class Auth extends Controller {
 	}
 
 	# user login page
-	public function index()
+	public function index($id = NULL)
 	{
 		# load EasyCSRF and session provider
 		$session = new EasyCSRF\NativeSessionProvider();
+
+		if(isset($id)) $session->set('source',$id);
+		else $session->set('source', getenv('CURRENT_SOURCE'));
 
 		if($session->get('loggedin')){
 			$this->redirect('dashboard');
@@ -264,7 +267,8 @@ class Auth extends Controller {
 				$session->set('last_ip', $_SERVER['REMOTE_ADDR']);
 
 				if($user[0]['permission'] == 'user'){
-					$this->redirect('dashboard');
+					$source = $session->get('source');
+					$this->redirect('borang/pandangan/'.$source);
 				}else{
 					$this->redirect('dashboard/admin');
 				}
