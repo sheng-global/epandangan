@@ -19,8 +19,8 @@ class Payment extends Controller {
 
 		</script>";
 
-		$header = $this->loadView('header');
-		$footer = $this->loadView('footer');
+		$header = $this->loadView('auth-header');
+		$footer = $this->loadView('auth-footer');
         $template = $this->loadView('payment/online-banking');
 
         $footer->set('custom_js', $custom_js);
@@ -84,11 +84,6 @@ class Payment extends Controller {
 	# internet banking receipt
 	function ib_receipt($trans_id)
 	{
-		$session = $this->loadHelper('session_helper');
-		if(empty($session->get('loggedin'))){
-			$this->redirect('auth/login');
-		}
-
 		$custom_js = "<script>
 			$('ul#details li').each(function() {
 			    var text = $(this).text();
@@ -101,17 +96,14 @@ class Payment extends Controller {
 			});
 		</script>";
 
-		$header = $this->loadView('header');
-		$navigation = $this->loadView('navigation');
-		$footer = $this->loadView('footer');
+		$header = $this->loadView('auth-header');
+		$footer = $this->loadView('auth-footer');
         $template = $this->loadView('payment/ib-receipt');
 
-		$data = $this->p_model->listSingleByTransID($trans_id);
 		$template->set('data', $data);
 		$footer->set('custom_js', $custom_js);
 		
 		$header->render();
-		$navigation->render();
 		$template->render();
 		$footer->render();
 	}
