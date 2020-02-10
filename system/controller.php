@@ -21,6 +21,11 @@ class Controller {
 		$helper = new $name;
 		return $helper;
 	}
+
+	public function loadPlugin($name)
+	{
+		require_once(APP_DIR .'plugins/'. $name .'.php');
+	}
 	
 	public function redirect($loc)
 	{
