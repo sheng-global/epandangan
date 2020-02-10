@@ -59,6 +59,7 @@ class Fpx extends Controller {
 
 	public function response()
 	{
+		var_dump(_POST);
 		if(isset($_POST)){
 
 			$data = array();
