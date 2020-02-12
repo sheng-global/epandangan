@@ -57,7 +57,6 @@ class Fpx extends Controller {
 
 	public function response()
 	{
-		$this->loadPlugin('DOSpace');
 		if(isset($_POST)){
 
 			//var_dump($_POST);
