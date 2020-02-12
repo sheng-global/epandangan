@@ -57,6 +57,7 @@ class Fpx extends Controller {
 
 	public function response()
 	{
+		$this->loadPlugin('DOSpace');
 		if(isset($_POST)){
 
 			//var_dump($_POST);
@@ -92,9 +93,8 @@ class Fpx extends Controller {
 					$status = 'success';
 					
 					# generate download link
-					$space = new Space();
 					$url = BASE_URL.'space/download/'.$data['TRANS_ID'];
-					$link = Space::generateLink(); //php5.6
+					$link = DOSpace::getLink('klmycity/draf-2-ppkl2040.pdf');
 
 					# store download link
 					$downloadData = array(
