@@ -33,7 +33,7 @@ class Payment_model extends Model {
 		$stm  = "INSERT INTO payments (transaction_id, amount, payment_date, payment_time, payment_type, payment_mode, status, remarks) VALUES (:transaction_id, :amount, :payment_date, :payment_time, :payment_type, :payment_mode, :status, :remarks)";
 		$bind = array(
 			'transaction_id' => $data['transaction_id'],
-			'amount' => $data['verification_code'],
+			'amount' => $data['amount'],
 			'payment_date' => $data['payment_date'],
 			'payment_time' => $data['payment_time'],
 			'payment_type' => $data['payment_type'],

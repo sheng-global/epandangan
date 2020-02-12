@@ -63,6 +63,7 @@ class Payment extends Controller {
 				'payment_time' => date('H:i:s'),
 				'payment_type' => $payment_type,
 				'payment_mode' => $_POST['payment_mode'],
+				'remarks' => '',
 				'status' => 'processing'
 			);
 
