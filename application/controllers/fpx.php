@@ -59,7 +59,7 @@ class Fpx extends Controller {
 	{
 		if(isset($_POST)){
 
-			var_dump($_POST);
+			//var_dump($_POST);
 			/*array(23) { ["TRANS_ID"]=> string(17) "WEB20200212014846" ["PAYMENT_DATETIME"]=> string(19) "2020-02-12 13:46:08" ["AMOUNT"]=> string(1) "1" ["PAYMENT_MODE"]=> string(4) "migs" ["STATUS"]=> string(1) "1" ["STATUS_CODE"]=> string(1) "0" ["STATUS_MESSAGE"]=> string(8) "Approved" ["PAYMENT_TRANS_ID"]=> string(10) "2070036055" ["APPROVAL_CODE"]=> string(6) "129282" ["RECEIPT_NO"]=> string(18) "PPKL200212-0000002" ["MERCHANT_CODE"]=> string(8) "dbkl-jpb" ["SELLER_ORDER_NO"]=> string(34) "2020021213460800000000000000295679" ["CHECKSUM"]=> string(64) "He+t08en8gPuOPVtp45lpjrVg8WUB/wmtxCU3GR4VuguwyvtOA81HuSdAmqx8b4W" ["CHECKSUM2"]=> string(64) "He+t08en8gPuOPVtp45lpjrVg8WUB/wmtxCU3GR4VuguwyvtOA81HuSdAmqx8b4W" ["payee_name"]=> string(5) "Fadli" ["payee_email"]=> string(19) "fadlisaad@gmail.com" ["email"]=> string(19) "fadlisaad@gmail.com" ["payee_phone_number"]=> string(10) "0126471057" ["bank_code"]=> string(12) "-Select One-" ["payment_type"]=> string(3) "WEB" ["be_message"]=> string(205) "PBB0233~A,MBB0228~A,BKRM0602~A,ABMB0212~A,MB2U0227~A,BIMB0340~A,BMMB0341~A,KFH0346~A,ABB0233~A,RHB0218~A,OCBC0229~A,SCB0216~A,HLB0224~A,UOB0226~A,BCBB0235~A,AMBB0209~A,BSN0601~A,HSBC0223~A|01|BC|EX00002640" ["currency"]=> string(3) "MYR" ["api_key"]=> string(32) "a5015551faed8f722d4698743c2afded" }*/
 
 			$data = array();
@@ -74,14 +74,13 @@ class Fpx extends Controller {
 			$data['RECEIPT_NO'] = $_POST['RECEIPT_NO'];
 			$data['MERCHANT_CODE'] = $_POST['MERCHANT_CODE'];
 			$data['SELLER_ORDER_NO'] = $_POST['SELLER_ORDER_NO'];
-			#$data['BUYER_BANK'] = $_POST['BUYER_BANK'];
-			#$data['BUYER_NAME'] = htmlspecialchars($_POST['BUYER_NAME'], ENT_QUOTES);
+			$data['BUYER_BANK'] = $_POST['BUYER_BANK'];
+			$data['BUYER_NAME'] = htmlspecialchars($_POST['BUYER_NAME'], ENT_QUOTES);
 			$data['CHECKSUM'] = $_POST['CHECKSUM'];
 			$data['TRANS_ID'] = $_POST['TRANS_ID'];
 			$data['currency'] = $_POST['currency'];
 			$data['be_message'] = $_POST['be_message'];
 			$data['email'] = $_POST['payee_email'];
-			$data['transaction_id'] = $_POST['transaction_id'];
 			$data['payee_name'] = $_POST['payee_name'];
 			$data['payee_email'] = $_POST['payee_email'];
 			$data['payee_phone_number'] = $_POST['payee_phone_number'];
@@ -94,12 +93,12 @@ class Fpx extends Controller {
 					
 					# generate download link
 					$space = new Space();
-					$url = BASE_URL.'space/download/'.$data['transaction_id'];
+					$url = BASE_URL.'space/download/'.$data['TRANS_ID'];
 					$link = $space->generateLink();
 
 					# store download link
 					$downloadData = array(
-						'transaction_id' => $data['transaction_id'],
+						'transaction_id' => $data['TRANS_ID'],
 						'link' => $link,
 						'count' => 0
 					);
@@ -115,7 +114,7 @@ class Fpx extends Controller {
 
 			# update payment status
 			$updateData = array(
-				'transaction_id' => $data['transaction_id'],
+				'transaction_id' => $data['TRANS_ID'],
 				'status' => $status,
 				'remarks' => serialize($data),
 				'count' => 0
@@ -139,8 +138,17 @@ class Fpx extends Controller {
 				)
 			);
 
-			if($_POST['PAYMENT_MODE'] == 'fpx') $payment_mode = 'Perbankan Internet (Individu)';
-			if($_POST['PAYMENT_MODE'] == 'migs') $payment_mode = 'Kad Kredit/Debit';
+			if($_POST['PAYMENT_MODE'] == 'fpx'){
+				$payment_mode = 'Perbankan Internet (Individu)';
+				$buyer_name = $data['BUYER_NAME'];
+				$buyer_bank = $data['BUYER_BANK'];
+			}
+
+			if($_POST['PAYMENT_MODE'] == 'migs'){
+				$payment_mode = 'Kad Kredit/Debit';
+				$buyer_name = $data['payee_name'];
+				$buyer_bank = 'N/A';
+			}
 
 	    	/** Email start *****************************/
 
@@ -159,15 +167,15 @@ class Fpx extends Controller {
 				<li>Status: ".ucfirst($status)."</li>
 				<li>FPX Transaction ID: ".$data['PAYMENT_TRANS_ID']."</li>
 				<li>Seller Order ID: ".$data['SELLER_ORDER_NO']."</li>
-				<li>Buyer Bank: ".$data['payee_name']."</li>
-				<li>Buyer Name: ".$data['payee_name']."</li>
+				<li>Buyer Bank: ".$buyer_bank."</li>
+				<li>Buyer Name: ".$buyer_name."</li>
 			</ul>";
 
 			# prepare the variable for email
 			$vars = array(
 				"{{EMAIL}}" => $data['email'],
-				"{{FULLNAME}}" => $_POST['payee_name'],
-				"{{DETAILS}}" => "Maklumat pembayaran adalah seperti berikut:<br>Jumlah : RM ".$_POST['AMOUNT']."<br>Daripada : ".$_POST['payee_name']." - ".$data['email']."<br>Jenis Pembayaran : ".strtoupper($_POST['payment_type'])."<br>Cara Pembayaran : ".$payment_mode."<br>Transaction ID: ".$_POST['TRANS_ID']."<br>Status : ".ucfirst($status)."<br>Keterangan Transaksi : <br>".$transaction_details,
+				"{{FULLNAME}}" => $data['payee_name'],
+				"{{DETAILS}}" => "Maklumat pembayaran adalah seperti berikut:<br>Jumlah : RM ".$_POST['AMOUNT']."<br>Daripada : ".$buyer_name." - ".$data['email']."<br>Jenis Pembayaran : ".strtoupper($_POST['payment_type'])."<br>Cara Pembayaran : ".$payment_mode."<br>Transaction ID: ".$_POST['TRANS_ID']."<br>Status : ".ucfirst($status)."<br>Keterangan Transaksi : <br>".$transaction_details,
 				"{{BUTTON}}" => '<tr style="font-family: Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
 				<td class="content-block aligncenter" style="font-family: Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top"><a href="'.$url.'" class="login">Muat Turun</a></td></tr>'
 			);
@@ -185,11 +193,13 @@ class Fpx extends Controller {
 
 			/** email end ******************************/
 
-			if($_POST['payment_type'] != 'web')
+			if($_POST['payment_type'] != 'WEB')
 			{
+				# mobile payment
 				$payment_data = json_encode($json_data)."\n";
 				echo $payment_data;
 			}else{
+				# Web payment
 				$payment_id = $_POST['TRANS_ID'];
 				$this->redirect('payment/ib_receipt/'.$payment_id);
 			}
