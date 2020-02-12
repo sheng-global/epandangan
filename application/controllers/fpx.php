@@ -94,7 +94,7 @@ class Fpx extends Controller {
 					# generate download link
 					$space = new Space();
 					$url = BASE_URL.'space/download/'.$data['TRANS_ID'];
-					$link = $space->generateLink();
+					$link = Space::generateLink(); //php5.6
 
 					# store download link
 					$downloadData = array(
