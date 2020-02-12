@@ -30,19 +30,6 @@ class DOSpace extends Controller
 		}
 	}
 
-	public static function list($path = NULL)
-	{
-		$space = DOSpace::connect();
-		try{
-			return $space->ListObjects($path);
-		}catch (\SpacesAPIException $e) {
-    		$error = $e->GetError();
-    		echo "<pre>";
-    		print_r($error);
-    		echo "</pre>";
-		}
-	}
-
 	public static function getLink($file, $validity = '1 day')
 	{
 		$space = DOSpace::connect();
