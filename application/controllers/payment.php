@@ -36,7 +36,7 @@ class Payment extends Controller {
 
 		</script>";
 
-		$header = $this->loadView('auth-header');
+		$header = $this->loadView('payment-header');
 		$footer = $this->loadView('auth-footer');
         $template = $this->loadView('payment/online-banking');
 
@@ -112,7 +112,7 @@ class Payment extends Controller {
 			});
 		</script>";
 
-		$header = $this->loadView('auth-header');
+		$header = $this->loadView('payment-header');
 		$footer = $this->loadView('auth-footer');
         $template = $this->loadView('payment/ib-receipt');
 
