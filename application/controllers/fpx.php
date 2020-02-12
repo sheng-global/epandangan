@@ -59,6 +59,8 @@ class Fpx extends Controller {
 	{
 		if(isset($_POST)){
 
+			var_dump($_POST);
+
 			$data = array();
 			$data['PAYMENT_DATETIME'] = $_POST['PAYMENT_DATETIME'];
 			$data['AMOUNT'] = $_POST['AMOUNT'];
