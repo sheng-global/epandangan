@@ -1,6 +1,11 @@
 <?php
 class Payment extends Controller {
 
+	public function __construct()
+	{
+		$this->model = $this->loadModel('Payment_model');
+	}
+
 	# Online banking payment method
 	function online_banking()
 	{
@@ -15,6 +20,18 @@ class Payment extends Controller {
 		                $('#select_bank').html(msg);
 		            }
 		        });
+
+		        $('.form-horizontal').removeClass('col-md-4');
+			});
+
+			$('#select_bank').show();
+
+			$('#fpx').click(function(){
+				$('#select_bank').show();
+			});
+
+			$('#migs').click(function(){
+				$('#select_bank').hide();
 			});
 
 		</script>";
@@ -35,31 +52,29 @@ class Payment extends Controller {
 	{
 		if(isset($_POST)){
 
-	    	if($_POST['payment_type'] == 'registration') $payment_type = 'REG';
-	    	else $payment_type = 'WAL';
+	    	if($_POST['payment_type'] == 'web') $payment_type = 'WEB';
+	    	else $payment_type = 'APP';
 			$transaction_id = $payment_type.date('Ymdhis');
 
 			$payment_data = array(
-				'user_id' => 1,
 				'transaction_id' => $transaction_id,
 				'amount' => $_POST['amount'],
 				'payment_date' => date('Y-m-d'),
 				'payment_time' => date('H:i:s'),
-				'attachment_id' => 0,
-				'payment_type' => $_POST['payment_type'],
+				'payment_type' => $payment_type,
 				'payment_mode' => $_POST['payment_mode'],
-				'remarks' => '',
 				'status' => 'processing'
 			);
 
+			$this->model->addPayment($payment_data);
+
 	    	$fpx_data = array(
-				'user_id' => 1,
 				'transaction_id' => $transaction_id,
 				'amount' => $_POST['amount'],
-				'payee_name' => 'Fadli Saad',
-				'payee_email' => 'fadlisaad@gmail.com',
-				'payee_phone_number' => '0126471057',
-				'payment_type' => $_POST['payment_type'],
+				'payee_name' => $_POST['fullname'],
+				'payee_email' => $_POST['email'],
+				'payee_phone_number' => $_POST['mobile'],
+				'payment_type' => $payment_type,
 				'payment_mode' => $_POST['payment_mode'],
 				'bank_code' => $_POST['BANK_CODE'],
 				'be_message' => $_POST['BE_MESSAGE']
@@ -77,7 +92,7 @@ class Payment extends Controller {
 
 	    } else {
 
-        	$this->redirect('site/page/invalid-token');
+        	// error
 	    }
 	}
 
@@ -100,6 +115,7 @@ class Payment extends Controller {
 		$footer = $this->loadView('auth-footer');
         $template = $this->loadView('payment/ib-receipt');
 
+		$data = $this->model->listSingleTransaction($trans_id);
 		$template->set('data', $data);
 		$footer->set('custom_js', $custom_js);
 		

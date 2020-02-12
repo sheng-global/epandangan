@@ -7,13 +7,14 @@
                             <div class="card-body p-4">
                                 
                                 <div class="text-center w-75 m-auto">
-                                    <p class="text-muted mb-4 mt-3">Pembayaran</p>
+                                    <h3 class="text-muted mb-4 mt-3">Pembayaran</h3>
                                 </div>
 
                                 <form method="post" role="form" action="<?php echo BASE_URL ?>payment/online_process" id="reload-payment" class="form-horizontal">
                                     <div class="form-group mb-3">
                                         <label for="payment_type" class="control-label">Bayaran untuk</label>
-                                        <input name="payment_type" class="form-control select2" readonly required="" value="Draf PSKL2040">
+                                        <input class="form-control" readonly value="Dokumen PDF Draf PSKL2040">
+                                        <input name="payment_type" type="hidden" value="web">
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="amount" class="control-label">Jumlah (RM)</label>
@@ -28,18 +29,28 @@
                                             <label for="fpx">Perbankan Internet (Individu)</label>
                                         </div>
                                         <div class="radio radio-inline">
-                                            <img src="<?php echo BASE_URL."assets/images/migs.jpeg" ?>">
+                                            <img src="<?php echo BASE_URL."assets/images/migs.png" ?>">
                                             <input type="radio" id="migs" value="migs" name="payment_mode">
                                             <label for="migs">Kad Kredit</label>
                                         </div>
                                     </div>
 
+                                    <div id="select_bank"></div>
+
                                     <div class="form-group mb-3">
-                                        <label for="email" class="control-label">E-mail</label>
-                                        <input type="text" class="form-control" readonly="" value="fadlisaad@gmail.com">
+                                        <label for="fullname" class="control-label">Nama Penuh</label>
+                                        <input type="text" class="form-control" name="fullname" required="">
                                     </div>
 
-                                    <div id="select_bank"></div>
+                                    <div class="form-group mb-3">
+                                        <label for="email" class="control-label">E-mail</label>
+                                        <input type="text" class="form-control" name="email" required="">
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label for="mobile" class="control-label">No. Telefon</label>
+                                        <input type="text" class="form-control" name="mobile">
+                                    </div>
 
                                     <div class="form-group">
                                         <label for="tnc" class="control-label">Terma &amp; Syarat</label>

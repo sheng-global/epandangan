@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<?php echo ($_COOKIE['lang']) ? $_COOKIE['lang'] : 'my' ?>">
+<html lang="<?php echo $_COOKIE['lang'] = $_GET['lang'] = $_SESSION['lang'] === 'en' ? 'en' : 'my' ?>">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1">

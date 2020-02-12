@@ -8,9 +8,9 @@
 
 class Fpx extends Controller {
 
-	public function index()
+	public function __construct()
 	{
-		echo 'Hi';
+		$this->model = $this->loadModel('Payment_model');
 	}
 
 	public function request()
@@ -29,8 +29,6 @@ class Fpx extends Controller {
 			$data['PAYMENT_MODE'] = $_POST['payment_mode'];
 			$data['AMOUNT'] = sprintf("%01.2f", $_POST['amount']);
 			$data['MERCHANT_CODE'] = getenv('MERCHANT_CODE');
-			
-			$data['user_id'] = $_POST['user_id'];
 			$data['PAYEE_NAME'] = $_POST['payee_name'];
 			$data['PAYEE_EMAIL'] = $_POST['payee_email'];
 			$data['EMAIL'] = $_POST['payee_email'];
@@ -59,7 +57,6 @@ class Fpx extends Controller {
 
 	public function response()
 	{
-		var_dump(_POST);
 		if(isset($_POST)){
 
 			$data = array();
@@ -77,43 +74,126 @@ class Fpx extends Controller {
 			$data['BUYER_BANK'] = $_POST['BUYER_BANK'];
 			$data['BUYER_NAME'] = htmlspecialchars($_POST['BUYER_NAME'], ENT_QUOTES);
 			$data['CHECKSUM'] = $_POST['CHECKSUM'];
+			$data['TRANS_ID'] = $_POST['TRANS_ID'];
 			$data['currency'] = $_POST['currency'];
 			$data['be_message'] = $_POST['be_message'];
 			$data['email'] = $_POST['payee_email'];
+			$data['transaction_id'] = $_POST['transaction_id'];
 
-			switch ($_POST['STATUS']) {
+			switch ($data['STATUS']) {
 				case '1':
 					$status = 'success';
+					
+					# generate download link
+					$space = new Space();
+					$url = BASE_URL.'space/download/'.$data['transaction_id'];
+					$link = $space->generateLink();
+
+					# store download link
+					$downloadData = array(
+						'transaction_id' => $data['transaction_id'],
+						'link' => $link,
+						'count' => 0
+					);
+					$this->model->addDownload($downloadData);
+
 					break;
 				
 				default:
 					$status = 'failed';
+					$link = NULL;
 					break;
 			}
 
-			$payment_data = array(
+			# update payment status
+			$updateData = array(
+				'transaction_id' => $data['transaction_id'],
 				'status' => $status,
-				'remarks' => serialize($data)
+				'remarks' => serialize($data),
+				'count' => 0
+			);
+			$this->model->updatePayment($updateData);
+
+			$json_data = array(
+				'response' => array(
+					'payment_datetime' => $data['PAYMENT_DATETIME'],
+					'amount' => $data['AMOUNT'],
+					'status' => $status,
+					'fpx_transaction_id' => $data['PAYMENT_TRANS_ID'],
+					'seller_order_id' => $data['MERCHANT_ORDER_NO'],
+					'buyer_bank' => $data['BUYER_BANK'],
+					'buyer_name' => $data['BUYER_NAME'],
+					'link' => $url
+				),
+				'message' => array(
+					'title' => "status",
+					'code' => "1",
+					'content' => "Payment"
+				)
 			);
 
-	    	$payment_id = $_POST['TRANS_ID'];
+			if($_POST['PAYMENT_MODE'] == 'fpx') $payment_mode = 'Perbankan Internet (Individu)';
+			if($_POST['PAYMENT_MODE'] == 'migs') $payment_mode = 'Kad Kredit/Debit';
 
 	    	/** Email start *****************************/
 
-			$details = "<ul>
-				<li>Payment Date/Time: ".$_POST['PAYMENT_DATETIME']."</li>
-				<li>Amount: RM ".$_POST['AMOUNT']."</li>
-				<li>FPX Transaction ID: ".$_POST['PAYMENT_TRANS_ID']."</li>
-				<li>Seller Order ID: ".$_POST['MERCHANT_ORDER_NO']."</li>
-				<li>Buyer Bank: ".$_POST['BUYER_BANK']."</li>
-				<li>Buyer Name: ".$_POST['BUYER_NAME']."</li>
+			# send receipt email
+			$email = $this->loadHelper('Email_helper');
+				
+			# choose email template
+			$e_model = $this->loadModel('Mailer_model');
+			$template = $e_model->getByID(4);
+			$body = $template[0]['body'];
+			$subject = $template[0]['subject'];
+
+			$transaction_details = "<ul>
+				<li>Payment Date/Time: ".$data['PAYMENT_DATETIME']."</li>
+				<li>Amount: RM ".$data['AMOUNT']."</li>
+				<li>Status: ".ucfirst($status)."</li>
+				<li>FPX Transaction ID: ".$data['PAYMENT_TRANS_ID']."</li>
+				<li>Seller Order ID: ".$data['MERCHANT_ORDER_NO']."</li>
+				<li>Buyer Bank: ".$data['BUYER_BANK']."</li>
+				<li>Buyer Name: ".$data['BUYER_NAME']."</li>
 			</ul>";
+
+			# prepare the variable for email
+			$vars = array(
+				"{{EMAIL}}" => $data['email'],
+				"{{FULLNAME}}" => $_POST['BUYER_NAME'],
+				"{{DETAILS}}" => "Maklumat pembayaran adalah seperti berikut:<br>Jumlah : RM ".$_POST['AMOUNT']."<br>Daripada : ".$_POST['BUYER_NAME']." - ".$data['email']."<br>Jenis Pembayaran : ".strtoupper($_POST['payment_type'])."<br>Cara Pembayaran : ".$payment_mode."<br>Transaction ID: ".$_POST['TRANS_ID']."<br>Status : ".ucfirst($status)."<br>Keterangan Transaksi : <br>".$transaction_details,
+				"{{BUTTON}}" => '<tr style="font-family: Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+				<td class="content-block aligncenter" style="font-family: Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top"><a href="'.$url.'" class="login">Muat Turun</a></td></tr>'
+			);
+
+			$content = strtr($body, $vars);
+
+			$email_data = array(
+				'email' => $data['email'], 
+				'subject' => $subject, 
+				'content' => $content 
+			);
+
+			# send the email
+			$send = $email->send($email_data);
 
 			/** email end ******************************/
 
-			$this->redirect('payment/ib_receipt/'.$payment_id);
+			if($_POST['payment_type'] != 'web')
+			{
+				$payment_data = json_encode($json_data)."\n";
+				echo $payment_data;
+			}else{
+				$payment_id = $_POST['TRANS_ID'];
+				$this->redirect('payment/ib_receipt/'.$payment_id);
+			}
+
 		}else{
-			echo "Error receiving POST data from E-payment";
+			$msg['title'] = "status";
+			$msg['code'] = "0";
+			$msg['content'] = "Error receiving POST data from E-payment";
+
+			$msg_data = json_encode($msg)."\n";
+			echo htmlentities($msg_data);
 		}
 	}
 }
