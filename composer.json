@@ -7,7 +7,6 @@
         "dolondro/google-authenticator": "^2.0",
         "dg/adminer-custom": "^1.18",
         "gargron/fileupload": "^1.5",
-        "nesbot/carbon": "^2.25",
-        "sociallydev/spaces-api": "dev-master"
+        "nesbot/carbon": "^2.25"
     }
 }

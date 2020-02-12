@@ -94,7 +94,7 @@ class Fpx extends Controller {
 					
 					# generate download link
 					$url = BASE_URL.'space/download/'.$data['TRANS_ID'];
-					$link = DOSpace::getLink('klmycity/draf-2-ppkl2040.pdf');
+					$link = getenv('DOWNLOAD_LINK');
 
 					# store download link
 					$downloadData = array(
