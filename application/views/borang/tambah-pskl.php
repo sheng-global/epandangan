@@ -128,6 +128,13 @@
                                                     <input type="text" class="form-control" name="telefon_bimbit" id="telefon_bimbit" required="" value="<?php echo @$profile[0]['telefon_bimbit'] ?>">
                                                 </div>
                                             </div>
+
+                                            <h4 class="header-title"><span data-tag="lampiran"></span> 1</h4>
+                                                <p class="sub-header" data-tag="muatnaik-memorandum"></p>
+                                                <div class="form-group">
+                                                    <input type="file" name="lampiran_a" data-parsley-max-file-size="2000">
+                                                </div>
+                                            <div class="alert alert-info" data-tag="alert-lampiran"></div>
                                         
                                     </div>
 
