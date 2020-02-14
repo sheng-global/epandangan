@@ -163,8 +163,7 @@
                                 <div class="form-group mb-0">
                                     <input type="hidden" name="token" value="<?php echo $token ?>">
                                     <input type="hidden" name="draf" value="1">
-                                    <input type="submit" class="btn btn-warning" id="save" value="Simpan">
-                                    <input type="submit" class="btn btn-success" name="submit" value="Hantar">
+                                    <input type="submit" class="btn btn-success" name="submit" value="Hantar" disabled="">
                                 </div>
 
                             </form>

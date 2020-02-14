@@ -13,11 +13,11 @@
                                 <ol class="breadcrumb m-0">
                                     <li class="breadcrumb-item"><a href="javascript: void(0);"><?php echo getenv('SITE_TITLE') ?></a></li>
                                     <li class="breadcrumb-item"><a href="javascript: void(0);">Borang</a></li>
-                                    <li class="breadcrumb-item"><a href="javascript: void(0);">PBRKL 2040</a></li>
-                                    <li class="breadcrumb-item active">PBRKL2020/DRAF/1/<?php echo $data[0]['borang_id'] ?></li>
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">PSKL 2040</a></li>
+                                    <li class="breadcrumb-item active">PSKL2040/DRAF/<?php echo $data[0]['borang_id'] ?></li>
                                 </ol>
                             </div>
-                            <h4 class="page-title">PBRKL2020/DRAF/1/<?php echo $data[0]['borang_id'] ?></h4>
+                            <h4 class="page-title">PSKL2040/DRAF/<?php echo $data[0]['borang_id'] ?></h4>
                         </div>
                     </div>
                 </div>     
@@ -27,28 +27,39 @@
                     <div class="col-9">
                         <div class="card-box ribbon-box">
                             <div class="ribbon ribbon-primary float-right"><i class="fas fa-user"></i> <?php echo $data[0]['kategori'] ?></div>
-                            <h4 class="header-title">Bahagian A: Pandangan anda terhadap Draf Perubahan 1 PBRKL 2040</h4>
+                            <h4 class="header-title">Bahagian A: Pandangan anda terhadap Draf PSKL2040</h4>
                             <div class="ribbon-content">
+                                <h4>Bentuk dan Kandungan</h4>
                                 <dl class="row">
-                                    <dt class="col-sm-3">Jilid Laporan</dt>
-                                    <dd class="col-sm-9">Jilid 1</dd>
+                                    <dt class="col-sm-3">Bentuk dan Kandungan</dt>
+                                    <dd class="col-sm-9"><?php echo empty($data[0]['komen_bentuk_kandungan']) ? "Tiada komen" : $data[0]['komen_bentuk_kandungan'] ?></dd>
 
-                                    <dt class="col-sm-3">Muka Surat</dt>
-                                    <dd class="col-sm-9"><?php echo $data[0]['muka_surat'] ?></dd>
+                                    <dt class="col-sm-3">Lain-lain</dt>
+                                    <dd class="col-sm-9"><?php echo empty($data[0]['komen_lain_lain']) ? "Tiada komen" : $data[0]['komen_lain_lain'] ?></dd>
+                                </dl>
+                                <h4>Matlamat</h4>
+                                <?php foreach ($matlamat as $value): ?>
+                                <dl class="row">
+                                    <dt class="col-sm-3">Matlamat</dt>
+                                    <dd class="col-sm-9"><?php echo $value['matlamat'] ?></dd>
 
-                                    <dt class="col-sm-3">No. Pelan Indexs</dt>
-                                    <dd class="col-sm-9"><?php echo $data[0]['peta_indeks'] ?></dd>
+                                    <dt class="col-sm-3">Halatuju</dt>
+                                    <dd class="col-sm-9"><?php echo $value['halatuju'] ?></dd>
 
-                                    <dt class="col-sm-3">Pandangan Awam</dt>
+                                    <dt class="col-sm-3">Tindakan</dt>
+                                    <dd class="col-sm-9"><?php echo $value['tindakan'] ?></dd>
+
+                                    <dt class="col-sm-3">Pandangan / Cadangan</dt>
                                     <dd class="col-sm-9">
-                                        <p><?php echo $data[0]['pandangan_awam'] ?></p>
+                                        <p><?php echo empty($value['cadangan']) ? "Tiada komen" : $value['cadangan'] ?></p>
                                     </dd>
 
-                                    <dt class="col-sm-3">Cadangan Penambahbaikan</dt>
+                                    <dt class="col-sm-3">Justifikasi</dt>
                                     <dd class="col-sm-9">
-                                        <p><?php echo @$data[0]['cadangan'] ?></p>
+                                        <p><?php echo empty($value['justifikasi']) ? "Tiada komen" : $value['justifikasi'] ?></p>
                                     </dd>
                                 </dl>
+                                <?php endforeach; ?>
 
                             </div> <!-- end card body-->
                         </div> <!-- end card -->

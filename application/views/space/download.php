@@ -16,7 +16,7 @@
 
                                 <div class="mb-0 text-center">
                                     <p>Dokumen: Draf Pelan Struktur 2040</p>
-                                    <p>Saiz: 300 MB</p>
+                                    <p>Saiz: 317.9 MB</p>
                                     <p>Had muat-turun: <?php echo $limit ?> kali</p>
                                 </div>
 

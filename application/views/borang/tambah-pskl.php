@@ -41,19 +41,19 @@
 
                             <div id="rootwizard">
                                 <ul class="nav nav-pills bg-light nav-justified form-wizard-header mb-3">
-                                    <li class="nav-item" data-target-form="#accountForm">
+                                    <li class="nav-item" data-target-form="#first">
                                         <a href="#first" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2 active">
                                             <i class="mdi mdi-account-circle mr-1"></i>
                                             <span class="d-none d-sm-inline"><span data-tag="part"></span> A</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item" data-target-form="#profileForm">
+                                    <li class="nav-item" data-target-form="#second">
                                         <a href="#second" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
                                             <i class="mdi mdi-face-profile mr-1"></i>
                                             <span class="d-none d-sm-inline"><span data-tag="part"></span> B</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item" data-target-form="#otherForm">
+                                    <li class="nav-item" data-target-form="#third">
                                         <a href="#third" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
                                             <i class="mdi mdi-checkbox-marked-circle-outline mr-1"></i>
                                             <span class="d-none d-sm-inline"><span data-tag="part"></span> C</span>
@@ -66,7 +66,7 @@
                                     <div class="tab-pane active show" id="first">
                                         <h4 class="sub-header" data-tag="maklumat-peribadi"></h4>
 
-                                        <form method="post" id="borang-pskl" data-parsley-validate="" enctype="multipart/form-data" action="<?php echo BASE_URL ?>borang/add_pskl">
+                                        <form method="post" id="borang-pskl" data-parsley-validate="" enctype="multipart/form-data" action="<?php echo BASE_URL ?>borang/add_pskl" class="borang-pskl">
                                             <div class="form-row">
                                                 <div class="form-group col-md-9">
                                                     <label for="nama_penuh"><span data-tag="nama-penuh"></span> <span class="text-danger">*</span></label>
@@ -132,16 +132,16 @@
                                     </div>
 
                                     <div class="tab-pane fade" id="second">
-                                        <h4 class="sub-header" data-tag="pengesahan-kehadiran"></h4>
+                                        <h4 class="sub-header">Pengesahan Kehadiran ke Sesi Pendengaran Pandangan Awam</h4>
                                         <div class="form-group">
                                             <p><span data-tag="soalan-kehadiran"></span> <span class="text-danger">*</span></p>
 
                                             <div class="radio mb-1 radio-success form-check-inline">
-                                                <input type="radio" name="hadir" id="ya" value="Ya">
+                                                <input type="radio" name="hadir" id="ya" value="Ya" required="">
                                                 <label for="ya" data-tag="hadir-ya"></label>
                                             </div>
                                             <div class="radio radio-danger form-check-inline">
-                                                <input type="radio" name="hadir" id="tidak" value="Tidak" required="">
+                                                <input type="radio" name="hadir" id="tidak" value="Tidak">
                                                 <label for="tidak" data-tag="hadir-tidak"></label>
                                             </div>
                                         </div>
@@ -149,330 +149,205 @@
 
                                     <div class="tab-pane fade" id="third">
 
-                                        <div id="accordion" class="mb-3">
-                                            <div class="card mb-1">
+                                        <div class="card mb-1">
 
-                                                <div class="card-header" id="heading00">
-                                                    <h5 class="m-0">
-                                                        <a class="text-dark collapsed" data-toggle="collapse" href="#collapse00" aria-expanded="true">
-                                                            <i class="mdi mdi-help-circle mr-1 text-primary"></i> 
-                                                            Bab 1: Pelan Struktur Kuala Lumpur
-                                                        </a>
-                                                    </h5>
+                                            <div class="card-header">
+                                                <h5 class="m-0">Bentuk dan Kandungan Dokumen</h5>
+                                            </div>
+
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="komen_bentuk_kandungan">Pandangan/Cadangan <span class="text-danger">*</span></label>
+                                                    <textarea id="komen_bentuk_kandungan" class="form-control" name="komen_bentuk_kandungan" rows="5" placeholder="Sila nyatakan" required=""></textarea>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="card mb-1">
+
+                                            <div class="card-header">
+                                                <h5 class="m-0">Matlamat <span id="matlamat_title"></span></h5>
+                                            </div>
+                                    
+                                            <div class="card-body">
+
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-4">
+                                                        <label for="matlamat_1">Matlamat <span class="text-danger">*</span></label>
+                                                        <select class="form-control" name="matlamat[]" id="matlamat_1">
+                                                            <option value="">- Pilih -</option>
+                                                            <?php foreach ($matlamat as $value): ?>
+                                                            <option value="<?php echo $value['id'] ?>"><?php echo $value['tajuk'] ?></option>
+                                                        <?php endforeach; ?>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label for="halatuju_1">Halatuju <span class="text-danger">*</span></label>
+                                                        <select class="form-control" name="halatuju[]" id="halatuju_1">
+                                                            <option value="">- Pilih -</option>
+                                                            <?php foreach ($halatuju as $value): ?>
+                                                            <option value="<?php echo $value['id'] ?>" class="<?php echo $value['matlamat_id'] ?>"><?php echo $value['tajuk'] ?></option>
+                                                        <?php endforeach; ?>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label for="tindakan_1">Tindakan <span class="text-danger">*</span></label>
+                                                        <select class="form-control" name="tindakan[]" id="tindakan_1">
+                                                            <option value="">- Pilih -</option>
+                                                            <?php foreach ($tindakan as $value): ?>
+                                                            <option value="<?php echo $value['id'] ?>" class="<?php echo $value['halatuju_id'] ?>"><?php echo $value['tajuk'] ?></option>
+                                                        <?php endforeach; ?>
+                                                        </select>
+                                                    </div>
+
                                                 </div>
 
-                                                <div id="collapse00" class="collapse" aria-labelledby="heading00" data-parent="#accordion" style="">
-                                                    <div class="card-body">
+                                                <div id="borang_pandangan_1">
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-6">
+                                                            <label for="cadangan_1">Pandangan/Cadangan <span class="text-danger">*</span></label>
+                                                            <textarea id="cadangan_1" class="form-control" name="cadangan[]" rows="5" placeholder="Contoh: Selaraskan Syarat Nyata" required=""></textarea>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="justifikasi_1">Justifikasi <span class="text-danger">*</span></label>
+                                                            <textarea id="justifikasi_1" class="form-control" name="justifikasi[]" rows="5"placeholder="Contoh: Selaraskan Syarat Nyata" required=""></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-row">
+                                                        <button type="button" class="btn btn-warning" id="btnAdd1">Tambah</button>
+                                                    </div>
+                                                </div>
+
+                                                <div id="borang_matlamat_2">
+
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-4">
+                                                            <label for="matlamat_2">Matlamat <span class="text-danger">*</span></label>
+                                                            <select class="form-control" name="matlamat[]" id="matlamat_2">
+                                                                <option value="">- Pilih -</option>
+                                                                <?php foreach ($matlamat as $value): ?>
+                                                                <option value="<?php echo $value['id'] ?>"><?php echo $value['tajuk'] ?></option>
+                                                            <?php endforeach; ?>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="form-group col-md-4">
+                                                            <label for="halatuju_2">Halatuju <span class="text-danger">*</span></label>
+                                                            <select class="form-control" name="halatuju[]" id="halatuju_2">
+                                                                <option value="">- Pilih -</option>
+                                                                <?php foreach ($halatuju as $value): ?>
+                                                                <option value="<?php echo $value['id'] ?>" class="<?php echo $value['matlamat_id'] ?>"><?php echo $value['tajuk'] ?></option>
+                                                            <?php endforeach; ?>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="form-group col-md-4">
+                                                            <label for="tindakan_2">Tindakan <span class="text-danger">*</span></label>
+                                                            <select class="form-control" name="tindakan[]" id="tindakan_2">
+                                                                <option value="">- Pilih -</option>
+                                                                <?php foreach ($tindakan as $value): ?>
+                                                                <option value="<?php echo $value['id'] ?>" class="<?php echo $value['halatuju_id'] ?>"><?php echo $value['tajuk'] ?></option>
+                                                            <?php endforeach; ?>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                
+                                                    <div id="borang_pandangan_2">
                                                         <div class="form-row">
                                                             <div class="form-group col-md-6">
-                                                                <label for="pandangan_awam_bab_1">Pandangan Awam/Cadangan <span class="text-danger">*</span></label>
-                                                                <textarea id="pandangan_awam_bab_1" class="form-control" name="pandangan_awam_bab_1" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
+                                                                <label for="cadangan_2">Pandangan/Cadangan <span class="text-danger">*</span></label>
+                                                                <textarea id="cadangan_2" class="form-control" name="cadangan[]" rows="5" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
                                                             </div>
                                                             <div class="form-group col-md-6">
-                                                                <label for="justifikasi_bab_1">Justifikasi <span class="text-danger">*</span></label>
-                                                                <textarea id="justifikasi_bab_1" class="form-control" name="justifikasi_bab_1" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
+                                                                <label for="justifikasi_2">Justifikasi <span class="text-danger">*</span></label>
+                                                                <textarea id="justifikasi_2" class="form-control" name="justifikasi[]" rows="5"placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
                                                             </div>
+                                                        </div>
+                                                        <div class="form-row">
+                                                            <button type="button" class="btn btn-warning" id="btnAdd2">Tambah</button>
+                                                            <button type="button" class="btn btn-danger" id="btnDel2">Hapus</button>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                            </div>
+                                                <div id="borang_matlamat_3">
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-4">
+                                                            <label for="matlamat_3">Matlamat <span class="text-danger">*</span></label>
+                                                            <select class="form-control" name="matlamat[]" id="matlamat_3">
+                                                                <option value="">- Pilih -</option>
+                                                                <?php foreach ($matlamat as $value): ?>
+                                                                <option value="<?php echo $value['id'] ?>"><?php echo $value['tajuk'] ?></option>
+                                                            <?php endforeach; ?>
+                                                            </select>
+                                                        </div>
 
-                                            <div class="card mb-1">
+                                                        <div class="form-group col-md-4">
+                                                            <label for="halatuju_3">Halatuju <span class="text-danger">*</span></label>
+                                                            <select class="form-control" name="halatuju[]" id="halatuju_3">
+                                                                <option value="">- Pilih -</option>
+                                                                <?php foreach ($halatuju as $value): ?>
+                                                                <option value="<?php echo $value['id'] ?>" class="<?php echo $value['matlamat_id'] ?>"><?php echo $value['tajuk'] ?></option>
+                                                            <?php endforeach; ?>
+                                                            </select>
+                                                        </div>
 
-                                                <div class="card-header" id="heading01">
-                                                    <h5 class="m-0">
-                                                        <a class="text-dark collapsed" data-toggle="collapse" href="#collapse01" aria-expanded="false">
-                                                            <i class="mdi mdi-help-circle mr-1 text-primary"></i> 
-                                                            Bab 2: Kuala Lumpur Bandar Untuk Semua
-                                                        </a>
-                                                    </h5>
-                                                </div>
-                                    
-                                                <div id="collapse01" class="collapse" aria-labelledby="heading01" data-parent="#accordion" style="">
-                                                    <div class="card-body">
+                                                        <div class="form-group col-md-4">
+                                                            <label for="tindakan_3">Tindakan <span class="text-danger">*</span></label>
+                                                            <select class="form-control" name="tindakan[]" id="tindakan_3">
+                                                                <option value="">- Pilih -</option>
+                                                                <?php foreach ($tindakan as $value): ?>
+                                                                <option value="<?php echo $value['id'] ?>" class="<?php echo $value['halatuju_id'] ?>"><?php echo $value['tajuk'] ?></option>
+                                                            <?php endforeach; ?>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="borang_pandangan_3">
                                                         <div class="form-row">
                                                             <div class="form-group col-md-6">
-                                                                <label for="pandangan_awam_bab_2">Pandangan Awam/Cadangan <span class="text-danger">*</span></label>
-                                                                <textarea id="pandangan_awam_bab_2" class="form-control" name="pandangan_awam_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
+                                                                <label for="cadangan_3">Pandangan/Cadangan <span class="text-danger">*</span></label>
+                                                                <textarea id="cadangan_3" class="form-control" name="cadangan[]" rows="5" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
                                                             </div>
                                                             <div class="form-group col-md-6">
-                                                                <label for="justifikasi_bab_2">Justifikasi <span class="text-danger">*</span></label>
-                                                                <textarea id="justifikasi_bab_2" class="form-control" name="justifikasi_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
+                                                                <label for="justifikasi_3">Justifikasi <span class="text-danger">*</span></label>
+                                                                <textarea id="justifikasi_3" class="form-control" name="justifikasi[]" rows="5"placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
                                                             </div>
+                                                        </div>
+                                                        <div class="form-row">
+                                                            <button type="button" class="btn btn-danger" id="btnDel3">Hapus</button>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                
                                             </div>
 
-                                            <div class="card mb-1">
+                                        </div>
 
-                                                <div class="card-header" id="headingOne">
-                                                    <h5 class="m-0">
-                                                        <a class="text-dark collapsed" data-toggle="collapse" href="#collapseOne" aria-expanded="false">
-                                                            <i class="mdi mdi-help-circle mr-1 text-primary"></i> 
-                                                            Matlamat 1: Inovatif dan Produktif (IP)
-                                                        </a>
-                                                    </h5>
-                                                </div>
-                                    
-                                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion" style="">
-                                                    <div class="card-body">
-                                                        <div id="matlamat-1">
-                                                            <h6 class="sub-header">Hala Tuju Strategik IP 1: Pertumbuhan Ekonomi Bandar yang Berdaya Saing (IP 1.1, IP 1.2, IP 1.3)</h6>
-                                                            <div class="form-row">
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="pandangan_awam_bab_2">Pandangan Awam/Cadangan <span class="text-danger">*</span></label>
-                                                                    <textarea id="pandangan_awam_bab_2" class="form-control" name="pandangan_awam_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="justifikasi_bab_2">Justifikasi <span class="text-danger">*</span></label>
-                                                                    <textarea id="justifikasi_bab_2" class="form-control" name="justifikasi_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                            </div>
-
-                                                            <h6 class="sub-header">Hala Tuju Strategik IP 2: Persekitaran Kerja dan Niaga yang Kondusif (IP 2.1, IP 2.2, IP 2.3, IP 2.4)</h6>
-                                                            <div class="form-row">
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="pandangan_awam_bab_2">Pandangan Awam/Cadangan <span class="text-danger">*</span></label>
-                                                                    <textarea id="pandangan_awam_bab_2" class="form-control" name="pandangan_awam_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="justifikasi_bab_2">Justifikasi <span class="text-danger">*</span></label>
-                                                                    <textarea id="justifikasi_bab_2" class="form-control" name="justifikasi_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                            </div>
-
-                                                            <h6 class="sub-header">Hala Tuju Strategik IP 3: Pemangkin Pertumbuhan Ekonomi Wilayah yang Dinamik dan Kukuh (IP 3.1, IP 3.2, IP 3.3)</h6>
-                                                            <div class="form-row">
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="pandangan_awam_bab_2">Pandangan Awam/Cadangan <span class="text-danger">*</span></label>
-                                                                    <textarea id="pandangan_awam_bab_2" class="form-control" name="pandangan_awam_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="justifikasi_bab_2">Justifikasi <span class="text-danger">*</span></label>
-                                                                    <textarea id="justifikasi_bab_2" class="form-control" name="justifikasi_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                            </div>
-                                                        
-                                                        </div>
-                                                    </div>
+                                        <div class="card mb-1">
+                                            <div class="card-header">
+                                                <h5 class="m-0">Lain-Lain</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="komen_lain_lain">Pandangan/Cadangan <span class="text-danger">*</span></label>
+                                                    <textarea id="komen_lain_lain" class="form-control" name="komen_lain_lain" rows="5" placeholder="Sila nyatakan"></textarea>
                                                 </div>
                                             </div>
 
-                                            <div class="card mb-1">
-                                                <div class="card-header" id="headingTwo">
-                                                    <h5 class="m-0">
-                                                        <a class="text-dark" data-toggle="collapse" href="#collapseTwo" aria-expanded="false">
-                                                            <i class="mdi mdi-help-circle mr-1 text-primary"></i> 
-                                                            Matlamat 2: Inklusif dan Saksama (IS)
-                                                        </a>
-                                                    </h5>
-                                                </div>
-                                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                                                    <div class="card-body">
-                                                        <div id="matlamat-2">
-                                                            <h6 class="sub-header">Hala Tuju Strategik IS 1: Perumahan untuk Semua Golongan Penduduk (IS 1.1, IS 1.2, IS 1.3, IS 1.4)</h6>
-                                                            <div class="form-row">
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="pandangan_awam_bab_2">Pandangan Awam/Cadangan <span class="text-danger">*</span></label>
-                                                                    <textarea id="pandangan_awam_bab_2" class="form-control" name="pandangan_awam_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="justifikasi_bab_2">Justifikasi <span class="text-danger">*</span></label>
-                                                                    <textarea id="justifikasi_bab_2" class="form-control" name="justifikasi_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                            </div>
-
-                                                            <h6 class="sub-header">Hala Tuju Strategik IS 2: Kejiranan yang Berkualiti, Kondusif dan Menggalakkan Interaksi Sosial (IS 2.1, IS 2.2, IS 2.3, IS 2.4, IS 2.5)</h6>
-                                                            <div class="form-row">
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="pandangan_awam_bab_2">Pandangan Awam/Cadangan <span class="text-danger">*</span></label>
-                                                                    <textarea id="pandangan_awam_bab_2" class="form-control" name="pandangan_awam_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="justifikasi_bab_2">Justifikasi <span class="text-danger">*</span></label>
-                                                                    <textarea id="justifikasi_bab_2" class="form-control" name="justifikasi_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card mb-1">
-                                                <div class="card-header" id="headingThree">
-                                                    <h5 class="m-0">
-                                                        <a class="text-dark collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false">
-                                                            <i class="mdi mdi-help-circle mr-1 text-primary"></i> 
-                                                            Matlamat 3: Sihat dan Vibrant (SV)
-                                                        </a>
-                                                    </h5>
-                                                </div>
-                                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion" style="">
-                                                    <div class="card-body">
-                                                        <div id="matlamat-3">
-
-                                                            <h6 class="sub-header">Hala Tuju Strategik SV 1: Pembangunan Bandar yang Mengintegrasikan Alam Semula Jadi (SV 1.1, SV 1.2, SV 1.3)</h6>
-                                                            <div class="form-row">
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="pandangan_awam_bab_2">Pandangan Awam/Cadangan <span class="text-danger">*</span></label>
-                                                                    <textarea id="pandangan_awam_bab_2" class="form-control" name="pandangan_awam_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="justifikasi_bab_2">Justifikasi <span class="text-danger">*</span></label>
-                                                                    <textarea id="justifikasi_bab_2" class="form-control" name="justifikasi_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                            </div>
-
-                                                            <h6 class="sub-header">Hala Tuju Strategik SV 2: Persekitaran Bandar yang Menarik dan Kreatif (SV 2.1, SV 2.2, SV 2.3)</h6>
-                                                            <div class="form-row">
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="pandangan_awam_bab_2">Pandangan Awam/Cadangan <span class="text-danger">*</span></label>
-                                                                    <textarea id="pandangan_awam_bab_2" class="form-control" name="pandangan_awam_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="justifikasi_bab_2">Justifikasi <span class="text-danger">*</span></label>
-                                                                    <textarea id="justifikasi_bab_2" class="form-control" name="justifikasi_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                            </div>
-
-                                                            <h6 class="sub-header">Hala Tuju Strategik SV 3: Rangkaian Hijau dan Warisan Bandar (SV 3.1, SV 3.2, SV 3.3, SV 3.4)</h6>
-                                                            <div class="form-row">
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="pandangan_awam_bab_2">Pandangan Awam/Cadangan <span class="text-danger">*</span></label>
-                                                                    <textarea id="pandangan_awam_bab_2" class="form-control" name="pandangan_awam_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="justifikasi_bab_2">Justifikasi <span class="text-danger">*</span></label>
-                                                                    <textarea id="justifikasi_bab_2" class="form-control" name="justifikasi_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                            </div>
-
-                                                            <h6 class="sub-header">Hala Tuju Strategik SV 4: Tadbir Urus Hijau yang Efektif (SV 4.1, SV 4.2, SV 4.3)</h6>
-                                                            <div class="form-row">
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="pandangan_awam_bab_2">Pandangan Awam/Cadangan <span class="text-danger">*</span></label>
-                                                                    <textarea id="pandangan_awam_bab_2" class="form-control" name="pandangan_awam_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="justifikasi_bab_2">Justifikasi <span class="text-danger">*</span></label>
-                                                                    <textarea id="justifikasi_bab_2" class="form-control" name="justifikasi_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="card mb-1">
-                                                <div class="card-header" id="headingFour">
-                                                    <h5 class="m-0">
-                                                        <a class="text-dark" data-toggle="collapse" href="#collapseFour" aria-expanded="false">
-                                                            <i class="mdi mdi-help-circle mr-1 text-primary"></i> 
-                                                            Matlamat 4: Pintar Iklim dan Rendah Karbon (PR)
-                                                        </a>
-                                                    </h5>
-                                                </div>
-                                                <div id="collapseFour" class="collapse show" aria-labelledby="collapseFour" data-parent="#accordion" style="">
-                                                    <div class="card-body">
-                                                        <div id="matlamat-4">
-
-                                                            <h6 class="sub-header">Hala Tuju Strategik PR 1: aya Tahan Terhadap Bencana Alam dan Perubahan Iklim (PR 1.1)</h6>
-                                                            <div class="form-row">
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="pandangan_awam_bab_2">Pandangan Awam/Cadangan <span class="text-danger">*</span></label>
-                                                                    <textarea id="pandangan_awam_bab_2" class="form-control" name="pandangan_awam_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="justifikasi_bab_2">Justifikasi <span class="text-danger">*</span></label>
-                                                                    <textarea id="justifikasi_bab_2" class="form-control" name="justifikasi_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                            </div>
-
-                                                            <h6 class="sub-header">Hala Tuju Strategik PR 2: Kecekapan Pengurusan Sumber Bandar (PR 2.1, PR 2.2, PR 2.3, PR 2.4, PR 2.5)</h6>
-                                                            <div class="form-row">
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="pandangan_awam_bab_2">Pandangan Awam/Cadangan <span class="text-danger">*</span></label>
-                                                                    <textarea id="pandangan_awam_bab_2" class="form-control" name="pandangan_awam_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="justifikasi_bab_2">Justifikasi <span class="text-danger">*</span></label>
-                                                                    <textarea id="justifikasi_bab_2" class="form-control" name="justifikasi_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                            </div>
-
-                                                            <h6 class="sub-header">Hala Tuju Strategik PR 3: Kecekapan dalam Pengurangan Perlepasan Karbon (PR 3.1, PR 3.2, PR 3.3, PR 3.4)</h6>
-                                                            <div class="form-row">
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="pandangan_awam_bab_2">Pandangan Awam/Cadangan <span class="text-danger">*</span></label>
-                                                                    <textarea id="pandangan_awam_bab_2" class="form-control" name="pandangan_awam_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="justifikasi_bab_2">Justifikasi <span class="text-danger">*</span></label>
-                                                                    <textarea id="justifikasi_bab_2" class="form-control" name="justifikasi_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                            </div>
-
-                                                            <h6 class="sub-header">Hala Tuju Strategik PR 4: Pembangunan Komuniti yang Rendah Karbon (PR 4.1, PR 4.2, PR 4.3, PR 4.4)</h6>
-                                                            <div class="form-row">
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="pandangan_awam_bab_2">Pandangan Awam/Cadangan <span class="text-danger">*</span></label>
-                                                                    <textarea id="pandangan_awam_bab_2" class="form-control" name="pandangan_awam_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="justifikasi_bab_2">Justifikasi <span class="text-danger">*</span></label>
-                                                                    <textarea id="justifikasi_bab_2" class="form-control" name="justifikasi_bab_2" rows="5" data-parsley-trigger="keyup" data-parsley-minlength="200" data-parsley-validation-threshold="100" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="card mb-1">
-                                                <div class="card-header" id="headingFive">
-                                                    <h5 class="m-0">
-                                                        <a class="text-dark" data-toggle="collapse" href="#collapseFive" aria-expanded="false">
-                                                            <i class="mdi mdi-help-circle mr-1 text-primary"></i> 
-                                                            Matlamat 5 <span class="text-danger">*</span>
-                                                        </a>
-                                                    </h5>
-                                                </div>
-                                                <div id="collapseFive" class="collapse show" aria-labelledby="collapseFive" data-parent="#accordion" style="">
-                                                    <div class="card-body">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="card mb-1">
-                                                <div class="card-header" id="headingSix">
-                                                    <h5 class="m-0">
-                                                        <a class="text-dark" data-toggle="collapse" href="#collapseSix" aria-expanded="false">
-                                                            <i class="mdi mdi-help-circle mr-1 text-primary"></i> 
-                                                            Matlamat 6 <span class="text-danger">*</span>
-                                                        </a>
-                                                    </h5>
-                                                </div>
-                                                <div id="collapseSix" class="collapse show" aria-labelledby="collapseSix" data-parent="#accordion" style="">
-                                                    <div class="card-body">
-
-                                                    </div>
+                                            <div class="card-footer">
+                                                <div class="form-group mb-0">
+                                                    <input type="hidden" name="token" value="<?php echo $token ?>">
+                                                    <input type="submit" class="btn btn-success" name="submit" value="Hantar">
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="form-group mb-0">
-                                            <input type="hidden" name="token" value="<?php echo $token ?>">
-                                            <input type="submit" class="btn btn-warning" id="save" value="Simpan">
-                                            <input type="submit" class="btn btn-success" name="submit" value="Hantar">
-                                        </div>
+                                    </div>
 
                                     </form>
-                                    </div>
 
                                     <ul class="list-inline wizard mb-0">
                                         <li class="previous list-inline-item"><a href="javascript: void(0);" class="btn btn-secondary">Previous</a>
@@ -506,7 +381,7 @@
                                 <h5 class="card-title">Bahagian B</h5>
                                 <p class="card-text">
                                     <ol>
-                                        <li>Setiap individu/kumpulan diberi pilihan untuk menghadiri atau tidak ke Jawatankuasa Pendengaran Pandangan Awam. Sila tandakan pilihan anda.</li>
+                                        <li>Setiap individu/kumpulan diberi pilihan untuk menghadiri atau tidak ke sesi Pendengaran Pandangan Awam. Sila tandakan pilihan anda.</li>
                                     </ol>
                                 </p>
 
@@ -517,14 +392,15 @@
                                         <li>Pandangan awam perlulah berkaitan dengan kandungan Draf Pelan Struktur Kuala Lumpur 2040 sahaja.</li>
                                         <li>Pandangan awam mestilah berasaskan kepada keperluan masyarakat umum dan tidak kepada kepentingan individu.</li> 
                                         <li>Pandangan awam secara bertulis sahaja yang akan didengar dan dipertimbangkan oleh Jawatankuasa Pendengaran Pandangan Awam.</li>
+                                        <li>Anda boleh menghantar 3 pandangan berkaitan sesebuah tindakan. Jika anda ingin menghantar lebih dari 3 pandangan, sila hantar dalam borang yang baru.</li>
                                     </ol>
                                 </p>
                                 <div class="alert alert-info" role="alert">
-                                    <i class="mdi mdi-alert-circle-outline mr-2"></i> Maklumat lanjut mengenai Draf Pelan Struktur Kuala Lumpur 2040 boleh diperoleh dengan menghubungi talian 03 – 2617 9512 / 9519 (Seksyen Perancangan Pelan Tempatan, Jabatan Perancangan Bandaraya).
+                                    <i class="mdi mdi-alert-circle-outline mr-2"></i> Maklumat lanjut mengenai Draf Pelan Struktur Kuala Lumpur 2040 boleh diperoleh dengan menghubungi talian 03–2617 9544 / 9545 / 9546 (Seksyen Perancangan Pelan Tempatan, Jabatan Perancangan Bandaraya).
                                 </div>
                                 <div class="alert alert-warning" role="alert">
                                     <i class="mdi mdi-alert-outline mr-2"></i>
-                                    <p>Borang yang telah lengkap diisi hendaklah dihantar sebelum 17 Mac 2020 (Selasa)</p>
+                                    Borang yang telah lengkap diisi hendaklah dihantar sebelum atau pada 17 Mac 2020 (Selasa)
                                     <div data-countdown="2020/03/17"></div>
                                 </div>
                                 

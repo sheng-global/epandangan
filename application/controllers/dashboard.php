@@ -53,6 +53,8 @@ class Dashboard extends Controller {
 
 		$this->borang_model = $this->loadModel('Borang_model');
 		$ptkl = $this->borang_model->getByUserID('ptkl', $this->session->get('user_id'));
+		$ptkl2 = $this->borang_model->getByUserID('ptkl_2', $this->session->get('user_id'));
+		$pskl = $this->borang_model->getByUserID('pskl', $this->session->get('user_id'));
 
 		$template = $this->loadView('dashboard');
 
@@ -64,6 +66,8 @@ class Dashboard extends Controller {
 		$topbar->render();
 
 		$template->set('ptkl', $ptkl);
+		$template->set('ptkl2', $ptkl2);
+		$template->set('pskl', $pskl);
 		$template->render();
 
 		$footer = $this->loadView('footer');

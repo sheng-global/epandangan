@@ -58,7 +58,7 @@ class Payment extends Controller {
 
 			$payment_data = array(
 				'transaction_id' => $transaction_id,
-				'amount' => $_POST['amount'],
+				'amount' => getenv('AMOUNT'),
 				'payment_date' => date('Y-m-d'),
 				'payment_time' => date('H:i:s'),
 				'payment_type' => $payment_type,

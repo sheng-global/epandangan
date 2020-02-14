@@ -31,7 +31,9 @@ class Borang extends Controller {
 			'assets/js/pages/sweet-alerts.init.js',
 			'assets/libs/parsleyjs/parsleyjs.min.js',
 			'assets/libs/parsleyjs/il8n/ms.js',
-			'assets/libs/jquery-countdown/jquery-countdown.min.js'
+			'assets/libs/jquery-countdown/jquery-countdown.min.js',
+			'assets/js/jquery.chained.js',
+			'assets/libs/twitter-bootstrap-wizard/twitter-bootstrap-wizard.min.js'
 		);
 
 		if(empty($this->session->get('loggedin'))){
@@ -255,6 +257,80 @@ class Borang extends Controller {
 		$footer->render();
 	}
 
+	function papar_ptkl_2($id)
+	{
+		$custom_css = "<style>
+		@media print {
+		    .printable {
+		        background-color: white;
+		        height: 100%;
+		        width: 100%;
+		        position: fixed;
+		        top: 0;
+		        left: 0;
+		        margin: 0;
+		        padding: 15px;
+		        font-size: 14px;
+		        line-height: 18px;
+		    }
+		}
+		</style>";
+
+		$data = $this->model->getByID('ptkl_2', $id);
+
+		$header = $this->loadView('header');
+		$navigation = $this->loadView('topbar');
+		$footer = $this->loadView('footer');
+        $template = $this->loadView('borang/view-ptkl-2');
+
+		$header->set('custom_css', $custom_css);
+		$template->set('data', $data);
+		$template->set('helper', $this->loadHelper('upload_helper'));
+		
+		$header->render();
+		$navigation->render();
+		$template->render();
+		$footer->render();
+	}
+
+	function papar_pskl($id)
+	{
+		$custom_css = "<style>
+		@media print {
+		    .printable {
+		        background-color: white;
+		        height: 100%;
+		        width: 100%;
+		        position: fixed;
+		        top: 0;
+		        left: 0;
+		        margin: 0;
+		        padding: 15px;
+		        font-size: 14px;
+		        line-height: 18px;
+		    }
+		}
+		</style>";
+
+		$data = $this->model->getByID('pskl', $id);
+		$matlamat = $this->model->getByID('matlamat', $id);
+
+		$header = $this->loadView('header');
+		$navigation = $this->loadView('topbar');
+		$footer = $this->loadView('footer');
+        $template = $this->loadView('borang/view-pskl');
+
+		$header->set('custom_css', $custom_css);
+		$template->set('data', $data);
+		$template->set('matlamat', $matlamat);
+		$template->set('helper', $this->loadHelper('upload_helper'));
+		
+		$header->render();
+		$navigation->render();
+		$template->render();
+		$footer->render();
+	}
+
 	function pandangan($borang)
 	{
 		$easyCSRF = new EasyCSRF\EasyCSRF($this->session);
@@ -263,13 +339,24 @@ class Borang extends Controller {
 		$token = $easyCSRF->generate('token');
 
 		$custom_js = "<script>
+
+		var borang = '".$borang."';
+
 		$(document).ready(function() {
 
-			Swal.fire({
-				title: 'Makluman',
-				text: 'Sila baca Panduan Mengisi Borang terlebih dahulu sebelum mengisi borang penyertaan awam ini.',
-				type: 'info'
-			});
+			if(borang == 'ptkl'){
+				Swal.fire({
+					title: 'Makluman',
+					text: 'Borang Penyertaan Awam Draf Perubahan 1 PBRKL 2020 telah ditutup',
+					type: 'info'
+				});
+			}else{
+				Swal.fire({
+					title: 'Makluman',
+					text: 'Sila baca Panduan Mengisi Borang terlebih dahulu sebelum mengisi borang penyertaan awam ini.',
+					type: 'info'
+				});
+			}
 
 			$('[data-countdown]').each(function () {
 				finalDate = $(this).data('countdown');
@@ -284,12 +371,96 @@ class Borang extends Controller {
 		});
 
 		$(function () {
-			$('#borang-ptkl').parsley().on('field:validated', function() {
+			$('#borang-".$borang."').parsley().on('field:validated', function() {
 				var ok = $('.parsley-error').length === 0;
 				$('.bs-callout-info').toggleClass('hidden', !ok);
 				$('.bs-callout-warning').toggleClass('hidden', ok);
 			});
 		});
+
+		$('#rootwizard').bootstrapWizard();
+
+		$('#borang_pandangan_1').hide(); 
+
+		$('#halatuju_1').chained('#matlamat_1');
+		$('#tindakan_1').chained('#halatuju_1');
+
+	    $('#tindakan_1').bind('change', function(event) {
+	        if ('' != $('option:selected', this).val() && '' != $('option:selected', $('#halatuju_1')).val()) {
+	            $('#borang_pandangan_1').fadeIn();
+	        } else {
+	            $('#borang_pandangan_1').hide();          
+	        }
+	    });
+
+	    $('#borang_pandangan_2').hide();
+	    $('#borang_matlamat_2').hide(); 
+
+		$('#halatuju_2').chained('#matlamat_2');
+		$('#tindakan_2').chained('#halatuju_2');
+
+	    $('#tindakan_2').bind('change', function(event) {
+	        if ('' != $('option:selected', this).val() && '' != $('option:selected', $('#halatuju_2')).val()) {
+	            $('#borang_pandangan_2').fadeIn();
+	        } else {
+	            $('#borang_pandangan_2').hide();          
+	        }
+	    });
+
+	    $('#borang_pandangan_3').hide();
+	    $('#borang_matlamat_3').hide();  
+
+		$('#halatuju_3').chained('#matlamat_3');
+		$('#tindakan_3').chained('#halatuju_3');
+
+	    $('#tindakan_3').bind('change', function(event) {
+	        if ('' != $('option:selected', this).val() && '' != $('option:selected', $('#halatuju_3')).val()) {
+	            $('#borang_pandangan_3').fadeIn();
+	        } else {
+	            $('#borang_pandangan_3').hide();          
+	        }
+	    });
+
+	    $('#btnAdd1').click(function(){
+	    	Swal.fire({
+				title: 'Tambah',
+				text: 'Sila pilih matlamat, halatuju dan tindakan yang selanjutnya.',
+				type: 'info'
+			});
+	    	$('#borang_matlamat_2').show();
+	    });
+
+	    $('#btnAdd2').click(function(){
+	    	Swal.fire({
+				title: 'Tambah',
+				text: 'Sila pilih matlamat, halatuju dan tindakan yang selanjutnya.',
+				type: 'info'
+			});
+	    	$('#borang_matlamat_3').show();
+	    });
+
+	    $('#btnDel2').click(function(){
+	    	Swal.fire({
+				title: 'Hapus',
+				text: 'Anda pasti? Pandangan dan justifikasi anda dalam ruangan ini akan dipadam.',
+				type: 'warning'
+			});
+	    	$('#borang_matlamat_2').hide(function(){
+	    		$('#borang_matlamat_2 textarea').val('');
+	    	}); 
+	    });
+
+	    $('#btnDel3').click(function(){
+	    	Swal.fire({
+				title: 'Hapus',
+				text: 'Anda pasti? Pandangan dan justifikasi anda dalam ruangan ini akan dipadam.',
+				type: 'warning'
+			});
+	    	$('#borang_matlamat_3').hide(function(){
+	    		$('#borang_matlamat_3 textarea').val('');
+	    	}); 
+	    });
+
 		</script>";
 
 		$this->auth_model = $this->loadModel('Auth_model');
@@ -299,6 +470,18 @@ class Borang extends Controller {
 		$navigation = $this->loadView('topbar');
 		$footer = $this->loadView('footer');
         $template = $this->loadView('borang/tambah-'.$borang);
+
+        if($borang == 'pskl'){
+
+        	# dropdown chain select
+        	$matlamat = $this->model->getDropdown('pskl_matlamat');
+        	$halatuju = $this->model->getDropdown('pskl_halatuju');
+        	$tindakan = $this->model->getDropdown('pskl_tindakan');
+
+        	$template->set('matlamat', $matlamat);
+        	$template->set('halatuju', $halatuju);
+        	$template->set('tindakan', $tindakan);
+        }
 
         $header->set('css', $this->css);
         $template->set('token', $token);
@@ -440,17 +623,25 @@ class Borang extends Controller {
 				'kategori' => $this->filter->sanitize($_POST['kategori']),
 				'nama_organisasi' => $this->filter->sanitize($_POST['nama_organisasi']),
 				'jumlah_nama' => $this->filter->sanitize($_POST['jumlah_nama']),
-				'peta_indeks' => $this->filter->sanitize($_POST['peta_indeks']),
-				'no_lot' => $this->filter->sanitize($_POST['no_lot']),
-				'muka_surat' => $this->filter->sanitize($_POST['muka_surat']),
-				'pandangan_awam' => $this->filter->sanitize($_POST['pandangan_awam']),
-				'cadangan' => $this->filter->sanitize($_POST['cadangan']),
+				'komen_bentuk_kandungan' => $this->filter->sanitize($_POST['komen_bentuk_kandungan']),
+				'komen_lain_lain' => $this->filter->sanitize($_POST['komen_lain_lain']),
 				'user_id' => $this->session->get('user_id'),
 				'tarikh_terima' => Carbon::now()->toDateString(),
 				'hadir' => $this->filter->sanitize($_POST['hadir'])
 			);
 
-			$insert = $this->model->addPTKL($dataBorang);
+			$borang_id = $this->model->addBorangPSKL($dataBorang);
+
+			$dataBorangMatlamat = array(
+				'borang_id' => $borang_id,
+				'matlamat_id' => $this->filter->sanitize($_POST['matlamat']),
+				'halatuju_id' => $this->filter->sanitize($_POST['halatuju']),
+				'tindakan_id' => $this->filter->sanitize($_POST['tindakan']),
+				'cadangan' => $this->filter->sanitize($_POST['cadangan']),
+				'justifikasi' => $this->filter->sanitize($_POST['justifikasi'])
+			);
+
+			$this->model->addBorangMatlamat($dataBorangMatlamat);
 
 			$dataProfile = array(
 				'nama_penuh' => $this->filter->sanitize($_POST['nama_penuh']),
@@ -463,7 +654,7 @@ class Borang extends Controller {
 				'user_id' => $this->session->get('user_id'),
 			);
 
-			$this->u_model = $this->loadModel('User_model');
+			$this->u_model = $this->loadModel('Pengguna_model');
 			$this->u_model->updateProfile($dataProfile);
 
 			# TODO: hantar notifikasi email
@@ -475,7 +666,7 @@ class Borang extends Controller {
 				'error_title' => 'Borang berjaya dihantar'
 			);
 
-			if($this->filter->isInt($insert)){
+			if($this->filter->isInt($borang_id)){
 
 				if(isset($_FILES)){
 
@@ -489,16 +680,6 @@ class Borang extends Controller {
 						);
 
 						$this->upload->add($lampiran_a);
-					}
-
-					if(isset($_FILES['lampiran_c'])){
-
-						$lampiran_c = array(
-							'files' => $_FILES['lampiran_c'],
-							'file_id' => $insert
-						);
-
-						$this->upload->add($lampiran_c);
 					}
 				}
 
@@ -516,8 +697,8 @@ class Borang extends Controller {
 			$data2 = array(
 				'user_id' => $this->session->get('user_id'),
 				'controller' => 'Borang',
-				'function' => 'add',
-				'action' => 'Add new PTKL form'
+				'function' => 'add_pskl',
+				'action' => 'Add new PSKL form'
 			);
 			$log->add($data2);
 

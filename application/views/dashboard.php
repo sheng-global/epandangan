@@ -69,7 +69,7 @@
                                 </thead>
 
                                 <tbody>
-                                    <?php foreach ($ptkl as $value): ?>
+                                    <?php foreach ($ptkl2 as $value): ?>
                                     <tr>
                                         <td>PBRKL2020/DRAF/2/<?php echo $value['borang_id'] ?></td>
                                         <td><?php echo $value['tarikh_terima'] ?></td>

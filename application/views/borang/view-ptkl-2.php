@@ -14,10 +14,10 @@
                                     <li class="breadcrumb-item"><a href="javascript: void(0);"><?php echo getenv('SITE_TITLE') ?></a></li>
                                     <li class="breadcrumb-item"><a href="javascript: void(0);">Borang</a></li>
                                     <li class="breadcrumb-item"><a href="javascript: void(0);">PBRKL 2040</a></li>
-                                    <li class="breadcrumb-item active">PBRKL2020/DRAF/1/<?php echo $data[0]['borang_id'] ?></li>
+                                    <li class="breadcrumb-item active">PBRKL2020/DRAF/2/<?php echo $data[0]['borang_id'] ?></li>
                                 </ol>
                             </div>
-                            <h4 class="page-title">PBRKL2020/DRAF/1/<?php echo $data[0]['borang_id'] ?></h4>
+                            <h4 class="page-title">PBRKL2020/DRAF/2/<?php echo $data[0]['borang_id'] ?></h4>
                         </div>
                     </div>
                 </div>     
@@ -27,7 +27,7 @@
                     <div class="col-9">
                         <div class="card-box ribbon-box">
                             <div class="ribbon ribbon-primary float-right"><i class="fas fa-user"></i> <?php echo $data[0]['kategori'] ?></div>
-                            <h4 class="header-title">Bahagian A: Pandangan anda terhadap Draf Perubahan 1 PBRKL 2040</h4>
+                            <h4 class="header-title">Bahagian A: Pandangan anda terhadap Draf Perubahan 2 PBRKL 2040</h4>
                             <div class="ribbon-content">
                                 <dl class="row">
                                     <dt class="col-sm-3">Jilid Laporan</dt>

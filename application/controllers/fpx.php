@@ -59,9 +59,6 @@ class Fpx extends Controller {
 	{
 		if(isset($_POST)){
 
-			//var_dump($_POST);
-			/*array(23) { ["TRANS_ID"]=> string(17) "WEB20200212014846" ["PAYMENT_DATETIME"]=> string(19) "2020-02-12 13:46:08" ["AMOUNT"]=> string(1) "1" ["PAYMENT_MODE"]=> string(4) "migs" ["STATUS"]=> string(1) "1" ["STATUS_CODE"]=> string(1) "0" ["STATUS_MESSAGE"]=> string(8) "Approved" ["PAYMENT_TRANS_ID"]=> string(10) "2070036055" ["APPROVAL_CODE"]=> string(6) "129282" ["RECEIPT_NO"]=> string(18) "PPKL200212-0000002" ["MERCHANT_CODE"]=> string(8) "dbkl-jpb" ["SELLER_ORDER_NO"]=> string(34) "2020021213460800000000000000295679" ["CHECKSUM"]=> string(64) "He+t08en8gPuOPVtp45lpjrVg8WUB/wmtxCU3GR4VuguwyvtOA81HuSdAmqx8b4W" ["CHECKSUM2"]=> string(64) "He+t08en8gPuOPVtp45lpjrVg8WUB/wmtxCU3GR4VuguwyvtOA81HuSdAmqx8b4W" ["payee_name"]=> string(5) "Fadli" ["payee_email"]=> string(19) "fadlisaad@gmail.com" ["email"]=> string(19) "fadlisaad@gmail.com" ["payee_phone_number"]=> string(10) "0126471057" ["bank_code"]=> string(12) "-Select One-" ["payment_type"]=> string(3) "WEB" ["be_message"]=> string(205) "PBB0233~A,MBB0228~A,BKRM0602~A,ABMB0212~A,MB2U0227~A,BIMB0340~A,BMMB0341~A,KFH0346~A,ABB0233~A,RHB0218~A,OCBC0229~A,SCB0216~A,HLB0224~A,UOB0226~A,BCBB0235~A,AMBB0209~A,BSN0601~A,HSBC0223~A|01|BC|EX00002640" ["currency"]=> string(3) "MYR" ["api_key"]=> string(32) "a5015551faed8f722d4698743c2afded" }*/
-
 			$data = array();
 			$data['PAYMENT_DATETIME'] = $_POST['PAYMENT_DATETIME'];
 			$data['AMOUNT'] = $_POST['AMOUNT'];

@@ -18,7 +18,7 @@
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="amount" class="control-label">Jumlah (RM)</label>
-                                        <input type="number" id="amount" name="amount" class="form-control" value="1.00" required="">
+                                        <input type="number" id="amount" name="amount" class="form-control" value="100.00" required="">
                                     </div>
                                     
                                     <div class="form-group mb-3">
