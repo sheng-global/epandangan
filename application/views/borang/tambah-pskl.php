@@ -186,27 +186,27 @@
                                                             <option value="">- Pilih -</option>
                                                             <?php foreach ($matlamat as $value): ?>
                                                             <option value="<?php echo $value['id'] ?>"><?php echo $value['tajuk'] ?></option>
-                                                        <?php endforeach; ?>
+                                                            <?php endforeach; ?>
                                                         </select>
                                                     </div>
 
                                                     <div class="form-group col-md-4">
-                                                        <label for="halatuju_1">Halatuju <span class="text-danger">*</span></label>
+                                                        <label for="halatuju_1">Halatuju</label>
                                                         <select class="form-control" name="halatuju[]" id="halatuju_1">
                                                             <option value="">- Pilih -</option>
                                                             <?php foreach ($halatuju as $value): ?>
                                                             <option value="<?php echo $value['id'] ?>" class="<?php echo $value['matlamat_id'] ?>"><?php echo $value['tajuk'] ?></option>
-                                                        <?php endforeach; ?>
+                                                            <?php endforeach; ?>
                                                         </select>
                                                     </div>
 
                                                     <div class="form-group col-md-4">
-                                                        <label for="tindakan_1">Tindakan <span class="text-danger">*</span></label>
+                                                        <label for="tindakan_1">Tindakan</label>
                                                         <select class="form-control" name="tindakan[]" id="tindakan_1">
                                                             <option value="">- Pilih -</option>
                                                             <?php foreach ($tindakan as $value): ?>
                                                             <option value="<?php echo $value['id'] ?>" class="<?php echo $value['halatuju_id'] ?>"><?php echo $value['tajuk'] ?></option>
-                                                        <?php endforeach; ?>
+                                                            <?php endforeach; ?>
                                                         </select>
                                                     </div>
 
@@ -224,7 +224,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-row">
-                                                        <button type="button" class="btn btn-warning" id="btnAdd1">Tambah</button>
+                                                        <button type="button" class="btn btn-info" id="btnAdd1"><i class="fas fa-plus-circle"></i>Tambah</button>
                                                     </div>
                                                 </div>
 
@@ -242,7 +242,7 @@
                                                         </div>
 
                                                         <div class="form-group col-md-4">
-                                                            <label for="halatuju_2">Halatuju <span class="text-danger">*</span></label>
+                                                            <label for="halatuju_2">Halatuju</label>
                                                             <select class="form-control" name="halatuju[]" id="halatuju_2">
                                                                 <option value="">- Pilih -</option>
                                                                 <?php foreach ($halatuju as $value): ?>
@@ -252,7 +252,7 @@
                                                         </div>
 
                                                         <div class="form-group col-md-4">
-                                                            <label for="tindakan_2">Tindakan <span class="text-danger">*</span></label>
+                                                            <label for="tindakan_2">Tindakan</label>
                                                             <select class="form-control" name="tindakan[]" id="tindakan_2">
                                                                 <option value="">- Pilih -</option>
                                                                 <?php foreach ($tindakan as $value): ?>
@@ -274,7 +274,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-row">
-                                                            <button type="button" class="btn btn-warning" id="btnAdd2">Tambah</button>
+                                                            <button type="button" class="btn btn-info" id="btnAdd2"><i class="fas fa-plus-circle"></i> Tambah</button>
                                                             <button type="button" class="btn btn-danger" id="btnDel2">Hapus</button>
                                                         </div>
                                                     </div>
@@ -293,7 +293,7 @@
                                                         </div>
 
                                                         <div class="form-group col-md-4">
-                                                            <label for="halatuju_3">Halatuju <span class="text-danger">*</span></label>
+                                                            <label for="halatuju_3">Halatuju</label>
                                                             <select class="form-control" name="halatuju[]" id="halatuju_3">
                                                                 <option value="">- Pilih -</option>
                                                                 <?php foreach ($halatuju as $value): ?>
@@ -303,7 +303,7 @@
                                                         </div>
 
                                                         <div class="form-group col-md-4">
-                                                            <label for="tindakan_3">Tindakan <span class="text-danger">*</span></label>
+                                                            <label for="tindakan_3">Tindakan</label>
                                                             <select class="form-control" name="tindakan[]" id="tindakan_3">
                                                                 <option value="">- Pilih -</option>
                                                                 <?php foreach ($tindakan as $value): ?>

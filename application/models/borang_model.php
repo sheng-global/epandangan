@@ -91,14 +91,15 @@ Class Borang_model extends Model {
 	public function addBorangMatlamat($data)
 	{
 		try{
-			$stm = "INSERT INTO pskl_borang_matalamat (borang_id, matlamat_id, halatuju_id, tindakan_id, cadangan, justifikasi) VALUES (:borang_id, :matlamat_id, :halatuju_id, :tarikh_terima, :cadangan, :justifikasi)";
+			$stm = "INSERT INTO pskl_borang_matlamat (borang_id, matlamat_id, halatuju_id, tindakan_id, cadangan, justifikasi, last_update) VALUES (:borang_id, :matlamat_id, :halatuju_id, :tindakan_id, :cadangan, :justifikasi, :last_update)";
 			$bind = array(
 				'borang_id' => $data['borang_id'],
 				'matlamat_id' => $data['matlamat_id'],
 				'halatuju_id' => $data['halatuju_id'],
 				'tindakan_id' => $data['tindakan_id'],
 				'cadangan' => $data['cadangan'],
-				'justifikasi' => $data['justifikasi']
+				'justifikasi' => $data['justifikasi'],
+				'last_update' => $data['last_update']
 			);
 			
 			return $this->pdo->fetchAffected($stm, $bind);

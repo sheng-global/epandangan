@@ -37,7 +37,7 @@ class Borang extends Controller {
 		);
 
 		if(empty($this->session->get('loggedin'))){
-			$this->redirect('auth/login');
+			$this->redirect('auth');
 		}
 	}
 
@@ -424,7 +424,7 @@ class Borang extends Controller {
 	    $('#btnAdd1').click(function(){
 	    	Swal.fire({
 				title: 'Tambah',
-				text: 'Sila pilih matlamat, halatuju dan tindakan yang selanjutnya.',
+				text: 'Sila pilih matlamat, halatuju dan tindakan yang selanjutnya. Sekiranya ingin komen pada matlamat sahaja, pilih -Tidak berkenaan - pada pilihan Halatuju. Sekiranya ingin komen hingga peringkat halatuju sahaja, pilih - Tidak berkenaan - di pilihan Tindakan.',
 				type: 'info'
 			});
 	    	$('#borang_matlamat_2').show();
@@ -634,14 +634,16 @@ class Borang extends Controller {
 
 			$dataBorangMatlamat = array(
 				'borang_id' => $borang_id,
-				'matlamat_id' => $this->filter->sanitize($_POST['matlamat']),
-				'halatuju_id' => $this->filter->sanitize($_POST['halatuju']),
-				'tindakan_id' => $this->filter->sanitize($_POST['tindakan']),
-				'cadangan' => $this->filter->sanitize($_POST['cadangan']),
-				'justifikasi' => $this->filter->sanitize($_POST['justifikasi'])
+				'matlamat_id' => $_POST['matlamat'],
+				'halatuju_id' => $_POST['halatuju'],
+				'tindakan_id' => $_POST['tindakan'],
+				'cadangan' => $_POST['cadangan'],
+				'justifikasi' => $_POST['justifikasi'],
+				'last_update' => Carbon::now()->toDateTimeString()
 			);
 
-			$this->model->addBorangMatlamat($dataBorangMatlamat);
+			$matlamat = $this->model->addBorangMatlamat($dataBorangMatlamat);
+			die($matlamat);
 
 			$dataProfile = array(
 				'nama_penuh' => $this->filter->sanitize($_POST['nama_penuh']),
@@ -676,7 +678,7 @@ class Borang extends Controller {
 
 						$lampiran_a = array(
 							'files' => $_FILES['lampiran_a'],
-							'file_id' => $insert
+							'file_id' => $borang_id
 						);
 
 						$this->upload->add($lampiran_a);

@@ -6,7 +6,7 @@ class Template extends Controller {
 	{
 		$session = $this->loadHelper('session_helper');
 		if(empty($session->get('loggedin'))){
-			$this->redirect('auth/login');
+			$this->redirect('auth');
 		}
 
 		$css = array(
@@ -62,7 +62,7 @@ class Template extends Controller {
 	{
 		$session = $this->loadHelper('session_helper');
 		if(empty($session->get('loggedin'))){
-			$this->redirect('auth/login');
+			$this->redirect('auth');
 		}
 
 		$css = array(
@@ -107,7 +107,7 @@ class Template extends Controller {
 	{
 		$session = $this->loadHelper('session_helper');
 		if(empty($session->get('loggedin'))){
-			$this->redirect('auth/login');
+			$this->redirect('auth');
 		}
 
 		$model = $this->loadModel('Template_model');
@@ -141,7 +141,7 @@ class Template extends Controller {
 	{
 		$session = $this->loadHelper('session_helper');
 		if(empty($session->get('loggedin'))){
-			$this->redirect('auth/login');
+			$this->redirect('auth');
 		}
 
 		$css = array(
@@ -232,7 +232,7 @@ class Template extends Controller {
 	{
 		$session = $this->loadHelper('session_helper');
 		if(empty($session->get('loggedin'))){
-			$this->redirect('auth/login');
+			$this->redirect('auth');
 		}
 
 		$model = $this->loadModel('Template_model');
@@ -265,7 +265,7 @@ class Template extends Controller {
 	{
 		$session = $this->loadHelper('session_helper');
 		if(empty($session->get('loggedin'))){
-			$this->redirect('auth/login');
+			$this->redirect('auth');
 		}
 
 		if(isset($id)){
@@ -298,7 +298,7 @@ class Template extends Controller {
 		$datatable = $this->loadHelper('datatable_helper');
 
 		if(empty($session->get('loggedin'))){
-			$this->redirect('auth/login');
+			$this->redirect('auth');
 		}
 
 		// DB table to use

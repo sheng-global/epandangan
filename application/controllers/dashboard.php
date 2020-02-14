@@ -31,7 +31,7 @@ class Dashboard extends Controller {
 		);
 
 		if(empty($this->session->get('loggedin'))){
-			$this->redirect('auth/login');
+			$this->redirect('auth');
 		}
 	}
 
