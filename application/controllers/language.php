@@ -335,4 +335,21 @@ class Language extends Controller {
 		}
 	}
 
+	public function setLocale()
+	{
+		$lang = 'my';
+
+		if(isset($_COOKIE["language"])){ 
+       		$lang = $_COOKIE["language"]; 
+    	}
+
+    	if(isset($_POST['lang'])){
+			$lang = $_POST['lang'];
+			setcookie('language', $lang, time() + (3600 * 24 * 30), '/', NULL);
+	    }
+
+	    $refresh = $_SERVER['HTTP_REFERER'];
+	    $this->redirectBlank($refresh);
+	}
+
 }

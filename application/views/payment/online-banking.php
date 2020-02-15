@@ -16,9 +16,22 @@
                                         <input class="form-control" readonly value="Dokumen PDF Draf PSKL2040">
                                         <input name="payment_type" type="hidden" value="web">
                                     </div>
+
+                                    <div class="form-group mb-3">
+                                        <label for="language" class="control-label">Versi</label>
+                                        <div class="radio radio-inline">
+                                            <input type="radio" id="my" value="my" name="language" required="" checked="checked">
+                                            <label for="my">Bahasa Melayu</label>
+                                        </div>
+                                        <div class="radio radio-inline">
+                                            <input type="radio" id="en" value="en" name="language">
+                                            <label for="en">English</label>
+                                        </div>
+                                    </div>
+
                                     <div class="form-group mb-3">
                                         <label for="amount" class="control-label">Jumlah (RM)</label>
-                                        <input type="number" id="amount" name="amount" class="form-control" value="100.00" required="">
+                                        <input type="number" id="amount" name="amount" class="form-control" value="100.00" readonly="">
                                     </div>
                                     
                                     <div class="form-group mb-3">

@@ -41,16 +41,16 @@
 
                                             <div class="form-group mb-0 text-center">
                                                 <button class="btn btn-primary" type="submit" name="submit" data-tag="login"></button>
-                                                <a href="<?php echo BASE_URL ?>auth/register" class="btn btn-info" data-tag="register"></a>
                                             </div>
                                             <input type="hidden" name="redirect" id="redirect">
                                             <input type="hidden" name="token" value="<?php echo $token ?>">
                                         </form>
-
-                                        <div class="text-center m-auto">
-                                            <p><a href="<?php echo BASE_URL ?>auth/recover" class="ml-1" data-tag="forgot-password"></a></p>
-                                            <p><a class="language" href="#" data-lang="en">English</a> | <a href="#" class="language" data-lang="my">Bahasa Melayu</a></p>
-                                        </div>
+                                        <p class="text-center mt-3">
+                                            <span data-tag="no-account"></span> <a href="<?php echo BASE_URL ?>auth/register" data-tag="register"></a>
+                                        </p>
+                                        <p class="text-center">
+                                            <span data-tag="forgot-password"></span> <a href="<?php echo BASE_URL ?>auth/recover" data-tag="recover"></a>
+                                        </p>
                                     </div>
                                 </div>
 
@@ -60,7 +60,13 @@
 
                         <div class="row mt-3">
                             <div class="col-12 text-center">
-                                
+                                <form action="<?php echo BASE_URL ?>language/setLocale" method="post">
+                                    <select name="language">
+                                        <option value="en"<?php if( $_COOKIE["language"] == "en" ) { echo " selected"; } ?>>English</option>
+                                        <option value="my"<?php if( $_COOKIE["language"] == "my" ) { echo " selected"; } ?>>Bahasa Melayu</option>
+                                    </select>
+                                    <input type="submit" value="Select Language" class="btn btn-success btn-xs">
+                                </form>
                             </div> <!-- end col -->
                         </div>
 

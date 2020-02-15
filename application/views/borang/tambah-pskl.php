@@ -27,7 +27,7 @@
                     <div class="col-md-8">
                         <div class="card-box">
 
-                            <h4 class="header-title mb-3">Borang Pandangan Awam</h4>
+                            <h4 class="header-title mb-3" data-tag="public-form"></h4>
 
                             <div class="alert alert-warning d-none fade show">
                                 <h4 data-tag="ralat">Ralat!</h4>
@@ -139,7 +139,7 @@
                                     </div>
 
                                     <div class="tab-pane fade" id="second">
-                                        <h4 class="sub-header">Pengesahan Kehadiran ke Sesi Pendengaran Pandangan Awam</h4>
+                                        <h4 class="sub-header" data-tag="pengesahan-kehadiran"></h4>
                                         <div class="form-group">
                                             <p><span data-tag="soalan-kehadiran"></span> <span class="text-danger">*</span></p>
 
@@ -159,13 +159,13 @@
                                         <div class="card mb-1">
 
                                             <div class="card-header">
-                                                <h5 class="m-0">Bentuk dan Kandungan Dokumen</h5>
+                                                <h5 class="m-0" data-tag="bentuk-dokumen"></h5>
                                             </div>
 
                                             <div class="card-body">
                                                 <div class="form-group">
-                                                    <label for="komen_bentuk_kandungan">Pandangan/Cadangan <span class="text-danger">*</span></label>
-                                                    <textarea id="komen_bentuk_kandungan" class="form-control" name="komen_bentuk_kandungan" rows="5" placeholder="Sila nyatakan" required=""></textarea>
+                                                    <label for="komen_bentuk_kandungan"><span data-tag="padangan-cadangan"></span> <span class="text-danger">*</span></label>
+                                                    <textarea id="komen_bentuk_kandungan" class="form-control" name="komen_bentuk_kandungan" rows="5" required=""></textarea>
                                                 </div>
                                             </div>
 
@@ -174,16 +174,16 @@
                                         <div class="card mb-1">
 
                                             <div class="card-header">
-                                                <h5 class="m-0">Matlamat <span id="matlamat_title"></span></h5>
+                                                <h5 class="m-0"><span data-tag="matlamat"></span> <span id="matlamat_title"></span></h5>
                                             </div>
                                     
                                             <div class="card-body">
 
                                                 <div class="form-row">
                                                     <div class="form-group col-md-4">
-                                                        <label for="matlamat_1">Matlamat <span class="text-danger">*</span></label>
+                                                        <label for="matlamat_1"><span data-tag="matlamat"></span> <span class="text-danger">*</span></label>
                                                         <select class="form-control" name="matlamat[]" id="matlamat_1">
-                                                            <option value="">- Pilih -</option>
+                                                            <option value="" data-tag="pilih"></option>
                                                             <?php foreach ($matlamat as $value): ?>
                                                             <option value="<?php echo $value['id'] ?>"><?php echo $value['tajuk'] ?></option>
                                                             <?php endforeach; ?>
@@ -191,9 +191,9 @@
                                                     </div>
 
                                                     <div class="form-group col-md-4">
-                                                        <label for="halatuju_1">Halatuju</label>
+                                                        <label for="halatuju_1" data-tag="halatuju"></label>
                                                         <select class="form-control" name="halatuju[]" id="halatuju_1">
-                                                            <option value="">- Pilih -</option>
+                                                            <option value="" data-tag="pilih"></option>
                                                             <?php foreach ($halatuju as $value): ?>
                                                             <option value="<?php echo $value['id'] ?>" class="<?php echo $value['matlamat_id'] ?>"><?php echo $value['tajuk'] ?></option>
                                                             <?php endforeach; ?>
@@ -201,9 +201,9 @@
                                                     </div>
 
                                                     <div class="form-group col-md-4">
-                                                        <label for="tindakan_1">Tindakan</label>
+                                                        <label for="tindakan_1" data-tag="tindakan"></label>
                                                         <select class="form-control" name="tindakan[]" id="tindakan_1">
-                                                            <option value="">- Pilih -</option>
+                                                            <option value="" data-tag="pilih"></option>
                                                             <?php foreach ($tindakan as $value): ?>
                                                             <option value="<?php echo $value['id'] ?>" class="<?php echo $value['halatuju_id'] ?>"><?php echo $value['tajuk'] ?></option>
                                                             <?php endforeach; ?>
@@ -215,16 +215,16 @@
                                                 <div id="borang_pandangan_1">
                                                     <div class="form-row">
                                                         <div class="form-group col-md-6">
-                                                            <label for="cadangan_1">Pandangan/Cadangan <span class="text-danger">*</span></label>
-                                                            <textarea id="cadangan_1" class="form-control" name="cadangan[]" rows="5" placeholder="Contoh: Selaraskan Syarat Nyata" required=""></textarea>
+                                                            <label for="cadangan_1"><span data-tag="padangan-cadangan"></span> <span class="text-danger">*</span></label>
+                                                            <textarea id="cadangan_1" class="form-control" name="cadangan[]" rows="5"  required=""></textarea>
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            <label for="justifikasi_1">Justifikasi <span class="text-danger">*</span></label>
-                                                            <textarea id="justifikasi_1" class="form-control" name="justifikasi[]" rows="5"placeholder="Contoh: Selaraskan Syarat Nyata" required=""></textarea>
+                                                            <label for="justifikasi_1"><span data-tag="justifikasi"></span> <span class="text-danger">*</span></label>
+                                                            <textarea id="justifikasi_1" class="form-control" name="justifikasi[]" rows="5" required=""></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="form-row">
-                                                        <button type="button" class="btn btn-info" id="btnAdd1"><i class="fas fa-plus-circle"></i>Tambah</button>
+                                                        <button type="button" class="btn btn-info" id="btnAdd1"><i class="fas fa-plus-circle"></i> <span data-tag="tambah"></span></button>
                                                     </div>
                                                 </div>
 
@@ -232,9 +232,9 @@
 
                                                     <div class="form-row">
                                                         <div class="form-group col-md-4">
-                                                            <label for="matlamat_2">Matlamat <span class="text-danger">*</span></label>
+                                                            <label for="matlamat_2"><span data-tag="matlamat"></span> <span class="text-danger">*</span></label>
                                                             <select class="form-control" name="matlamat[]" id="matlamat_2">
-                                                                <option value="">- Pilih -</option>
+                                                                <option value="" data-tag="pilih"></option>
                                                                 <?php foreach ($matlamat as $value): ?>
                                                                 <option value="<?php echo $value['id'] ?>"><?php echo $value['tajuk'] ?></option>
                                                             <?php endforeach; ?>
@@ -242,9 +242,9 @@
                                                         </div>
 
                                                         <div class="form-group col-md-4">
-                                                            <label for="halatuju_2">Halatuju</label>
+                                                            <label for="halatuju_2" data-tag="halatuju"></label>
                                                             <select class="form-control" name="halatuju[]" id="halatuju_2">
-                                                                <option value="">- Pilih -</option>
+                                                                <option value="" data-tag="pilih"></option>
                                                                 <?php foreach ($halatuju as $value): ?>
                                                                 <option value="<?php echo $value['id'] ?>" class="<?php echo $value['matlamat_id'] ?>"><?php echo $value['tajuk'] ?></option>
                                                             <?php endforeach; ?>
@@ -252,9 +252,9 @@
                                                         </div>
 
                                                         <div class="form-group col-md-4">
-                                                            <label for="tindakan_2">Tindakan</label>
+                                                            <label for="tindakan_2" data-tag="tindakan"></label>
                                                             <select class="form-control" name="tindakan[]" id="tindakan_2">
-                                                                <option value="">- Pilih -</option>
+                                                                <option value="" data-tag="pilih"></option>
                                                                 <?php foreach ($tindakan as $value): ?>
                                                                 <option value="<?php echo $value['id'] ?>" class="<?php echo $value['halatuju_id'] ?>"><?php echo $value['tajuk'] ?></option>
                                                             <?php endforeach; ?>
@@ -265,17 +265,17 @@
                                                     <div id="borang_pandangan_2">
                                                         <div class="form-row">
                                                             <div class="form-group col-md-6">
-                                                                <label for="cadangan_2">Pandangan/Cadangan <span class="text-danger">*</span></label>
-                                                                <textarea id="cadangan_2" class="form-control" name="cadangan[]" rows="5" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
+                                                                <label for="cadangan_2"><span data-tag="padangan-cadangan"></span> <span class="text-danger">*</span></label>
+                                                                <textarea id="cadangan_2" class="form-control" name="cadangan[]" rows="5" ></textarea>
                                                             </div>
                                                             <div class="form-group col-md-6">
-                                                                <label for="justifikasi_2">Justifikasi <span class="text-danger">*</span></label>
-                                                                <textarea id="justifikasi_2" class="form-control" name="justifikasi[]" rows="5"placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
+                                                                <label for="justifikasi_2"><span data-tag="justifikasi"></span> <span class="text-danger">*</span></label>
+                                                                <textarea id="justifikasi_2" class="form-control" name="justifikasi[]" rows="5"></textarea>
                                                             </div>
                                                         </div>
                                                         <div class="form-row">
-                                                            <button type="button" class="btn btn-info" id="btnAdd2"><i class="fas fa-plus-circle"></i> Tambah</button>
-                                                            <button type="button" class="btn btn-danger" id="btnDel2">Hapus</button>
+                                                            <button type="button" class="btn btn-info" id="btnAdd2"><i class="fas fa-plus-circle"></i> <span data-tag="tambah"></span></button>
+                                                            <button type="button" class="btn btn-danger" id="btnDel2"><span data-tag="hapus"></span></button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -283,9 +283,9 @@
                                                 <div id="borang_matlamat_3">
                                                     <div class="form-row">
                                                         <div class="form-group col-md-4">
-                                                            <label for="matlamat_3">Matlamat <span class="text-danger">*</span></label>
+                                                            <label for="matlamat_3"><span data-tag="matlamat"></span> <span class="text-danger">*</span></label>
                                                             <select class="form-control" name="matlamat[]" id="matlamat_3">
-                                                                <option value="">- Pilih -</option>
+                                                                <option value="" data-tag="pilih"></option>
                                                                 <?php foreach ($matlamat as $value): ?>
                                                                 <option value="<?php echo $value['id'] ?>"><?php echo $value['tajuk'] ?></option>
                                                             <?php endforeach; ?>
@@ -293,9 +293,9 @@
                                                         </div>
 
                                                         <div class="form-group col-md-4">
-                                                            <label for="halatuju_3">Halatuju</label>
+                                                            <label for="halatuju_3" data-tag="halatuju"></label>
                                                             <select class="form-control" name="halatuju[]" id="halatuju_3">
-                                                                <option value="">- Pilih -</option>
+                                                                <option value="" data-tag="pilih"></option>
                                                                 <?php foreach ($halatuju as $value): ?>
                                                                 <option value="<?php echo $value['id'] ?>" class="<?php echo $value['matlamat_id'] ?>"><?php echo $value['tajuk'] ?></option>
                                                             <?php endforeach; ?>
@@ -303,9 +303,9 @@
                                                         </div>
 
                                                         <div class="form-group col-md-4">
-                                                            <label for="tindakan_3">Tindakan</label>
+                                                            <label for="tindakan_3" data-tag="tindakan"></label>
                                                             <select class="form-control" name="tindakan[]" id="tindakan_3">
-                                                                <option value="">- Pilih -</option>
+                                                                <option value="" data-tag="pilih"></option>
                                                                 <?php foreach ($tindakan as $value): ?>
                                                                 <option value="<?php echo $value['id'] ?>" class="<?php echo $value['halatuju_id'] ?>"><?php echo $value['tajuk'] ?></option>
                                                             <?php endforeach; ?>
@@ -316,16 +316,16 @@
                                                     <div id="borang_pandangan_3">
                                                         <div class="form-row">
                                                             <div class="form-group col-md-6">
-                                                                <label for="cadangan_3">Pandangan/Cadangan <span class="text-danger">*</span></label>
-                                                                <textarea id="cadangan_3" class="form-control" name="cadangan[]" rows="5" placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
+                                                                <label for="cadangan_3"><span data-tag="padangan-cadangan"></span> <span class="text-danger">*</span></label>
+                                                                <textarea id="cadangan_3" class="form-control" name="cadangan[]" rows="5" ></textarea>
                                                             </div>
                                                             <div class="form-group col-md-6">
-                                                                <label for="justifikasi_3">Justifikasi <span class="text-danger">*</span></label>
-                                                                <textarea id="justifikasi_3" class="form-control" name="justifikasi[]" rows="5"placeholder="Contoh: Selaraskan Syarat Nyata"></textarea>
+                                                                <label for="justifikasi_3"><span data-tag="justifikasi"></span> <span class="text-danger">*</span></label>
+                                                                <textarea id="justifikasi_3" class="form-control" name="justifikasi[]" rows="5"></textarea>
                                                             </div>
                                                         </div>
                                                         <div class="form-row">
-                                                            <button type="button" class="btn btn-danger" id="btnDel3">Hapus</button>
+                                                            <button type="button" class="btn btn-danger" id="btnDel3" data-tag="hapus"></button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -336,19 +336,19 @@
 
                                         <div class="card mb-1">
                                             <div class="card-header">
-                                                <h5 class="m-0">Lain-Lain</h5>
+                                                <h5 class="m-0" data-tag="lain-lain"></h5>
                                             </div>
                                             <div class="card-body">
                                                 <div class="form-group">
-                                                    <label for="komen_lain_lain">Pandangan/Cadangan <span class="text-danger">*</span></label>
-                                                    <textarea id="komen_lain_lain" class="form-control" name="komen_lain_lain" rows="5" placeholder="Sila nyatakan"></textarea>
+                                                    <label for="komen_lain_lain"><span data-tag="padangan-cadangan"> <span class="text-danger">*</span></label>
+                                                    <textarea id="komen_lain_lain" class="form-control" name="komen_lain_lain" rows="5"></textarea>
                                                 </div>
                                             </div>
 
                                             <div class="card-footer">
                                                 <div class="form-group mb-0">
                                                     <input type="hidden" name="token" value="<?php echo $token ?>">
-                                                    <input type="submit" class="btn btn-success" name="submit" value="Hantar">
+                                                    <button type="submit" class="btn btn-success" name="submit" data-tag="submit"></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -357,9 +357,9 @@
                                     </form>
 
                                     <ul class="list-inline wizard mb-0">
-                                        <li class="previous list-inline-item"><a href="javascript: void(0);" class="btn btn-secondary">Previous</a>
+                                        <li class="previous list-inline-item"><a href="javascript: void(0);" class="btn btn-secondary" data-tag="previous"></a>
                                         </li>
-                                        <li class="next list-inline-item float-right"><a href="javascript: void(0);" class="btn btn-secondary">Next</a></li>
+                                        <li class="next list-inline-item float-right"><a href="javascript: void(0);" class="btn btn-secondary" data-tag="next"></a></li>
                                     </ul>
 
                                 </div> <!-- tab-content -->
@@ -370,45 +370,43 @@
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Panduan Mengisi Borang Pandangan Awam</h4>
+                                <h4 class="card-title" data-tag="borang-guide"></h4>
 
-                                <p class="card-text">Ruangan bertanda (<span class="text-danger">*</span>) adalah ruangan wajib diisi.</p>
+                                <p class="card-text"><span data-tag="ruangan-bertanda"></span> (<span class="text-danger">*</span>) <span data-tag="ruangan-wajib"></span></p>
                                 
-                                <h5 class="card-title">Bahagian A</h5>
+                                <h5 class="card-title" data-tag="part"> A</h5>
                                 <p class="card-text">
                                     <ol>
-                                        <li>Sila isikan maklumat dengan lengkap.</li>
-                                        <li>Sila masukkan nombor kad pengenalan anda dalam format 12 digit pada bahagian No. IC/Passport (tanpa simbol -)</li>
-                                        <li>Pilih kategori samada <strong class="text-dark">Individu</strong> bagi perseorangan atau <strong class="text-dark">Agensi/Organisasi</strong> bagi wakil kepada kumpulan, persatuan, NGO atau syarikat.</li>
-                                        <li>Jika anda mewakili <strong class="text-dark">Agensi/Organisasi</strong> dan menghantar memorandum, sila masukkan jumlah nama tandatangan memorandum berkenaan dalam ruangan <strong class="text-dark">Jumlah nama</strong></li>
-                                        <li>Jika anda menghantar memorandum, sila muat naik memorandum berkenaan dalam ruangan <strong class="text-dark">Lampiran 1</strong></li>
+                                        <li data-tag="a-1"></li>
+                                        <li data-tag="a-2"></li>
+                                        <li data-tag="a-3"></li>
+                                        <li data-tag="a-4"></li>
                                     </ol>
                                 </p>
 
-                                <h5 class="card-title">Bahagian B</h5>
+                                <h5 class="card-title" data-tag="part"> B</h5>
                                 <p class="card-text">
                                     <ol>
-                                        <li>Setiap individu/kumpulan diberi pilihan untuk menghadiri atau tidak ke sesi Pendengaran Pandangan Awam. Sila tandakan pilihan anda.</li>
+                                        <li data-tag="b-1"></li>
                                     </ol>
                                 </p>
 
-                                <h5 class="card-title">Bahagian C</h5>
+                                <h5 class="card-title" data-tag="part"> C</h5>
                                 <p class="card-text">
                                     <ol>
-                                        <li>Sila gunakan ruang yang telah disediakan untuk memberi pandangan.</li>
-                                        <li>Pandangan awam perlulah berkaitan dengan kandungan Draf Pelan Struktur Kuala Lumpur 2040 sahaja.</li>
-                                        <li>Pandangan awam mestilah berasaskan kepada keperluan masyarakat umum dan tidak kepada kepentingan individu.</li> 
-                                        <li>Pandangan awam secara bertulis sahaja yang akan didengar dan dipertimbangkan oleh Jawatankuasa Pendengaran Pandangan Awam.</li>
-                                        <li>Anda boleh menghantar 3 pandangan berkaitan sesebuah tindakan. Jika anda ingin menghantar lebih dari 3 pandangan, sila hantar dalam borang yang baru.</li>
+                                        <li data-tag="c-1"></li>
+                                        <li data-tag="c-2"></li>
+                                        <li data-tag="c-4"></li>
+                                        <li data-tag="c-5"></li>
                                     </ol>
                                 </p>
                                 <div class="alert alert-info" role="alert">
-                                    <i class="mdi mdi-alert-circle-outline mr-2"></i> Maklumat lanjut mengenai Draf Pelan Struktur Kuala Lumpur 2040 boleh diperoleh dengan menghubungi talian 03–2617 9544 / 9545 / 9546 (Seksyen Perancangan Pelan Tempatan, Jabatan Perancangan Bandaraya).
+                                    <i class="mdi mdi-alert-circle-outline mr-2"></i>
+                                    <span data-tag="maklumat-lanjut-pskl"></span>
                                 </div>
                                 <div class="alert alert-warning" role="alert">
                                     <i class="mdi mdi-alert-outline mr-2"></i>
-                                    Borang yang telah lengkap diisi hendaklah dihantar sebelum atau pada 17 Mac 2020 (Selasa)
-                                    <div data-countdown="2020/03/17"></div>
+                                    <span data-tag="maklumat-tutup-pskl"></span>
                                 </div>
                                 
                             </div>

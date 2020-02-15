@@ -44,7 +44,7 @@ Class Email_helper extends Controller {
 		if(isset($data['attachment'])) $this->mail->addAttachment($data['attachment']);
 
 		# Important setting for Mailtrap.io 
-		if(getenv('ENVIRONMENT') == 'staging'){
+		if(getenv('ENVIRONMENT') == 'production'){
 
 			$this->mail->SMTPAuth = true;
 			$this->mail->SMTPSecure = 'tls';

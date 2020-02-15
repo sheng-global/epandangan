@@ -43,7 +43,7 @@
                                 </form>
 
                                 <a class="language" href="#" data-lang="en">English</a> | <a href="#" class="language" data-lang="my">Bahasa Melayu</a>
-
+                                
                             </div> <!-- end card-body -->
                         </div>
                         <!-- end card -->

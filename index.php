@@ -36,10 +36,11 @@ define('DB_USER', getenv('DB_USER'));
 define('DB_PASS', getenv('DB_PASS'));
 
 // Set language
-$session = new EasyCSRF\NativeSessionProvider();
-if(!$session->get('lang')){
-	setcookie('lang', 'my', time() + (3600 * 24 * 30));
-	$session->set('lang', 'my');
+if(!$_COOKIE['language']){
+	setcookie('language', 'my', time() + (3600 * 24 * 30), '/');
+	$_COOKIE['language'] = 'my';
+}else{
+	$_COOKIE['language'] = 'en';
 }
 
 $_SESSION['last_ip'] = $_SERVER['REMOTE_ADDR'];

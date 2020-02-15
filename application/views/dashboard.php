@@ -29,7 +29,7 @@
                             <?php endif; ?>
                             <a href="<?php echo BASE_URL ?>borang/pandangan/ptkl" class="btn btn-primary btn-rounded mb-3"><i class="mdi mdi-plus"></i> Borang Draf Perubahan 1 PBRKL 2020</a>
                             <a href="<?php echo BASE_URL ?>borang/pandangan/ptkl-2" class="btn btn-success btn-rounded mb-3"><i class="mdi mdi-plus"></i> Borang Draf Perubahan 2 PBRKL 2020</a>
-                            <a href="<?php echo BASE_URL ?>borang/pandangan/pskl" class="btn btn-info btn-rounded mb-3"><i class="mdi mdi-plus"></i> Borang Draf Perubahan PSKL 2040</a>
+                            <a href="<?php echo BASE_URL ?>borang/pandangan/pskl" class="btn btn-info btn-rounded mb-3"><i class="mdi mdi-plus"></i> Borang Draf PSKL 2040</a>
 
                             <h4>Senarai borang Pandangan Awam Draf Perubahan 1 PBRKL 2020</h4>
                             <table class="table-bordered table table-hover">

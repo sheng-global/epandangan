@@ -2,8 +2,17 @@
         <footer class="footer">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
-                        <?php echo getenv('FOOTER') ?> | <a class="language" href="#" data-lang="en">English</a> | <a href="#" class="language" data-lang="my">Bahasa Melayu</a>
+                    <div class="col-md-8">
+                        <?php echo getenv('FOOTER') ?>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <form action="<?php echo BASE_URL ?>language/setLocale" method="post">
+                            <select name="language">
+                                <option value="en"<?php if( $_COOKIE["language"] == "en" ) { echo " selected"; } ?>>English</option>
+                                <option value="my"<?php if( $_COOKIE["language"] == "my" ) { echo " selected"; } ?>>Bahasa Melayu</option>
+                            </select>
+                            <input type="submit" value="Select Language" class="btn btn-success btn-xs">
+                        </form>
                     </div>
                 </div>
             </div>
@@ -21,13 +30,7 @@
                 window.history.back();
                 $(form)[0].reset();
             });
-
-            // change language
-            $('.language').bind('click', function(event){
-                var lang = $(this).data('lang');
-                checkCookie(lang);
-                window.location.reload();
-            });
+            
         </script>
 
         <!-- Page specific -->

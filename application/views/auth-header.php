@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<?php echo $_COOKIE['lang'] = $_GET['lang'] = $_SESSION['lang'] === 'en' ? 'en' : 'my' ?>">
+<html lang="my">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -7,7 +7,7 @@
         <title><?php echo SITE_TITLE ?></title>
 
         <!-- App favicon -->
-        <link rel="shortcut icon" href="<?php echo BASE_URL; ?>assets/images/favicon.png">
+        <link rel="shortcut icon" href="<?php echo BASE_URL; ?>assets/images/favicon.ico">
 
         <!-- App css -->
         <link href="<?php echo BASE_URL; ?>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -40,7 +40,7 @@
         </script>
         <script src="<?php echo BASE_URL; ?>assets/js/translate.js"></script>
         <script>
-        var currentLng = "<?php echo $_COOKIE['lang'] ?>";
+        var currentLng = "<?php echo $_COOKIE['language'] ?>";
         function load(){
             var translate = new Translate();
             var attributeName = 'data-tag';

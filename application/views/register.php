@@ -52,13 +52,24 @@
                                     <input type="hidden" name="redirect" id="redirect">
                                     <input type="hidden" name="token" value="<?php echo $token ?>">
                                 </form>
-                                <div class="text-center m-auto">
-                                    <p><span data-tag="account-exist"></span> <a href="<?php echo BASE_URL ?>auth" class="ml-1"><b><span data-tag="login"></span></b></a></p>
-                                    <p><a class="language" href="#" data-lang="en">English</a> | <a href="#" class="language" data-lang="my">Bahasa Melayu</a></p>
-                                </div>
+                                <p class="text-center">
+                                    <span data-tag="account-exist"></span> <a href="<?php echo BASE_URL ?>auth" data-tag="login"></a>
+                                </p>
                             </div> <!-- end card-body -->
                         </div>
                         <!-- end card -->
+
+                        <div class="row mt-3">
+                            <div class="col-12 text-center">
+                                <form action="<?php echo BASE_URL ?>language/setLocale" method="post">
+                                    <select name="language">
+                                        <option value="en"<?php if( $_COOKIE["language"] == "en" ) { echo " selected"; } ?>>English</option>
+                                        <option value="my"<?php if( $_COOKIE["language"] == "my" ) { echo " selected"; } ?>>Bahasa Melayu</option>
+                                    </select>
+                                    <input type="submit" value="Select Language" class="btn btn-success btn-xs">
+                                </form>
+                            </div> <!-- end col -->
+                        </div>
                     </div> <!-- end col -->
                 </div>
                 <!-- end row -->

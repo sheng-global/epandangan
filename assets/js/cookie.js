@@ -5,6 +5,11 @@ function setCookie(cname, cvalue, exdays) {
   	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
+function deleteCookie(cname) {
+  var expires = "expires=Thu, 01 Jan 1970 00:00:00 UTC";
+  document.cookie = cname + "=;" + expires + ";path=/";
+}
+
 function getCookie(cname) {
   	var name = cname + "=";
   	var decodedCookie = decodeURIComponent(document.cookie);

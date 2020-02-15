@@ -34,6 +34,9 @@ class Payment extends Controller {
 				$('#select_bank').hide();
 			});
 
+			$('#bank_list').removeClass('col-md-4 control-label');
+			$('#bank_code').addClass('form-control');
+
 		</script>";
 
 		$header = $this->loadView('payment-header');

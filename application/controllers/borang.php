@@ -342,18 +342,28 @@ class Borang extends Controller {
 
 		var borang = '".$borang."';
 
+		if(currentLng == 'my'){
+			var msg1_title = 'Makluman';
+			var msg1_text = 'Borang Penyertaan Awam Draf Perubahan 1 PBRKL 2020 telah ditutup.';
+			var msg2_text = 'Sila baca Panduan Mengisi Borang terlebih dahulu sebelum mengisi borang penyertaan awam ini.';
+		}else{
+			var msg1_title = 'Attention';
+			var msg1_text = 'This form submission has been closed.';
+			var msg2_text = 'Please read Guidance for Public Opinion Form before filling up this public opinion form.';
+		}
+
 		$(document).ready(function() {
 
 			if(borang == 'ptkl'){
 				Swal.fire({
-					title: 'Makluman',
-					text: 'Borang Penyertaan Awam Draf Perubahan 1 PBRKL 2020 telah ditutup',
+					title: msg1_title,
+					text: msg1_text,
 					type: 'info'
 				});
 			}else{
 				Swal.fire({
-					title: 'Makluman',
-					text: 'Sila baca Panduan Mengisi Borang terlebih dahulu sebelum mengisi borang penyertaan awam ini.',
+					title: msg1_title,
+					text: msg2_text,
 					type: 'info'
 				});
 			}

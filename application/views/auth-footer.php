@@ -15,12 +15,6 @@
             $(form)[0].reset();
         });
 
-        // change language
-        $('.language').bind('click', function(event){
-            var lang = $(this).data('lang');
-            checkCookie(lang);
-            window.location.reload();
-        });
         </script>
         
         <?php
