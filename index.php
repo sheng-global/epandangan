@@ -45,8 +45,4 @@ if(!$_COOKIE['language']){
 
 $_SESSION['last_ip'] = $_SERVER['REMOTE_ADDR'];
 
-$controller = new Controller();
-$languageFile = $controller->loadHelper('Lang_helper');
-$languageFile->createLanguageFile('my');
-
 pip();
