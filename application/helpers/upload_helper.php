@@ -22,7 +22,8 @@ class Upload_helper extends Model {
 		$fileupload = new \FileUpload\FileUpload($data['files'], $_SERVER);
 
 		// file extension
-		$extension = end(explode(".", $data['files']['name']));
+		$tmpExt = explode(".", $data['files']['name']);
+		$extension = end($tmpExt);
 		$newFileName = $data['file_id'].".".strtolower($extension);
 
 		// rename file
@@ -42,7 +43,7 @@ class Upload_helper extends Model {
 		    header($header . ': ' . $value);
 		}
 
-		echo json_encode(['files' => $files]);
+		//echo json_encode(['files' => $files]);
 
 		foreach($files as $file){
 		    

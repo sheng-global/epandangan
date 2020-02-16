@@ -112,7 +112,7 @@
 
                         <div class="card bg-default d-print-none">
                             <div class="card-body">
-                                <h5 class="card-title">Lampiran A & C</h5>
+                                <h5 class="card-title">Lampiran A (Memorandum)</h5>
 
                                 <?php $upload = array('id' => $data[0]['borang_id']); 
                                 $get = $helper->get($upload);

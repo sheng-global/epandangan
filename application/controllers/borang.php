@@ -615,6 +615,21 @@ class Borang extends Controller {
 		}
 	}
 
+	function debugMatlamat()
+	{
+		$dataBorangMatlamat = array(
+			'borang_id' => $_POST['borang_id'],
+			'matlamat_id' => $_POST['matlamat'],
+			'halatuju_id' => $_POST['halatuju'],
+			'tindakan_id' => $_POST['tindakan'],
+			'cadangan' => $_POST['cadangan'],
+			'justifikasi' => $_POST['justifikasi']
+		);
+
+		$matlamat = $this->model->addBorangMatlamat($dataBorangMatlamat);
+		return $matlamat;
+	}
+
 	function add_pskl()
 	{
 		$easyCSRF = new EasyCSRF\EasyCSRF($this->session);
@@ -642,18 +657,43 @@ class Borang extends Controller {
 
 			$borang_id = $this->model->addBorangPSKL($dataBorang);
 
-			$dataBorangMatlamat = array(
+			$dataBorangMatlamat1 = array(
 				'borang_id' => $borang_id,
-				'matlamat_id' => $_POST['matlamat'],
-				'halatuju_id' => $_POST['halatuju'],
-				'tindakan_id' => $_POST['tindakan'],
-				'cadangan' => $_POST['cadangan'],
-				'justifikasi' => $_POST['justifikasi'],
-				'last_update' => Carbon::now()->toDateTimeString()
+				'matlamat_id' => $_POST['matlamat'][0],
+				'halatuju_id' => $_POST['halatuju'][0],
+				'tindakan_id' => $_POST['tindakan'][0],
+				'cadangan' => $_POST['cadangan'][0],
+				'justifikasi' => $_POST['justifikasi'][0]
 			);
 
-			$matlamat = $this->model->addBorangMatlamat($dataBorangMatlamat);
-			die($matlamat);
+			$this->model->addBorangMatlamat($dataBorangMatlamat1);
+
+
+			if(isset($_POST['matlamat'][1])){
+				$dataBorangMatlamat2 = array(
+					'borang_id' => $borang_id,
+					'matlamat_id' => $_POST['matlamat'][1],
+					'halatuju_id' => $_POST['halatuju'][1],
+					'tindakan_id' => $_POST['tindakan'][1],
+					'cadangan' => $_POST['cadangan'][1],
+					'justifikasi' => $_POST['justifikasi'][1]
+				);
+
+				$this->model->addBorangMatlamat($dataBorangMatlamat2);
+			}
+
+			if(isset($_POST['matlamat'][1])){
+				$dataBorangMatlamat3 = array(
+					'borang_id' => $borang_id,
+					'matlamat_id' => $_POST['matlamat'][3],
+					'halatuju_id' => $_POST['halatuju'][3],
+					'tindakan_id' => $_POST['tindakan'][3],
+					'cadangan' => $_POST['cadangan'][3],
+					'justifikasi' => $_POST['justifikasi'][3]
+				);
+
+				$this->model->addBorangMatlamat($dataBorangMatlamat3);
+			}
 
 			$dataProfile = array(
 				'nama_penuh' => $this->filter->sanitize($_POST['nama_penuh']),

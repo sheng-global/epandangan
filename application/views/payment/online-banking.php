@@ -18,13 +18,13 @@
                                     </div>
 
                                     <div class="form-group mb-3">
-                                        <label for="language" class="control-label">Versi</label>
+                                        <label for="version" class="control-label">Versi</label>
                                         <div class="radio radio-inline">
-                                            <input type="radio" id="my" value="my" name="language" required="" checked="checked">
+                                            <input type="radio" id="my" value="my" name="version" required="" checked="checked">
                                             <label for="my">Bahasa Melayu</label>
                                         </div>
                                         <div class="radio radio-inline">
-                                            <input type="radio" id="en" value="en" name="language">
+                                            <input type="radio" id="en" value="en" name="version">
                                             <label for="en">English</label>
                                         </div>
                                     </div>
